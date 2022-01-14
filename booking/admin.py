@@ -17,6 +17,7 @@ class TimeSlotAdmin(admin.ModelAdmin):
 
     form = TimeSlotForm
 
+    filter_vertical = ('tables',)
     list_display = ('booking_time', 'allocated_tables')
     list_filter = ('time', 'tables')
     search_fields = ['time', 'tables__name']

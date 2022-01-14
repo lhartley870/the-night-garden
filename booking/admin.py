@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Table, TimeSlot
+from .forms import TimeSlotForm
 
 
 # Register your models here.
@@ -13,6 +14,8 @@ class TableAdmin(admin.ModelAdmin):
 
 @admin.register(TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
+
+    form = TimeSlotForm
 
     list_display = ('booking_time', 'allocated_tables')
     list_filter = ('time', 'tables')

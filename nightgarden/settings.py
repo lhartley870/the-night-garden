@@ -75,6 +75,12 @@ TEMPLATES = [
     },
 ]
 
+# Solution for changing the format of time inputs taken from an answer
+# given by CoffeeBasedLifeform on this Stack Overflow post -
+# https://stackoverflow.com/questions/48514222/django-admin
+# -datetimefield-showing-24hr-format-time
+TIME_INPUT_FORMATS = ['%H:%M']
+
 WSGI_APPLICATION = 'nightgarden.wsgi.application'
 
 

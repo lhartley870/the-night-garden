@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -42,3 +44,29 @@ class TimeSlot(models.Model):
 
     def __str__(self):
         return self.time.strftime("%H:%M")
+
+
+class Booking(models.Model):
+    created_on = models.DateTimeField(auto_now_add=True)
+    date = models.DateField()
+    booker = models.ForeignKey(User, on_delete=models.CASCADE,
+                               related_name="booking")
+    party_size = models.PositiveSmallIntegerField(
+        validators=[
+                    MinValueValidator(1),
+                    MaxValueValidator(16)
+        ]
+    )
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE,
+                                  related_name="time_slot_booking")
+    tables = models.ManyToManyField(Table, related_name='table_booking')
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['date']
+
+    def __str__(self):
+        return (
+            f'Booking #{self.id} on {self.date} '
+            f'for {self.party_size} at {self.time_slot}'
+        )

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Table, TimeSlot
+from .models import Table, TimeSlot, Booking
 from .forms import TimeSlotForm
 
 
@@ -52,3 +52,15 @@ class TimeSlotAdmin(admin.ModelAdmin, TablesMixin):
         """
         twenty_four_hour_clock_time = obj.time.strftime("%H:%M")
         return twenty_four_hour_clock_time
+
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin, TablesMixin):
+
+    filter_vertical = ('tables',)
+    list_display = ('id', 'date', 'time_slot', 'party_size',
+                    'allocated_tables', 'booker', 'approved',
+                    'created_on')
+    list_filter = ('date', 'time_slot', 'party_size',
+                   'tables', 'booker', 'approved')
+    search_fields = ['date']

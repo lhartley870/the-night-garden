@@ -58,9 +58,19 @@ class TimeSlotAdmin(admin.ModelAdmin, TablesMixin):
 class BookingAdmin(admin.ModelAdmin, TablesMixin):
 
     filter_vertical = ('tables',)
-    list_display = ('id', 'date', 'time_slot', 'party_size',
+    list_display = ('id', 'booking_date', 'time_slot', 'party_size',
                     'allocated_tables', 'booker', 'approved',
                     'created_on')
     list_filter = ('date', 'time_slot', 'party_size',
                    'tables', 'booker', 'approved')
     search_fields = ['date']
+
+    def booking_date(self, obj):
+        """
+        Method to display each booking date in the Admin panel
+        in the '2022-01-03' format rather than the default 'Jan. 03, 2022'
+        format for consistency with the search field format, the format of the
+        date field in the admin form for bookings and the database.
+        """
+        year_month_date_format = obj.date.strftime("%Y-%m-%d")
+        return year_month_date_format

@@ -41,27 +41,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Bookings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Make a Booking</a>
                     </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Login</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Menus</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact Us</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logout</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -1,5 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from allauth.account.forms import SignupForm
 from .models import TimeSlot
 
 
@@ -26,3 +28,36 @@ class TimeSlotForm(forms.ModelForm):
             raise ValidationError('Time slots must be between 17:30 and 22:00')
         else:
             return self.cleaned_data['time']
+
+
+class CustomSignUpForm(SignupForm):
+    """
+    CustomSignUpForm class added so that the django-allauth
+    standard SignUpForm class can be extended to add first name and
+    last name fields.
+    """
+    # Code for this CustomSignUpForm class is based upon code
+    # included in an article entitled 'The complete django-allauth guide'
+    # by Gajesh at -
+    # https://dev.to/gajesh/the-complete-django-allauth-guide-la3
+    #
+    # Code for validating the first_name and last_name fields so that
+    # only letters are allowed was adapted from an answer given by
+    # Martijn Pieters and edited by Lord Elrond on this Stack Overflow
+    # post - https://stackoverflow.com/questions/17165147/how-can-i-make-
+    # a-django-form-field-contain-only-alphanumeric-characters
+    alpha = RegexValidator(r'^[a-zA-Z]*$', 'Only letters are allowed.')
+    first_name = forms.CharField(max_length=30, label='First Name',
+                                 widget=forms.TextInput(
+                                     attrs={'placeholder': 'First Name'}),
+                                 validators=[alpha])
+    last_name = forms.CharField(max_length=30, label='Last Name',
+                                widget=forms.TextInput(
+                                    attrs={'placeholder': 'Last Name'}),
+                                validators=[alpha])
+
+    def signup(self, request, user):
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()
+        return user

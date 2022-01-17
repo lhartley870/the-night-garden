@@ -36,6 +36,9 @@ ALLOWED_HOSTS = ['the-night-garden.herokuapp.com', 'localhost']
 # Application definition
 
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_FORMS = {
+    'signup': 'booking.forms.CustomSignUpForm',
+}
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 INSTALLED_APPS = [

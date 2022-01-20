@@ -37,6 +37,7 @@ class CustomSignUpForm(SignupForm):
     standard SignUpForm class can be extended to add first name and
     last name fields.
     """
+
     # Code for this CustomSignUpForm class is based upon code
     # included in an article entitled 'The complete django-allauth guide'
     # by Gajesh at -
@@ -123,6 +124,25 @@ class BookingForm(forms.ModelForm):
         current_bookings = Booking.objects.filter(date=date,
                                                   time_slot=time_slot)
         return current_bookings
+
+    def get_capacity_booked(self, current_bookings):
+        """
+        Method to get the seating capacity of all the tables booked in
+        the current_bookings.
+        """
+        all_booked_tables = []
+        for booking in current_bookings:
+            booked_tables = booking.tables.all()
+            for booked_table in booked_tables:
+                all_booked_tables.append(booked_table)
+        print(all_booked_tables)
+        capacity_booked = sum(
+            [
+                booked_table.size
+                for booked_table in all_booked_tables
+            ]
+        )
+        return capacity_booked
 
     def clean_time_slot(self):
         """

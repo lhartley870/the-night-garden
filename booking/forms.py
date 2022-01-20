@@ -1,8 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+from django.forms.widgets import Select
 from allauth.account.forms import SignupForm
-from .models import TimeSlot
+from .models import TimeSlot, Booking
 
 
 class TimeSlotForm(forms.ModelForm):
@@ -61,3 +62,28 @@ class CustomSignUpForm(SignupForm):
         user.last_name = self.cleaned_data['last_name']
         user.save()
         return user
+
+
+class BookingForm(forms.ModelForm):
+
+    class Meta:
+        PARTY_SIZE = [
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (4, 4),
+            (5, 5),
+            (6, 6),
+            (7, 7),
+            (8, 8),
+            (9, 9),
+            (10, 10)
+        ]
+        model = Booking
+        fields = ('date', 'party_size', 'time_slot')
+        # party_size widget has been changed so that users (except admin users
+        # via the admin panel) are limited to making a booking for 1-10
+        # guests only.
+        widgets = {
+            'party_size': Select(choices=PARTY_SIZE),
+        }

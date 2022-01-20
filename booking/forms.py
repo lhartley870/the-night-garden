@@ -135,7 +135,6 @@ class BookingForm(forms.ModelForm):
             booked_tables = booking.tables.all()
             for booked_table in booked_tables:
                 all_booked_tables.append(booked_table)
-        print(all_booked_tables)
         capacity_booked = sum(
             [
                 booked_table.size
@@ -169,5 +168,9 @@ class BookingForm(forms.ModelForm):
         tables = self.get_timeslot_tables(time_slot)
         time_slot_capacity = self.get_timeslot_capacity(tables)
         current_bookings = self.get_current_bookings(date, time_slot)
+
+        capacity_booked = 0
+        if len(current_bookings) > 0:
+            capacity_booked = self.get_capacity_booked(current_bookings)
 
         return time_slot

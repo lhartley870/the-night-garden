@@ -107,6 +107,14 @@ class BookingForm(forms.ModelForm):
         tables = time.tables.all()
         return tables
 
+    def get_timeslot_capacity(self, tables):
+        """
+        Method to get the seating capacity of a
+        particuar time slot.
+        """
+        time_slot_capacity = sum([table.size for table in tables])
+        return time_slot_capacity
+
     def clean_time_slot(self):
         """
         Method to clean the time_slot field by making sure that the selected
@@ -130,5 +138,6 @@ class BookingForm(forms.ModelForm):
         date = self.cleaned_data['date']
         party_size = self.cleaned_data['party_size']
         tables = self.get_timeslot_tables(time_slot)
+        time_slot_capacity = self.get_timeslot_capacity(tables)
 
         return time_slot

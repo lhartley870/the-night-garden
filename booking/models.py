@@ -52,13 +52,15 @@ class Booking(models.Model):
     booker = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="booking")
     party_size = models.PositiveSmallIntegerField(
+        "Number of Guests",
         validators=[
                     MinValueValidator(1),
                     MaxValueValidator(16)
         ]
     )
     time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE,
-                                  related_name="time_slot_booking")
+                                  related_name="time_slot_booking",
+                                  verbose_name="Time")
     tables = models.ManyToManyField(Table, related_name='table_booking')
     approved = models.BooleanField(default=False)
 

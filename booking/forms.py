@@ -97,6 +97,16 @@ class BookingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['date'].widget.attrs.update({'readonly': True})
 
+    def get_timeslot_tables(self, time_slot):
+        """
+        Method to get all the tables allocated to a
+        particular time slot.
+        """
+        time_slot_string = str(time_slot)
+        time = TimeSlot.objects.get(time=time_slot_string)
+        tables = time.tables.all()
+        return tables
+
     def clean_time_slot(self):
         """
         Method to clean the time_slot field by making sure that the selected
@@ -119,3 +129,6 @@ class BookingForm(forms.ModelForm):
         time_slot = self.cleaned_data['time_slot']
         date = self.cleaned_data['date']
         party_size = self.cleaned_data['party_size']
+        tables = self.get_timeslot_tables(time_slot)
+
+        return time_slot

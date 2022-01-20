@@ -173,4 +173,7 @@ class BookingForm(forms.ModelForm):
         if len(current_bookings) > 0:
             capacity_booked = self.get_capacity_booked(current_bookings)
 
+        if capacity_booked + party_size > time_slot_capacity:
+            raise ValidationError('Sorry this booking is now unavailable')
+
         return time_slot

@@ -96,3 +96,26 @@ class BookingForm(forms.ModelForm):
         """
         super().__init__(*args, **kwargs)
         self.fields['date'].widget.attrs.update({'readonly': True})
+
+    def clean_time_slot(self):
+        """
+        Method to clean the time_slot field by making sure that the selected
+        time slot still has enough capacity to cater for the number of guests
+        selected by the user for the booking.
+
+        This check is to cater for the situation where:
+        1. user1 selects an available time slot (as only
+        available time slots for the date and number of guests chosen will be
+        able to be selected in the time dropdown when the JavaScript fetch call
+        is made) but does not book straight away;
+        2. In the meantime another user (user2) makes a booking for that date
+        and time slot that means the time slot is now unavailable for user1;
+        and
+        3. user1 later clicks 'Book' for that time slot without having
+        refreshed the page.
+        If the time slot can no longer accommodate user1's booking on the
+        selected date then a ValidationError is raised to inform the user.
+        """
+        time_slot = self.cleaned_data['time_slot']
+        date = self.cleaned_data['date']
+        party_size = self.cleaned_data['party_size']

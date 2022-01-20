@@ -87,3 +87,12 @@ class BookingForm(forms.ModelForm):
         widgets = {
             'party_size': Select(choices=PARTY_SIZE),
         }
+
+    def __init__(self, *args, **kwargs):
+        """
+        __init__ method included so that the date widget can be
+        made readonly to avoid users filling in the date field manually
+        rather than using the datepicker.
+        """
+        super().__init__(*args, **kwargs)
+        self.fields['date'].widget.attrs.update({'readonly': True})

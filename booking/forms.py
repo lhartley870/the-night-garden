@@ -115,6 +115,15 @@ class BookingForm(forms.ModelForm):
         time_slot_capacity = sum([table.size for table in tables])
         return time_slot_capacity
 
+    def get_current_bookings(self, date, time_slot):
+        """
+        Method to get current bookings already made on the same date and for
+        the same time slot.
+        """
+        current_bookings = Booking.objects.filter(date=date,
+                                                  time_slot=time_slot)
+        return current_bookings
+
     def clean_time_slot(self):
         """
         Method to clean the time_slot field by making sure that the selected
@@ -139,5 +148,6 @@ class BookingForm(forms.ModelForm):
         party_size = self.cleaned_data['party_size']
         tables = self.get_timeslot_tables(time_slot)
         time_slot_capacity = self.get_timeslot_capacity(tables)
+        current_bookings = self.get_current_bookings(date, time_slot)
 
         return time_slot

@@ -18,3 +18,15 @@ class BookingFormPage(View):
                 "booking_form": BookingForm(),
             }
         )
+
+    def post(self, request, *args, **kwargs):
+
+        booking_form = BookingForm(data=request.POST)
+
+        return render(
+            request,
+            "booking_form.html",
+            {
+                 "booking_form": booking_form,
+            }
+        )

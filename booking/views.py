@@ -21,6 +21,21 @@ class BookingFormPage(View):
             }
         )
 
+    def evaluate_multiple_tables(self, available_tables, party_size):
+        match_tables = [
+            table for table in available_tables
+            if table.size == party_size or table.size == party_size + 1
+        ]
+        print(match_tables)
+        if len(match_tables) == 1:
+            allocated_tables = match_tables[0]
+        elif len(match_tables) > 1:
+            allocated_tables = random.choice(match_tables)
+        else:
+            allocated_tables = []
+
+        return allocated_tables
+
     def select_tables(self, booking_form):
         time_slot = booking_form.cleaned_data['time_slot']
         date = booking_form.cleaned_data['date']
@@ -36,7 +51,8 @@ class BookingFormPage(View):
         if len(available_tables) == 1:
             allocated_tables = available_tables[0]
         elif len(available_tables) > 1:
-            allocated_tables = []
+            allocated_tables = self.evaluate_multiple_tables(available_tables,
+                                                             party_size)
         else:
             allocated_tables = None
 

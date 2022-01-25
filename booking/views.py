@@ -1,8 +1,8 @@
+import random
 from django.shortcuts import render
 from django.views import View
 from .forms import BookingForm
 from .models import Table
-import random
 
 
 # Create your views here.
@@ -28,9 +28,9 @@ class BookingFormPage(View):
         ]
         print(match_tables)
         if len(match_tables) == 1:
-            allocated_tables = match_tables[0]
+            allocated_tables = match_tables
         elif len(match_tables) > 1:
-            allocated_tables = random.choice(match_tables)
+            allocated_tables = [random.choice(match_tables)]
         else:
             allocated_tables = []
 
@@ -49,7 +49,7 @@ class BookingFormPage(View):
         )
 
         if len(available_tables) == 1:
-            allocated_tables = available_tables[0]
+            allocated_tables = available_tables
         elif len(available_tables) > 1:
             allocated_tables = self.evaluate_multiple_tables(available_tables,
                                                              party_size)

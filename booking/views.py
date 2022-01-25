@@ -21,6 +21,58 @@ class BookingFormPage(View):
             }
         )
 
+    def evaluate_no_match_tables(self, available_tables, party_size):
+        """
+        Method to evaluate multiple tables where there are no 'match' tables.
+
+        Where there are multiple available_tables but none which are a 'match'
+        for the party_size (a 'match' being a table which is the same size as
+        the party_size (for even party sizes) or a table which is the same size
+        as the party_size + 1 (for odd party sizes)), this method finds out
+        whether all the available tables are smaller in size than the
+        party_size, larger in size than the party_size or whether some
+        available_tables are smaller and some are larger. If all tables are
+        larger, the smallest of those tables is returned (or if there is more
+        than 1, 1 of those tables chosen at random). If all the tables are
+        smaller than the party_size, the evaluate_smaller_tables method is
+        called to provide the table(s). If some tables are smaller and some
+        are larger than the party_size, the combine_tables method is called
+        to provide the table(s).
+
+        This method provides the selected tables to the
+        evaluate_multiple_tables method.
+        """
+        # Creates a list of all the available_tables with a smaller size
+        # than the party_size.
+        tables_smaller_than_party = [
+            table for table in available_tables
+            if table.size < party_size
+        ]
+
+        # If there are no tables in the tables_smaller_than_party list
+        # then all available_tables must be larger than the party_size.
+        # The smallest of the available_tables is chosen (or 1 of the
+        # smallest is chosen at random if there is more than 1).
+        if len(tables_smaller_than_party) == 0:
+            table_sizes = [table.size for table in available_tables]
+            smallest_table_size = min(table_sizes)
+            smallest_tables = available_tables.filter(size=smallest_table_size)
+            if len(smallest_tables) == 1:
+                allocated_tables = smallest_tables
+            else:
+                allocated_tables = [random.choice(smallest_tables)]
+        # If all the available_tables are smaller in size than the party_size
+        # another method is called.
+        elif len(tables_smaller_than_party) == len(available_tables):
+            allocated_tables = []
+        # If some tables are smaller than the party_size and some are larger,
+        # another method is called.
+        else:
+            min_combo_size = 1
+            allocated_tables = []
+
+        return allocated_tables
+
     def evaluate_multiple_tables(self, available_tables, party_size):
         """
         Method to evaluate multiple tables available for the booking.
@@ -51,7 +103,8 @@ class BookingFormPage(View):
             allocated_tables = [random.choice(match_tables)]
         # If there are no match tables, another method is called.
         else:
-            allocated_tables = []
+            allocated_tables = self.evaluate_no_match_tables(available_tables,
+                                                             party_size)
 
         return allocated_tables
 

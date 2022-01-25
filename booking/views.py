@@ -22,15 +22,34 @@ class BookingFormPage(View):
         )
 
     def evaluate_multiple_tables(self, available_tables, party_size):
+        """
+        Method to evaluate multiple tables available for the booking.
+
+        Finds any tables which are 'match' tables, being those that are the
+        same size as the party_size (for even party sizes) and those that are
+        the same size as the party_size + 1 (for odd party sizes). If there is
+        1 match table, that is returned. If there is more than 1 match table,
+        one is selected at random and returned. If there are no match tables,
+        the evaluate_no_match_tables method is called to provide the table(s).
+
+        This method provides the selected tables to the select_tables method.
+        """
+        # Creates a list of all 'match' tables, being available_tables that are
+        # the same size as the party_size (for even party sizes) or the
+        # party_size + 1 (for odd party sizes).
         match_tables = [
             table for table in available_tables
             if table.size == party_size or table.size == party_size + 1
         ]
-        print(match_tables)
+
+        # If there is 1 match table, that is returned.
         if len(match_tables) == 1:
             allocated_tables = match_tables
+        # If there is more than 1 match table, one is selected at random
+        # and returned.
         elif len(match_tables) > 1:
             allocated_tables = [random.choice(match_tables)]
+        # If there are no match tables, another method is called.
         else:
             allocated_tables = []
 

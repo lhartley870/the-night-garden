@@ -1,5 +1,6 @@
 import random
 import math
+import itertools
 from django.shortcuts import render
 from django.views import View
 from .forms import BookingForm
@@ -22,6 +23,80 @@ class BookingFormPage(View):
             }
         )
 
+    def combine_tables(self, available_tables, party_size, min_combo_size):
+        """
+        Method to evaluate multiple table combinations.
+
+        Where there are multiple available_tables all smaller in size than
+        the party_size, not all the tables are needed to cover the
+        party_size, there are more than 2 tables and not all the tables
+        are the same size, this method gets the best combination of tables.
+
+        Where there are multiple available_tables, no one table is a 'match'
+        (a 'match' being a size which is the same size as the party_size
+        (for even party sizes) or the same size as the party_size + 1
+        (for odd party sizes)) and some of the tables are smaller in size than
+        the party_size and some are larger in size than the party_size, this
+        method gets the best table or combination of tables.
+
+        This method may be called upon to provide the selected table(s) to the
+        evaluate_smaller_tables method or the evaluate_no_match_tables method.
+        """
+        # Creates a list of table combination tuples where the minimum
+        # combination size is as per the min_combo_size specified.
+        combinations = []
+        # Code for creating a list of all possible table combinations for a
+        # particular minimum combination size and above was
+        # adapted from a response provided by Dan H and edited by Steven C.
+        # Howell on this Stack Overflow post -
+        # https://stackoverflow.com/questions/464864/how-to-get-all-possible
+        # -combinations-of-a-list-s-elements
+        for length in range(min_combo_size, len(available_tables) + 1):
+            for subset in itertools.combinations(available_tables, length):
+                combinations.append(subset)
+
+        # Creates a list of the number of tables in each combination.
+        combinations_num_tables = [
+            len(combination) for combination in combinations
+        ]
+
+        # Creates a list of the seating capacity for each combination.
+        combinations_capacities = []
+        for combination in combinations:
+            combination_capacity = sum([table.size for table in combination])
+            combinations_capacities.append(combination_capacity)
+
+        # Creates a combo:capacities dictionary where a table combination
+        # tuple is the key and the seating capacity of that tuple is the value.
+        # Code for creating a dictionary from two lists was adapted from an
+        # answer given by Dan Lenski and edited by wjandrea on this Stack
+        # Overflow post -
+        # https://stackoverflow.com/questions/209840/how-do-i-convert-two-lists-
+        # into-a-dictionary
+        combinations_capacities_dictionary = dict(zip(combinations,
+                                                  combinations_capacities))
+        # Creates a combo:number of tables dictionary where a table combination
+        # tuple is the key and the number of tables in that tuple is the value.
+        combinations_num_tables_dictionary = dict(zip(combinations,
+                                                  combinations_num_tables))
+
+        match_table = None
+        # If the party_size is even, set match_table to that value.
+        if party_size % 2 == 0:
+            match_table = party_size
+        # If the party_size is odd, set match_table to that value + 1.
+        else:
+            match_table = party_size + 1
+
+        # A different method is called depending on whether there is
+        # a 'matching' table combination or not.
+        if match_table in combinations_capacities:
+            allocated_tables = []
+        else:
+            allocated_tables = []
+
+        return allocated_tables
+
     def evaluate_smaller_tables(self, available_tables, party_size):
         """
         Method to evaluate multiple tables smaller than the party_size.
@@ -38,7 +113,7 @@ class BookingFormPage(View):
         If neither of those options applies, the combine_tables method is
         called to provide the table(s).
 
-        This method provides the selected tables to the
+        This method may be called upon to provide the selected tables to the
         evaluate_no_match_tables method.
         """
         # Creates a list of the size of each available_table.
@@ -62,7 +137,9 @@ class BookingFormPage(View):
         # If neither of the above options apply, another method is called.
         else:
             min_combo_size = 2
-            allocated_tables = []
+            allocated_tables = self.combine_tables(available_tables,
+                                                   party_size,
+                                                   min_combo_size)
 
         return allocated_tables
 
@@ -84,7 +161,7 @@ class BookingFormPage(View):
         are larger than the party_size, the combine_tables method is called
         to provide the table(s).
 
-        This method provides the selected tables to the
+        This method may be called upon to provide the selected tables to the
         evaluate_multiple_tables method.
         """
         # Creates a list of all the available_tables with a smaller size
@@ -115,7 +192,9 @@ class BookingFormPage(View):
         # another method is called.
         else:
             min_combo_size = 1
-            allocated_tables = []
+            allocated_tables = self.combine_tables(available_tables,
+                                                   party_size,
+                                                   min_combo_size)
 
         return allocated_tables
 
@@ -130,7 +209,8 @@ class BookingFormPage(View):
         one is selected at random and returned. If there are no match tables,
         the evaluate_no_match_tables method is called to provide the table(s).
 
-        This method provides the selected tables to the select_tables method.
+        This method may be called upon to provide the selected tables to the
+        select_tables method.
         """
         # Creates a list of all 'match' tables, being available_tables that are
         # the same size as the party_size (for even party sizes) or the

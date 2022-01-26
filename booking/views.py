@@ -23,9 +23,112 @@ class BookingFormPage(View):
             }
         )
 
+    def filter_match_tables(self, combinations_capacities_dictionary,
+                            combinations_num_tables_dictionary,
+                            match_table):
+        """
+        Method to evaluate 'match' table combinations.
+
+        Where there are multiple available_tables all smaller in size than
+        the party_size, not all the tables are needed to cover the
+        party_size, there are more than 2 tables, not all the tables
+        are the same size, and there is at least 1 'match' combination of
+        tables, this method gets the best (or only) 'match' combination of
+        tables. A 'match' here being a table combination capacity which is the
+        same size as the party_size (for even party sizes) or the same size
+        as the party_size + 1 (for odd party sizes).
+
+        Where there are multiple available_tables, no one table is a 'match',
+        some of the tables are smaller in size than the party_size and some
+        are larger in size than the party_size, and there is at least 1 'match'
+        combination of tables, this method gets the best (or only) 'match'
+        combination of tables.
+
+        This method may be called upon to provide the selected tables to the
+        combine_tables method.
+        """
+        # Creates a list of all table combination tuples that 'match' the
+        # party_size.
+        match_keys = []
+        for key, value in combinations_capacities_dictionary.items():
+            if value == match_table:
+                match_keys.append(key)
+
+        # If there is only 1 table combination that is a 'match' return it.
+        if len(match_keys) == 1:
+            allocated_tables = match_keys[0]
+        # If there is more than 1 table combination that is a 'match'.
+        else:
+            # Finds the smallest number of tables for a 'matching' table
+            # combination.
+            smallest_match_combo = min(
+                [len(match_key) for match_key in match_keys]
+            )
+
+            # Creates a list of all the 'matching' table combinations which
+            # have the smallest number of tables.
+            smallest_match_keys = []
+            for key, value in combinations_num_tables_dictionary.items():
+                if key in match_keys and value == smallest_match_combo:
+                    smallest_match_keys.append(key)
+
+            # If there is only 1 'matching' table combination with the
+            # smallest number of tables, return that.
+            if len(smallest_match_keys) == 1:
+                allocated_tables = smallest_match_keys[0]
+            # If there is more than 1 'matching' table combination with the
+            # smallest number of tables.
+            else:
+                # Creates a list of all the table sizes for all the tables in
+                # the 'matching' table combinations with the smallest number of
+                # tables and finds the largest table size from that list.
+                tables_sizes = []
+                for match_key in smallest_match_keys:
+                    for table in match_key:
+                        tables_sizes.append(table.size)
+                largest_table_size = max(tables_sizes)
+
+                # Creates a list of all the tables with the largest_table_size
+                # found within the 'matching' table combinations with the
+                # smallest number of tables.
+                big_tables = []
+                for smallest_match_key in smallest_match_keys:
+                    for table in smallest_match_key:
+                        if table.size == largest_table_size:
+                            big_tables.append(table)
+
+                # Removes any duplicates from the list of big_tables.
+                # The code to remove duplicates from a list was adapated
+                # from a W3 Schools article entitled 'How to Remove
+                # Duplicates From a Python List' found at this link -
+                # https://www.w3schools.com/python/python_howto_remove_duplicates.asp
+                big_tables = list(dict.fromkeys(big_tables))
+
+                # Filters the list of 'matching' table combinations with the
+                # smallest number of tables to those combinations that also
+                # contain a table in the big_tables list. Creates a new
+                # best_combos list.
+                best_combos = []
+                for big_table in big_tables:
+                    for smallest_match_key in smallest_match_keys:
+                        if big_table in smallest_match_key:
+                            best_combos.append(smallest_match_key)
+
+                # If there is only 1 table combination in the best_combos list
+                # return that.
+                if len(best_combos) == 1:
+                    allocated_tables = best_combos[0]
+                # If there is more than 1 table combination in the best_combos
+                # list, select one of the combinations at random and return
+                # that.
+                else:
+                    allocated_tables = random.choice(best_combos)
+
+        return allocated_tables
+
     def combine_tables(self, available_tables, party_size, min_combo_size):
         """
-        Method to evaluate multiple table combinations.
+        Method to evaluate table combinations.
 
         Where there are multiple available_tables all smaller in size than
         the party_size, not all the tables are needed to cover the
@@ -91,7 +194,10 @@ class BookingFormPage(View):
         # A different method is called depending on whether there is
         # a 'matching' table combination or not.
         if match_table in combinations_capacities:
-            allocated_tables = []
+            allocated_tables = self.filter_match_tables(
+                combinations_capacities_dictionary,
+                combinations_num_tables_dictionary,
+                match_table)
         else:
             allocated_tables = []
 

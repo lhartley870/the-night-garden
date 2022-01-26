@@ -3,6 +3,7 @@ import math
 import itertools
 from django.shortcuts import render
 from django.views import View
+from django.contrib import messages
 from .forms import BookingForm
 from .models import Table
 
@@ -471,11 +472,35 @@ class BookingFormPage(View):
         return allocated_tables
 
     def post(self, request, *args, **kwargs):
-
         booking_form = BookingForm(data=request.POST)
 
         if booking_form.is_valid():
             allocated_tables = self.select_tables(booking_form)
+            # There should be tables available due to the validation carried
+            # out prior to reaching this point but in the unlikely event that
+            # no tables are available when the select_tables method is run,
+            # an appopriate message is returned to the user.
+            if allocated_tables is None:
+                messages.error(request,
+                               'Sorry this booking is no longer available')
+            else:
+                booking = booking_form.save(commit=False)
+                booking.booker = request.user
+                booking.save()
+                # If there is only 1 allocated_table, that is added to the
+                # booking.
+                if len(allocated_tables) == 1:
+                    booking.tables.add(allocated_tables[0].id)
+                # If there are multiple allocated tables, they are added to the
+                # booking.
+                else:
+                    for table in allocated_tables:
+                        booking.tables.add(table.id)
+                messages.success(
+                    request,
+                    'Thank you for your booking request.'
+                    'Your booking is awaiting confirmation.'
+                )
 
         return render(
             request,

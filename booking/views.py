@@ -23,6 +23,90 @@ class BookingFormPage(View):
             }
         )
 
+    def filter_non_match_tables(self, combinations_capacities_dictionary,
+                                combinations_num_tables_dictionary,
+                                party_size):
+        """
+        Method to evaluate 'non match' table combinations.
+
+        Where there are multiple available_tables all smaller in size than
+        the party_size, not all the tables are needed to cover the
+        party_size, there are more than 2 tables, not all the tables
+        are the same size, and there is no 'match' combination of
+        tables, this method gets the best 'non match' combination of
+        tables. A 'match' here being a table combination capacity which is the
+        same size as the party_size (for even party sizes) or the same size
+        as the party_size + 1 (for odd party sizes).
+
+        Where there are multiple available_tables, no one table or combination
+        of tables is a 'match' and some of the tables are smaller in size
+        than the party_size and some are larger in size than the party_size,
+        this method gets the best 'non match' table or combination of tables.
+
+        This method may be called upon to provide the selected table(s) to the
+        combine_tables method.
+        """
+        # Creates a list of all the table combinations which have a smaller
+        # seating capacity than the party_size.
+        insufficient_combos = []
+        for key, value in combinations_capacities_dictionary.items():
+            if value < party_size:
+                insufficient_combos.append(key)
+
+        # Removes the table combinations which have a smaller seating capacity
+        # than the party_size from the combo:capacity dictionary and the
+        # combo:number of tables dictionary.
+        for combo in insufficient_combos:
+            del combinations_capacities_dictionary[combo]
+            del combinations_num_tables_dictionary[combo]
+
+        # Creates a list of the seating capacities covered by each of the
+        # remaining table combinations and finds the smallest capacity that
+        # is bigger than the party_size (the smallest viable capacity).
+        capacities_bigger_party_size = list(
+            combinations_capacities_dictionary.values())
+        smallest_capacity_bigger_party_size = min(capacities_bigger_party_size)
+
+        # Creates a list of the table combinations with a capacity bigger than
+        # the smallest viable capacity.
+        largest_combos = []
+        for key, value in combinations_capacities_dictionary.items():
+            if value != smallest_capacity_bigger_party_size:
+                largest_combos.append(key)
+
+        # Removes the table combinations with a capacity bigger than the
+        # smallest viable capacity from the combo:capacity and combo:number
+        # of tables dictionaries.
+        for combo in largest_combos:
+            del combinations_capacities_dictionary[combo]
+            del combinations_num_tables_dictionary[combo]
+
+        # If there is only 1 table combination remaining, that is returned.
+        if len(combinations_capacities_dictionary) == 1:
+            allocated_tables = list(
+                combinations_capacities_dictionary.keys())[0]
+        # If there is more than 1 table combination.
+        else:
+            # Finds the smallest number of tables in the remaining
+            # table combinations.
+            smallest_num_tables = min(list(
+                combinations_num_tables_dictionary.values()))
+
+            # Creates a list of the remaining table combinations which
+            # have the smallest number of tables.
+            smallest_num_tables_combos = []
+            for key, value in combinations_num_tables_dictionary.items():
+                if value == smallest_num_tables:
+                    smallest_num_tables_combos.append(key)
+
+            # If there is more than 1 remaining table combination with the
+            # smallest number of tables, one will be selected at random and
+            # returned. If there is only 1 combination left, that will be
+            # returned.
+            allocated_tables = random.choice(smallest_num_tables_combos)
+
+        return allocated_tables
+
     def filter_match_tables(self, combinations_capacities_dictionary,
                             combinations_num_tables_dictionary,
                             match_table):
@@ -199,7 +283,10 @@ class BookingFormPage(View):
                 combinations_num_tables_dictionary,
                 match_table)
         else:
-            allocated_tables = []
+            allocated_tables = self.filter_non_match_tables(
+                combinations_capacities_dictionary,
+                combinations_num_tables_dictionary,
+                party_size)
 
         return allocated_tables
 

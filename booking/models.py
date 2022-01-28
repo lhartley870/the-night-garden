@@ -12,6 +12,7 @@ class NameField(models.CharField):
     with different uppercase and lowercase characters from getting
     around any requirement for the name field to be 'unique'.
     """
+
     # Code for this NameField class taken from an answer given
     # by Danil and edited by Oran on this Stack Overflow post -
     # https://stackoverflow.com/questions/36330677/django-model
@@ -68,7 +69,8 @@ class Booking(models.Model):
         ordering = ['date']
 
     def __str__(self):
+        date = self.date.strftime("%d %B %Y")
         return (
-            f'Booking #{self.id} on {self.date} '
-            f'for {self.party_size} at {self.time_slot}'
+            f'Booking #{self.id} on {date} '
+            f'for {self.party_size} guests at {self.time_slot}'
         )

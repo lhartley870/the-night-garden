@@ -1,11 +1,12 @@
 import random
 import math
 import itertools
+from datetime import datetime
 from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 from .forms import BookingForm
-from .models import Table
+from .models import Table, Booking
 
 
 # Create your views here.
@@ -16,7 +17,25 @@ class HomePage(View):
 
 class MyBookingsPg(View):
     def get(self, request):
-        return render(request, "my_bookings.html")
+        current_date = datetime.now().date()
+        current_time = datetime.now().time()
+        # Filters the bookings so that only those of the logged in user
+        # are displayed, excludes bookings for dates before today
+        # and excludes any bookings for today before the current time.
+        bookings = Booking.objects.filter(
+            booker=request.user
+        ).exclude(
+            date__lt=current_date
+        ).exclude(
+            date=current_date,
+            time_slot__time__lt=current_time
+        )
+        return render(
+            request,
+            "my_bookings.html",
+            {
+                "bookings": bookings
+            })
 
 
 class BookingFormPage(View):

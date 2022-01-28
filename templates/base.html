@@ -46,7 +46,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Bookings</a>
+                        <a class="nav-link" href="{% url 'my_bookings' %}">My Bookings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'make_booking' %}">Make a Booking</a>

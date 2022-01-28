@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post">
-    {{ booking_form }}
-    {% csrf_token %}
-    <button type="submit">Book</button>
-</form>
+    {% if user.is_authenticated %}
+    <form method="post">
+        {{ booking_form }}
+        {% csrf_token %}
+        <button type="submit">Book</button>
+    </form>
+    {% endif %}
 {% endblock %}

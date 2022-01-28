@@ -14,6 +14,11 @@ class HomePage(View):
         return render(request, "index.html",)
 
 
+class MyBookingsPg(View):
+    def get(self, request):
+        return render(request, "my_bookings.html")
+
+
 class BookingFormPage(View):
     def get(self, request):
         return render(

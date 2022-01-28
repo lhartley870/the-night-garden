@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Bookings</h1>
+    {% if user.is_authenticated %}
+    <h2>Current bookings for {{ user.first_name }} {{ user.last_name }}</h2>
+    <a href="{% url 'make_booking' %}">
+        <button>Make a Booking</button>
+    </a>
+    {% for booking in bookings %}
+    <div>
+        {{ booking }}
+    </div>
+    {% empty %}
+    <div>You have no current bookings</div>
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}

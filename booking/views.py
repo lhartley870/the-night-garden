@@ -5,6 +5,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .forms import BookingForm
 from .models import Table, Booking
 
@@ -520,11 +521,13 @@ class BookingFormPage(View):
                 else:
                     for table in allocated_tables:
                         booking.tables.add(table.id)
-                messages.success(
-                    request,
-                    'Thank you for your booking request.'
-                    'Your booking is awaiting confirmation.'
-                )
+
+                # HttpResponseRedirect returned after successfully dealing
+                # with POST data as recommended by the Django documentation as
+                # this prevents data from being posted twice if a user hits
+                # the back button - described in an example on this page -
+                # https://docs.djangoproject.com/en/4.0/intro/tutorial04/
+                return HttpResponseRedirect('my_bookings')
 
         return render(
             request,

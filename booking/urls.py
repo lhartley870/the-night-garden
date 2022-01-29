@@ -19,4 +19,7 @@ urlpatterns = [
          name='make_booking'),
     path('my-bookings', login_required(views.MyBookingsPg.as_view()),
          name='my_bookings'),
+    path('edit-booking/<int:booking_id>',
+         login_required(views.EditBookingPage.as_view()),
+         name='edit_booking')
 ]

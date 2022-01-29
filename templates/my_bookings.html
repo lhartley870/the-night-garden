@@ -10,6 +10,9 @@
     {% for booking in bookings %}
     <div>
         {{ booking }}
+        <a href="{% url 'edit_booking' booking_id=booking.id%}">
+            <button>Edit Booking</button>
+        </a>
     </div>
     {% empty %}
     <div>You have no current bookings</div>

@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.views.decorators.cache import cache_control
 from .forms import BookingForm
 from .models import Table, Booking
 
@@ -17,6 +18,13 @@ class HomePage(View):
 
 
 class MyBookingsPg(View):
+    # The solution of using the @cache_control decorator to control what
+    # happens if a user logs out of their account and then presses the
+    # back button was taken from an answer given by Mahmood on this Stack
+    # Overflow post -
+    # https://stackoverflow.com/questions/28000981/django-user-re-entering
+    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request):
         current_date = datetime.now().date()
         current_time = datetime.now().time()
@@ -40,6 +48,13 @@ class MyBookingsPg(View):
 
 
 class BookingFormPage(View):
+    # The solution of using the @cache_control decorator to control what
+    # happens if a user logs out of their account and then presses the
+    # back button was taken from an answer given by Mahmood on this Stack
+    # Overflow post -
+    # https://stackoverflow.com/questions/28000981/django-user-re-entering
+    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request):
         # Code for providing an initial value in a model form field
         # was adapted from code provided in an article entitled 'Django

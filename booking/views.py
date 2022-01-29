@@ -41,11 +41,23 @@ class MyBookingsPg(View):
 
 class BookingFormPage(View):
     def get(self, request):
+        # Code for providing an initial value in a model form field
+        # was adapted from code provided in an article entitled 'Django
+        # Initial Value to Model forms' by challapallimanoj99@gmail.com
+        # dated 16 June 2021 and found at this link -
+        # https://studygyaan.com/django/how-to-give-initial-value-to-model-forms
+        current_date = datetime.now().date()
+        # The booking form will have today's date initially inserted as
+        # the date value.
+        initial_data = {
+            'date': current_date
+        }
+        booking_form = BookingForm(initial=initial_data)
         return render(
             request,
             "booking_form.html",
             {
-                "booking_form": BookingForm(),
+                "booking_form": booking_form,
             }
         )
 

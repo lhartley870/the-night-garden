@@ -2,7 +2,7 @@ import random
 import math
 import itertools
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -561,5 +561,25 @@ class BookingFormPage(View):
             "booking_form.html",
             {
                  "booking_form": booking_form,
+            }
+        )
+
+
+class EditBookingPage(View):
+    # The solution of using the @cache_control decorator to control what
+    # happens if a user logs out of their account and then presses the
+    # back button was taken from an answer given by Mahmood on this Stack
+    # Overflow post -
+    # https://stackoverflow.com/questions/28000981/django-user-re-entering
+    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, booking_id):
+        booking = get_object_or_404(Booking, id=booking_id)
+        booking_form = BookingForm(instance=booking)
+        return render(
+            request,
+            "edit_booking.html",
+            {
+                "booking_form": booking_form,
             }
         )

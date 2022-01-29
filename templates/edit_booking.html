@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit A Booking</h1>
+    {% if user.is_authenticated %}
+    <form method="post">
+        {{ booking_form }}
+        {% csrf_token %}
+        <button type="submit">Update Booking</button>
+    </form>
+    {% endif %}
+{% endblock %}

@@ -416,33 +416,18 @@ class TableSelectionMixin:
 
         return allocated_tables
 
-    def select_tables(self, booking_form):
+    def select_tables(self, available_tables, party_size):
         """
         Method to select the table(s) for the booking.
 
-        Gets all tables assigned to the chosen time_slot and removes any
-        that have already been booked on the same date and for the same
-        time slot. If only 1 table is available, that is returned. If more
-        than 1 table is available, the evaluate_multiple tables method is
-        called to return the table(s). In the unlikely event that no tables
-        are available, 'None' is returned.
+        Evaluates the available_tables. If only 1 table is available,
+        that is returned. If more than 1 table is available, the
+        evaluate_multiple tables method is called to return the table(s).
+        In the unlikely event that no tables are available, 'None' is returned.
 
-        This method provides the selected tables to the post method.
+        This method provides the selected tables to the get_allocated_tables
+        method.
         """
-        time_slot = booking_form.cleaned_data['time_slot']
-        date = booking_form.cleaned_data['date']
-        party_size = booking_form.cleaned_data['party_size']
-        bookings = booking_form.get_current_bookings(date, time_slot)
-
-        # Gets all the tables assigned to the chosen time slot and
-        # removes any tables that have already been booked on the same date
-        # and for that same time slot.
-        available_tables = Table.objects.filter(
-            table_timeslots=time_slot
-        ).exclude(
-            table_booking__in=bookings
-        )
-
         # If there is only 1 available table, that is returned.
         if len(available_tables) == 1:
             allocated_tables = available_tables
@@ -456,6 +441,53 @@ class TableSelectionMixin:
         # are available, 'None' is returned.
         else:
             allocated_tables = None
+
+        return allocated_tables
+
+    def get_allocated_tables(self, booking_form, edit, *args):
+        """
+        Method to get the allocated table(s) for the booking.
+
+        Gets all tables assigned to the chosen time_slot and removes any
+        that have already been booked on the same date and for the same
+        time slot (save for any tables allocated to an existing booking being
+        edited where the existing booking has the same date and time_slot
+        as the edited booking). This method provides the available_tables
+        to the select_tables method and gets the final allocated table(s)
+        for the booking back.
+
+        This method provides the allocated tables to the post method.
+        """
+        time_slot = booking_form.cleaned_data['time_slot']
+        date = booking_form.cleaned_data['date']
+        party_size = booking_form.cleaned_data['party_size']
+
+        # If edit is true then an existing booking is being edited
+        # where the existing booking has the same date and time_slot
+        # as the edited booking. Therefore the table(s) allocated
+        # to the existing booking need to be made available to the
+        # available_tables variable.
+        if edit:
+            bookings = booking_form.get_current_bookings(
+                date, time_slot
+            ).exclude(
+                id=args[0]
+            )
+        else:
+            bookings = booking_form.get_current_bookings(date, time_slot)
+
+        # Gets all the tables assigned to the chosen time slot and
+        # removes any tables that have already been booked on the same date
+        # and for that same time slot (apart from an existing booking that
+        # is being edited with the same date and time_slot which will have been
+        # excluded from the bookings variable above).
+        available_tables = Table.objects.filter(
+            table_timeslots=time_slot
+        ).exclude(
+            table_booking__in=bookings
+        )
+
+        allocated_tables = self.select_tables(available_tables, party_size)
 
         return allocated_tables
 
@@ -528,7 +560,8 @@ class BookingFormPage(View, TableSelectionMixin):
         booking_form = BookingForm(data=request.POST)
 
         if booking_form.is_valid():
-            allocated_tables = self.select_tables(booking_form)
+            edit = False
+            allocated_tables = self.get_allocated_tables(booking_form, edit)
             # There should be tables available due to the validation carried
             # out prior to reaching this point but in the unlikely event that
             # no tables are available when the select_tables method is run,

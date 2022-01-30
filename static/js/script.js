@@ -21,7 +21,6 @@ $(document).ready(function() {
         // earliest date the user can book will be the date the user visits the page to make a booking
         minDate: function() {
             let date = new Date();
-            date.setDate(date.getDate()-1);
             return new Date(date.getFullYear(), date.getMonth(), date.getDate());
         },
         // latest date the user can book will be approximately 3 months from the date the user visits the page

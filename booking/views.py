@@ -564,8 +564,8 @@ class BookingFormPage(View, TableSelectionMixin):
             allocated_tables = self.get_allocated_tables(booking_form, edit)
             # There should be tables available due to the validation carried
             # out prior to reaching this point but in the unlikely event that
-            # no tables are available when the select_tables method is run,
-            # an appopriate message is returned to the user.
+            # no tables are available when the get_allocated_tables method is
+            # run, an appropriate message is returned to the user.
             if allocated_tables is None:
                 messages.error(request,
                                'Sorry this booking is no longer available')
@@ -602,7 +602,7 @@ class BookingFormPage(View, TableSelectionMixin):
         )
 
 
-class EditBookingPage(View):
+class EditBookingPage(View, TableSelectionMixin):
     # The solution of using the @cache_control decorator to control what
     # happens if a user logs out of their account and then presses the
     # back button was taken from an answer given by Mahmood on this Stack
@@ -618,5 +618,67 @@ class EditBookingPage(View):
             "edit_booking.html",
             {
                 "booking_form": booking_form,
+            }
+        )
+
+    def post(self, request, booking_id):
+        booking = get_object_or_404(Booking, id=booking_id)
+        booking_form = BookingForm(data=request.POST, instance=booking)
+
+        # If the user is editing a booking but only changing the party_size
+        # i.e. the date and time_slot are not changing, edit needs to be set
+        # to True so that the table(s) allocated to the original booking
+        # will not be excluded when the get_allocated_tables method
+        # creates a list of available_tables.
+        same_date = booking.date == request.POST.get('date')
+        same_time_slot = booking.time_slot == request.POST.get('time_slot')
+        if same_date and same_time_slot:
+            edit = True
+        else:
+            edit = False
+
+        if booking_form.is_valid():
+            allocated_tables = self.get_allocated_tables(booking_form,
+                                                         edit, booking_id)
+            print(allocated_tables)
+            # There should be tables available due to the validation carried
+            # out prior to reaching this point but in the unlikely event that
+            # no tables are available when the get_allocated_tables method is
+            # run, an appropriate message is returned to the user.
+            if allocated_tables is None:
+                messages.error(request,
+                               'Sorry this booking is no longer available')
+            else:
+                booking = booking_form.save(commit=False)
+                booking.booker = request.user
+                # The table(s) allocated to the existing booking need to be
+                # removed before the newly allocated table(s) are added.
+                booking.tables.clear()
+                booking.save()
+                # If there is only 1 allocated_table, that is added to the
+                # booking.
+                if len(allocated_tables) == 1:
+                    booking.tables.add(allocated_tables[0].id)
+                # If there are multiple allocated tables, they are added to the
+                # booking.
+                else:
+                    for table in allocated_tables:
+                        booking.tables.add(table.id)
+
+                # HttpResponseRedirect returned after successfully dealing
+                # with POST data as recommended by the Django documentation as
+                # this prevents data from being posted twice if a user hits
+                # the back button - described in an example on this page -
+                # https://docs.djangoproject.com/en/4.0/intro/tutorial04/.
+                # The redirect shortcut function returns an
+                # HttpResponseRedirect to the appropriate url for the
+                # arguments passed.
+                return redirect('my_bookings')
+
+        return render(
+            request,
+            "booking_form.html",
+            {
+                 "booking_form": booking_form,
             }
         )

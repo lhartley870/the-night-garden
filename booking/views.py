@@ -11,70 +11,7 @@ from .models import Table, Booking
 
 
 # Create your views here.
-class HomePage(View):
-    def get(self, request):
-        return render(request, "index.html",)
-
-
-class MyBookingsPg(View):
-    # The solution of using the @cache_control decorator to control what
-    # happens if a user logs out of their account and then presses the
-    # back button was taken from an answer given by Mahmood on this Stack
-    # Overflow post -
-    # https://stackoverflow.com/questions/28000981/django-user-re-entering
-    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-    def get(self, request):
-        current_date = datetime.now().date()
-        current_time = datetime.now().time()
-        # Filters the bookings so that only those of the logged in user
-        # are displayed, excludes bookings for dates before today
-        # and excludes any bookings for today before the current time.
-        bookings = Booking.objects.filter(
-            booker=request.user
-        ).exclude(
-            date__lt=current_date
-        ).exclude(
-            date=current_date,
-            time_slot__time__lt=current_time
-        )
-        return render(
-            request,
-            "my_bookings.html",
-            {
-                "bookings": bookings
-            })
-
-
-class BookingFormPage(View):
-    # The solution of using the @cache_control decorator to control what
-    # happens if a user logs out of their account and then presses the
-    # back button was taken from an answer given by Mahmood on this Stack
-    # Overflow post -
-    # https://stackoverflow.com/questions/28000981/django-user-re-entering
-    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-    def get(self, request):
-        # Code for providing an initial value in a model form field
-        # was adapted from code provided in an article entitled 'Django
-        # Initial Value to Model forms' by challapallimanoj99@gmail.com
-        # dated 16 June 2021 and found at this link -
-        # https://studygyaan.com/django/how-to-give-initial-value-to-model-forms
-        current_date = datetime.now().date()
-        # The booking form will have today's date initially inserted as
-        # the date value.
-        initial_data = {
-            'date': current_date
-        }
-        booking_form = BookingForm(initial=initial_data)
-        return render(
-            request,
-            "booking_form.html",
-            {
-                "booking_form": booking_form,
-            }
-        )
-
+class TableSelectionMixin:
     def filter_non_match_tables(self, combinations_capacities_dictionary,
                                 combinations_num_tables_dictionary,
                                 party_size):
@@ -521,6 +458,71 @@ class BookingFormPage(View):
             allocated_tables = None
 
         return allocated_tables
+
+
+class HomePage(View):
+    def get(self, request):
+        return render(request, "index.html",)
+
+
+class MyBookingsPg(View):
+    # The solution of using the @cache_control decorator to control what
+    # happens if a user logs out of their account and then presses the
+    # back button was taken from an answer given by Mahmood on this Stack
+    # Overflow post -
+    # https://stackoverflow.com/questions/28000981/django-user-re-entering
+    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request):
+        current_date = datetime.now().date()
+        current_time = datetime.now().time()
+        # Filters the bookings so that only those of the logged in user
+        # are displayed, excludes bookings for dates before today
+        # and excludes any bookings for today before the current time.
+        bookings = Booking.objects.filter(
+            booker=request.user
+        ).exclude(
+            date__lt=current_date
+        ).exclude(
+            date=current_date,
+            time_slot__time__lt=current_time
+        )
+        return render(
+            request,
+            "my_bookings.html",
+            {
+                "bookings": bookings
+            })
+
+
+class BookingFormPage(View, TableSelectionMixin):
+    # The solution of using the @cache_control decorator to control what
+    # happens if a user logs out of their account and then presses the
+    # back button was taken from an answer given by Mahmood on this Stack
+    # Overflow post -
+    # https://stackoverflow.com/questions/28000981/django-user-re-entering
+    # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request):
+        # Code for providing an initial value in a model form field
+        # was adapted from code provided in an article entitled 'Django
+        # Initial Value to Model forms' by challapallimanoj99@gmail.com
+        # dated 16 June 2021 and found at this link -
+        # https://studygyaan.com/django/how-to-give-initial-value-to-model-forms
+        current_date = datetime.now().date()
+        # The booking form will have today's date initially inserted as
+        # the date value.
+        initial_data = {
+            'date': current_date
+        }
+        booking_form = BookingForm(initial=initial_data)
+        return render(
+            request,
+            "booking_form.html",
+            {
+                "booking_form": booking_form,
+            }
+        )
 
     def post(self, request, *args, **kwargs):
         booking_form = BookingForm(data=request.POST)

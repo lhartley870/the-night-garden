@@ -2,10 +2,9 @@ import random
 import math
 import itertools
 from datetime import datetime
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_control
 from .forms import BookingForm
 from .models import Table, Booking
@@ -553,8 +552,11 @@ class BookingFormPage(View):
                 # with POST data as recommended by the Django documentation as
                 # this prevents data from being posted twice if a user hits
                 # the back button - described in an example on this page -
-                # https://docs.djangoproject.com/en/4.0/intro/tutorial04/
-                return HttpResponseRedirect('my_bookings')
+                # https://docs.djangoproject.com/en/4.0/intro/tutorial04/.
+                # The redirect shortcut function returns an
+                # HttpResponseRedirect to the appropriate url for the
+                # arguments passed.
+                return redirect('my_bookings')
 
         return render(
             request,

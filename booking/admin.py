@@ -8,6 +8,7 @@ class TablesMixin:
     Mixin to allow table details to be displayed in an Admin panel list_display
     where tables is a Many to Many field and so not supported in list_display.
     """
+
     def allocated_tables(self, obj):
         """
         Method to enable the name and size of each allocated table to be
@@ -64,6 +65,7 @@ class BookingAdmin(admin.ModelAdmin, TablesMixin):
     list_filter = ('date', 'time_slot', 'party_size',
                    'tables', 'booker', 'approved')
     search_fields = ['date']
+    actions = ['approve_bookings']
 
     def booking_date(self, obj):
         """
@@ -74,3 +76,9 @@ class BookingAdmin(admin.ModelAdmin, TablesMixin):
         """
         year_month_date_format = obj.date.strftime("%Y-%m-%d")
         return year_month_date_format
+
+    def approve_bookings(self, request, queryset):
+        """
+        Method for admin users to approve bookings in the Admin panel.
+        """
+        queryset.update(approved=True)

@@ -1,7 +1,7 @@
 import random
 import math
 import itertools
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
@@ -535,14 +535,38 @@ class BookingFormPage(View, TableSelectionMixin):
     # -session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request):
+        # The booking form will have today's date initially inserted as
+        # the date value unless today's date is a Monday or Tuesday (when
+        # the restaurant is closed) or is during the Christmas shutdown.
+        # If the former, the date initially inserted will be the next
+        # Wednesday and if the latter, the date initially inserted will be
+        # 04/01/2023.
+        current_date = datetime.now().date()
+        closed_day = current_date.weekday() == 0 or current_date.weekday() == 1
+        christmas_closed_dates = [
+            datetime(2022, 12, 24).date(),
+            datetime(2022, 12, 25).date(),
+            datetime(2022, 12, 28).date(),
+            datetime(2022, 12, 29).date(),
+            datetime(2022, 12, 30).date(),
+            datetime(2022, 12, 31).date(),
+            datetime(2023, 1, 1).date()
+        ]
+        
+        if closed_day:
+            if current_date.weekday() == 0:
+                current_date = current_date + timedelta(days=2)
+            else:
+                current_date = current_date + timedelta(days=1)
+
+        if current_date in christmas_closed_dates:
+            current_date = datetime(2023, 1, 4).date()
+
         # Code for providing an initial value in a model form field
         # was adapted from code provided in an article entitled 'Django
         # Initial Value to Model forms' by challapallimanoj99@gmail.com
         # dated 16 June 2021 and found at this link -
         # https://studygyaan.com/django/how-to-give-initial-value-to-model-forms
-        current_date = datetime.now().date()
-        # The booking form will have today's date initially inserted as
-        # the date value.
         initial_data = {
             'date': current_date
         }

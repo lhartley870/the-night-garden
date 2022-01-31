@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms.widgets import Select
+from django.shortcuts import get_object_or_404
 from allauth.account.forms import SignupForm
 from .models import TimeSlot, Booking
 
@@ -161,17 +162,49 @@ class BookingForm(forms.ModelForm):
         refreshed the page.
         If the time slot can no longer accommodate user1's booking on the
         selected date then a ValidationError is raised to inform the user.
+
+        In the case of edited bookings, if a user is editing a booking but
+        only changing the party_size i.e. the date and time_slot are not
+        changing, the existing booking needs to be excluded from the
+        current_bookings so that the table(s) allocated to the original
+        booking will be included when the available seating capacity for
+        the edited booking is calculated.
         """
         time_slot = self.cleaned_data['time_slot']
         date = self.cleaned_data['date']
         party_size = self.cleaned_data['party_size']
         tables = self.get_timeslot_tables(time_slot)
         time_slot_capacity = self.get_timeslot_capacity(tables)
-        current_bookings = self.get_current_bookings(date, time_slot)
 
-        capacity_booked = 0
+        # If the booking is a new booking, self.instance.id will be None
+        # and all current bookings will be taken into account when calculating
+        # the available seating capacity.
+        if self.instance.id is None:
+            current_bookings = self.get_current_bookings(date, time_slot)
+        # If the booking is an edited booking, self.instance.id will be the
+        # booking id. If the user is editing a booking but only changing the
+        # party_size i.e. the date and time_slot are not changing, the existing
+        # booking needs to be excluded from the current_bookings so that the
+        # table(s) allocated to the original booking will be included
+        # in the available seating capacity calculated for the edited booking.
+        else:
+            current_booking = get_object_or_404(Booking, id=self.instance.id)
+            same_date = current_booking.date == date
+            same_time_slot = current_booking.time_slot == time_slot
+
+            if same_date and same_time_slot:
+                current_bookings = self.get_current_bookings(
+                    date, time_slot
+                ).exclude(
+                    id=self.instance.id
+                )
+            else:
+                current_bookings = self.get_current_bookings(date, time_slot)
+
         if len(current_bookings) > 0:
             capacity_booked = self.get_capacity_booked(current_bookings)
+        else:
+            capacity_booked = 0
 
         if capacity_booked + party_size > time_slot_capacity:
             raise ValidationError('Sorry this booking is now unavailable')

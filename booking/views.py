@@ -7,7 +7,7 @@ from django.views import View
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from .forms import BookingForm
-from .models import Table, Booking
+from .models import Table, Booking, TimeSlot
 
 
 # Create your views here.
@@ -461,7 +461,6 @@ class TableSelectionMixin:
         time_slot = booking_form.cleaned_data['time_slot']
         date = booking_form.cleaned_data['date']
         party_size = booking_form.cleaned_data['party_size']
-
         # If edit is true then an existing booking is being edited
         # where the existing booking has the same date and time_slot
         # as the edited booking. Therefore the table(s) allocated
@@ -630,8 +629,11 @@ class EditBookingPage(View, TableSelectionMixin):
         # to True so that the table(s) allocated to the original booking
         # will not be excluded when the get_allocated_tables method
         # creates a list of available_tables.
-        same_date = booking.date == request.POST.get('date')
-        same_time_slot = booking.time_slot == request.POST.get('time_slot')
+        time_slot_id = request.POST.get('time_slot')
+        form_time_slot = TimeSlot.objects.get(id=time_slot_id)
+        same_date = str(booking.date) == request.POST.get('date')
+        same_time_slot = booking.time_slot == form_time_slot
+
         if same_date and same_time_slot:
             edit = True
         else:
@@ -640,7 +642,6 @@ class EditBookingPage(View, TableSelectionMixin):
         if booking_form.is_valid():
             allocated_tables = self.get_allocated_tables(booking_form,
                                                          edit, booking_id)
-            print(allocated_tables)
             # There should be tables available due to the validation carried
             # out prior to reaching this point but in the unlikely event that
             # no tables are available when the get_allocated_tables method is

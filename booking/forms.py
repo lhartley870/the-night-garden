@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -146,22 +147,27 @@ class BookingForm(forms.ModelForm):
 
     def clean_time_slot(self):
         """
-        Method to clean the time_slot field by making sure that the selected
-        time slot still has enough capacity to cater for the number of guests
-        selected by the user for the booking.
+        Method to clean the time_slot field.
+
+        This method makes sure that the selected time slot still has enough
+        capacity to cater for the number of guests selected by the user for
+        the booking and if the booking is for today, checks that the time_slot
+        is not in the past.
 
         This check is to cater for the situation where:
         1. user1 selects an available time slot (as only
-        available time slots for the date and number of guests chosen will be
-        able to be selected in the time dropdown when the JavaScript fetch call
-        is made) but does not book straight away;
+        available time slots for the date and number of guests chosen that are
+        notin the past will be able to be selected in the time dropdown when
+        the JavaScript fetch call is made) but does not book straight away;
         2. In the meantime another user (user2) makes a booking for that date
-        and time slot that means the time slot is now unavailable for user1;
+        and time slot that means the time slot is now unavailable for user1 or
+        the booking is for today and the time slot becomes a time in the past;
         and
         3. user1 later clicks 'Book' for that time slot without having
         refreshed the page.
         If the time slot can no longer accommodate user1's booking on the
-        selected date then a ValidationError is raised to inform the user.
+        selected date or the time slot is now in the past then a
+        ValidationError is raised to inform the user.
 
         In the case of edited bookings, if a user is editing a booking but
         only changing the party_size i.e. the date and time_slot are not
@@ -175,6 +181,15 @@ class BookingForm(forms.ModelForm):
         party_size = self.cleaned_data['party_size']
         tables = self.get_timeslot_tables(time_slot)
         time_slot_capacity = self.get_timeslot_capacity(tables)
+
+        # If the new booking/edited booking is being made/edited for
+        # today, this checks whether the time_slot the user is trying
+        # to book for has passed.
+        current_date = datetime.now().date()
+        current_time = datetime.now().time()
+        time = getattr(time_slot, 'time')
+        if date == current_date and time < current_time:
+            raise ValidationError('You cannot book for a time in the past')
 
         # If the booking is a new booking, self.instance.id will be None
         # and all current bookings will be taken into account when calculating

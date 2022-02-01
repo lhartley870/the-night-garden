@@ -10,9 +10,16 @@
     {% for booking in bookings %}
     <div>
         {{ booking }}
-        <a href="{% url 'edit_booking' booking_id=booking.id%}">
-            <button>Edit Booking</button>
-        </a>
+        {% if booking.approved %}
+        <i class="fas fa-check-circle"> Approved</i>
+        {% else %}
+        <i class="fas fa-times-circle"> Awaiting Confirmation</i>
+        {% endif %}
+        <div>
+            <a href="{% url 'edit_booking' booking_id=booking.id %}">
+                <button>Edit Booking</button>
+            </a>
+        </div>
     </div>
     {% empty %}
     <div>You have no current bookings</div>

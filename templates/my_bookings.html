@@ -19,6 +19,18 @@
             <a href="{% url 'edit_booking' booking_id=booking.id %}">
                 <button>Edit Booking</button>
             </a>
+            <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST">
+                {% csrf_token %}
+                <!-- Asks the user to confirm that they want to cancel the booking  -->
+                <!-- 
+                    Code for the user to confirm that they want to cancel taken from an answer given by 
+                    Raghav Rach and edited by Besnik on this Stack Overflow post - 
+                    https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
+                -->
+                <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');">
+                    Cancel Booking
+                </button>
+            </form>
         </div>
     </div>
     {% empty %}

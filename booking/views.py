@@ -552,7 +552,7 @@ class BookingFormPage(View, TableSelectionMixin):
             datetime(2022, 12, 31).date(),
             datetime(2023, 1, 1).date()
         ]
-        
+
         if closed_day:
             if current_date.weekday() == 0:
                 current_date = current_date + timedelta(days=2)
@@ -707,3 +707,11 @@ class EditBookingPage(View, TableSelectionMixin):
                  "booking_form": booking_form,
             }
         )
+
+
+class CancelBooking(View):
+    def post(self, request, booking_id):
+        booking = get_object_or_404(Booking, id=booking_id)
+        booking.delete()
+
+        return redirect('my_bookings')

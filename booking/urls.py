@@ -21,5 +21,8 @@ urlpatterns = [
          name='my_bookings'),
     path('edit-booking/<int:booking_id>',
          login_required(views.EditBookingPage.as_view()),
-         name='edit_booking')
+         name='edit_booking'),
+    path('cancel-booking/<int:booking_id>',
+         views.CancelBooking.as_view(),
+         name='cancel_booking')
 ]

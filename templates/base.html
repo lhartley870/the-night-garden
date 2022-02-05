@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
@@ -99,7 +99,7 @@
         </div>
     </nav>
 
-    <main>
+    <main class="flex-shrink-0">
         {% block content %}
         <!-- Content goes here -->
         {% endblock content %}

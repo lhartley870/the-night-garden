@@ -42,32 +42,56 @@
             <div class="collapse navbar-collapse" id="navbarItems">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">
+                            Home
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'my_bookings' %}">My Bookings</a>
+                        <a class="nav-link" href="{% url 'my_bookings' %}">
+                            My Bookings
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'make_booking' %}">Make a Booking</a>
+                        <a class="nav-link" href="{% url 'make_booking' %}">
+                            Make a Booking
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                        <a class="nav-link" href="{% url 'account_signup' %}">
+                            Register
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'account_login' %}">
+                            Login
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Menus</a>
+                        <a class="nav-link" href="#">
+                            Menus
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
+                        <a class="nav-link" href="#">
+                            Contact Us
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'account_logout' %}">
+                            Logout
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
                     </li>
                     {% endif %}
                 </ul>

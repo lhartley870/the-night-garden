@@ -65,6 +65,19 @@
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
                     </li>
+                    {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <!-- 
+                            url for the admin panel taken from an answer given by markmuetz and edited by blueyed
+                            on this Stack Overflow post - 
+                            https://stackoverflow.com/questions/694477/getting-django-admin-url-for-an-object
+                        -->
+                        <a class="nav-link" href="{% url 'admin:index' %}">
+                            Admin
+                            <span><i class="fas fa-leaf"></i></span>
+                        </a>
+                    </li>
+                    {% endif %}
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">

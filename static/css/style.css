@@ -92,7 +92,7 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 /* for medium screen sizes of 1200px and up */
 @media screen and (min-width:1200px) {
 
-    nav {
+    body {
         font-size: 18px;
     }
 }
@@ -100,7 +100,7 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 /* for large screen sizes of 1400px and up */
 @media screen and (min-width:1400px) {
 
-    nav {
+    body {
         font-size: 20px;
     }
 
@@ -117,7 +117,7 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 /* for extra large screen sizes of 2000px and up */
 @media screen and (min-width:2000px) {
 
-    nav {
+    body {
         font-size: 24px;
     }
 
@@ -138,7 +138,7 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 /* for extra extra large screen sizes of 3000px and up */
 @media screen and (min-width:3000px) {
 
-    nav {
+    body {
         font-size: 28px;
     }
 

@@ -18,7 +18,7 @@ nav {
 
 .navbar-brand {
     font-family: 'Montez', cursive;
-    font-size: 1.7em;
+    font-size: 1.8em;
     font-weight: 400;
 }
 
@@ -63,4 +63,95 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 
 .navbar-light .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 91, 74, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* media queries */
+
+/* for small screen sizes of 375px and up */
+@media screen and (min-width:375px) {
+
+    .navbar-brand img {
+        margin-right: 0.6em;
+    }
+}
+
+/* for medium screen sizes of 992px and up */
+@media screen and (min-width:992px) {
+
+    .navbar-brand {
+        margin-right: 0.8em;
+    }
+
+    .navbar-brand img { 
+        height: 60px;
+        margin-right: 0.8em;
+        width: 60px; 
+    }
+}
+
+/* for medium screen sizes of 1200px and up */
+@media screen and (min-width:1200px) {
+
+    nav {
+        font-size: 18px;
+    }
+}
+
+/* for large screen sizes of 1400px and up */
+@media screen and (min-width:1400px) {
+
+    nav {
+        font-size: 20px;
+    }
+
+    .navbar-brand {
+        font-size: 2em;
+    }
+
+    .navbar-brand img {
+        height: 80px; 
+        width: 80px; 
+    }
+}
+
+/* for extra large screen sizes of 2000px and up */
+@media screen and (min-width:2000px) {
+
+    nav {
+        font-size: 24px;
+    }
+
+    .navbar-brand {
+        margin-right: 1em;
+    }
+
+    .navbar-brand img {
+        height: 100px; 
+        width: 100px; 
+    }
+
+    .nav-item {
+        margin-right: 1em;
+    }
+}
+
+/* for extra extra large screen sizes of 3000px and up */
+@media screen and (min-width:3000px) {
+
+    nav {
+        font-size: 28px;
+    }
+
+    .navbar-brand {
+        margin-right: 2em;
+    }
+
+    .navbar-brand img {
+        height: 120px; 
+        width: 120px; 
+    }
+
+    .nav-item {
+        margin-right: 2em;
+    }
 }

@@ -13,6 +13,13 @@
     <meta name="keywords" content="night garden, restaurant, cardiff, late dining, open late">
     <meta name="author" content="Lianne Hartley">
 
+    <!-- Favicon -->
+    <!-- 
+        Code for adding a favicon to a Django project taken from an answer given by hanleyhansen and edited 
+        by FlipperPA on this Stack Overflow post -
+        https://stackoverflow.com/questions/21938028/how-can-i-get-a-favicon-to-show-up-in-my-django-app
+    -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon/favicon.ico' %}"/>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +43,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="https://res.cloudinary.com/lhartley/image/upload/v1644067871/butterfly_logo_tu2kiy.svg" 
+                <img src="https://res.cloudinary.com/lhartley/image/upload/v1644164468/pink_butterfly_logo_xnvv16.svg" 
                 alt="pink butterfly logo" class="d-inline-block align-text-center">
                 The Night Garden
             </a>

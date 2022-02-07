@@ -75,11 +75,11 @@ footer {
 
 /* home page */
 
-.intro-text {
+.intro-outer-container {
     font-size: 0.9em;
 }
 
-.intro-container {
+.intro-inner-container {
     min-height: 342px;
 }
 
@@ -118,7 +118,7 @@ footer {
 /* for small screen sizes of 600px and up */
 @media screen and (min-width:600px) {
 
-    .intro-container {
+    .intro-inner-container {
         min-height: 450px;
     }
 }

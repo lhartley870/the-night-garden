@@ -7,7 +7,9 @@
 
 body {
     background-color: #3D6C77;
+    color: #FFF6EA;
     font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 /* navigation bar */
@@ -68,7 +70,6 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
 /* footer */
 
 footer {
-    color:#FFF6EA;
     font-size: 0.8em;
 }
 

@@ -74,3 +74,7 @@ class Booking(models.Model):
             f'Booking #{self.id} on {date} '
             f'for {self.party_size} guests at {self.time_slot}'
         )
+
+    def date_string(self):
+        date = self.date.strftime("%d %B %Y")
+        return date

@@ -24,36 +24,44 @@
                 {% for booking in bookings %}
                 <div class="col-12">
 
-                    {{ booking }}
-                    {% if booking.approved %}
-                    <i class="fas fa-check-circle"> Approved</i>
-                    {% else %}
-                    <i class="fas fa-times-circle"> Awaiting Confirmation</i>
-                    {% endif %}
-                    <div>
-                        <form action="{% url 'edit_booking' booking_id=booking.id %}">
-                            <button type="submit">Edit Booking</button>
-                        </form>
-                        <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST">
-                            {% csrf_token %}
-                            <!-- Asks the user to confirm that they want to cancel the booking  -->
-                            <!-- 
-                                Code for the user to confirm that they want to cancel taken from an answer given by 
-                                Raghav Rach and edited by Besnik on this Stack Overflow post - 
-                                https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
-                            -->
-                            <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');">
-                                Cancel Booking
-                            </button>
-                        </form>
+                    <div class="card">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ booking.date_string }}</h3>
+                            <p class="card-text">{{ booking }}</p>
+                            <p class="card-text">
+                                {% if booking.approved %}
+                                <i class="fas fa-check-circle"> Approved</i>
+                                {% else %}
+                                <i class="fas fa-times-circle"> Awaiting Confirmation</i>
+                                {% endif %}
+                            </p>
+                            <form action="{% url 'edit_booking' booking_id=booking.id %}">
+                                <button type="submit">Edit Booking</button>
+                            </form>
+                            <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST">
+                                {% csrf_token %}
+                                <!-- Asks the user to confirm that they want to cancel the booking  -->
+                                <!-- 
+                                    Code for the user to confirm that they want to cancel taken from an answer given by 
+                                    Raghav Rach and edited by Besnik on this Stack Overflow post - 
+                                    https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
+                                -->
+                                <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');">
+                                    Cancel Booking
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+
+                <div>
                 {% empty %}
                 <p>You have no current bookings</p>
                 {% endfor %}
+
             </div>
             
-            <div class="row ">
+            <div class="row">
                 <div class="col">
                     <form action="{% url 'make_booking' %}">
                         <button type="submit">Make a Booking</button>

@@ -135,6 +135,10 @@ footer {
         margin-right: 0.8em;
         width: 60px; 
     }
+
+    .intro-inner-container {
+        min-height: 600px;
+    }
 }
 
 /* for medium screen sizes of 1200px and up */
@@ -142,6 +146,10 @@ footer {
 
     body {
         font-size: 18px;
+    }
+
+    .intro-inner-container {
+        min-height: 700px;
     }
 }
 
@@ -159,6 +167,10 @@ footer {
     .navbar-brand img {
         height: 80px; 
         width: 80px; 
+    }
+
+    .intro-inner-container {
+        min-height: 800px;
     }
 }
 
@@ -181,6 +193,18 @@ footer {
     .nav-item {
         margin-right: 1em;
     }
+
+    .intro-inner-container {
+        min-height: 1000px;
+    }
+}
+
+/* for extra large screen sizes of 2500px and up */
+@media screen and (min-width:2500px) {
+
+    .intro-inner-container {
+        min-height: 1500px;
+    }
 }
 
 /* for extra extra large screen sizes of 3000px and up */
@@ -201,5 +225,9 @@ footer {
 
     .nav-item {
         margin-right: 2em;
+    }
+
+    .intro-inner-container {
+        min-height: 2000px;
     }
 }

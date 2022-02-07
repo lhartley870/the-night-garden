@@ -73,6 +73,29 @@ footer {
     font-size: 0.8em;
 }
 
+/* home page */
+
+.intro-text {
+    font-size: 0.9em;
+}
+
+.intro-container {
+    min-height: 342px;
+}
+
+.tree-logo {
+    height: 50vw;
+    width: 50vw;
+}
+
+.booking-invite-outer-container {
+    background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644182225/tea_lights_lryeuj.jpg') center center / cover no-repeat; 
+}
+
+.booking-invite-inner-container {
+    background-color: rgba(61, 108, 119, 0.5);
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

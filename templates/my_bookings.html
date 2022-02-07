@@ -55,9 +55,9 @@
             
             <div class="row ">
                 <div class="col">
-                    <a href="{% url 'make_booking' %}">
-                        <button>Make a Booking</button>
-                    </a>
+                    <form action="{% url 'make_booking' %}">
+                        <button type="submit">Make a Booking</button>
+                    </form>
                     {% endif %}
                 </div>
             </div>

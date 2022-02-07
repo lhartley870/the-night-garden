@@ -2,4 +2,49 @@
 
 {% block content %}
 
+<div class="container-fluid h-100 px-0 overflow-hidden intro-text">
+    <div class="row d-flex h-100">
+        <!-- Introductory column with restaurant logo and address -->
+        <div class="col-12 h-50 flex-grow-1 d-flex justify-content-center align-items-center intro-container">
+            <div class="col px-3">
+                <!-- Row containing headline text -->
+                <div class="row">
+                    <div class="col text-center">
+                        <p class="mb-0">
+                            A unique late night dining experience set in beautiful garden 
+                            surroundings all within a stone's throw of Cardiff city centre.
+                        </p>
+                    </div>
+                </div>
+                <!-- Row containing restaurant logo -->
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <img class="tree-logo" src="https://res.cloudinary.com/lhartley/image/upload/v1644170261/tree_logo_edkqjv.svg" 
+                            alt="restaurant logo of a cream circle containing a pink tree, stars and a butterfly">
+                    </div>
+                </div>
+                <!-- Row containing restaurant address -->
+                <div class="row mt-1">
+                    <div class="col text-center">
+                        <p class="mb-0">
+                            24 Park Gardens, Bute Park & Arboretum, Castle St, Cardiff CF10 1BJ
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Introductory column with background image, restaurant capacity and opening times and call to action to book -->
+        <div class="col-12 h-50 flex-grow-1 intro-container booking-invite-outer-container">
+            <div class="h-100 d-flex justify-content-center align-items-center text-center px-3 booking-invite-inner-container">
+                <p class="mb-0">
+                    We offer a Summer and Winter set menu in our exclusive and cosy 32 guest garden setting. 
+                    Open Wednesday to Sunday with evening sittings until 10pm.
+                    Register or login now to book online.
+                </p> 
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

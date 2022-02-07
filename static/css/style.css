@@ -106,6 +106,37 @@ footer {
     }
 }
 
+/* for small screen sizes of 425px and up */
+@media screen and (min-width:425px) {
+
+    .tree-logo {
+        height: 30vw;
+        width: 30vw;
+    }
+
+    .px-6 p {
+        padding-right: 10vw;
+        padding-left: 10vw;
+    }
+}
+
+/* for small screen sizes of 550px and up */
+@media screen and (min-width:550px) {
+
+    .px-6 p {
+        padding-right: 20vw;
+        padding-left: 20vw;
+    }
+}
+
+/* for small screen sizes of 650px and up */
+@media screen and (min-width:650px) {
+
+    .intro-container {
+        min-height: 450px;
+    }
+}
+
 /* for medium screen sizes of 992px and up */
 @media screen and (min-width:992px) {
 

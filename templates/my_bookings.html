@@ -5,7 +5,7 @@
 <div class="container-fluid h-100 text-center">
 
     <div class="row h-100">
-        <div class="col d-flex flex-column">
+        <div class="col d-flex flex-column justify-content-center">
 
             <div class="row flex-grow-1 header-row">
                 <div class="col d-flex justify-content-center align-items-center">
@@ -21,10 +21,10 @@
                 </div>
             </div>
 
-            <div class="row flex-grow-1 d-flex justify-content-center align-items-center">
+            <div class="row flex-grow-1 d-flex justify-content-center align-items-center bookings-row">
                 
                 {% for booking in bookings %}
-                <div class="col-12 py-2">
+                <div class="col-12 py-2 col-md-6 py-md-4 col-lg-4 py-xxl-5">
 
                     <div class="card booking-card">
                         <!-- Alternating butterfly and tree logos to appear at the top of each booking card -->
@@ -66,7 +66,7 @@
 
                 {% empty %}
                 <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
-                    <div class="card h-75 d-flex justify-content-center align-items-center">
+                    <div class="card h-75 d-flex justify-content-center align-items-center empty-card">
                         <div>
                             <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
                                 alt="restaurant logo of a pink tree">

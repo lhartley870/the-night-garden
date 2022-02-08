@@ -25,7 +25,14 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
+                        <!-- Alternating butterfly and tree logos to appear at the top of each booking card -->
+                        {% if forloop.counter|divisibleby:2 %}
+                        <img src="https://res.cloudinary.com/lhartley/image/upload/v1644164468/pink_butterfly_logo_xnvv16.svg" class="card-img-top" 
+                            alt="restaurant logo of a pink butterfly">
+                        {% else %}
+                        <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
+                            alt="restaurant logo of a pink tree">
+                        {% endif %}
                         <div class="card-body">
                             <h3 class="card-title">{{ booking.date_string }}</h3>
                             <p class="card-text">{{ booking }}</p>

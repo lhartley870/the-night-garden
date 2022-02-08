@@ -5,9 +5,9 @@
 <div class="container-fluid h-100 text-center">
 
     <div class="row h-100">
-        <div class="col">
+        <div class="col d-flex flex-column">
 
-            <div class="row">
+            <div class="row flex-grow-1">
                 <div class="col">
                     <h1>My Bookings</h1>
                     {% if user.is_authenticated %}
@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row flex-grow-2">
                 
                 {% for booking in bookings %}
                 <div class="col-12">
@@ -68,7 +68,7 @@
 
             </div>
             
-            <div class="row">
+            <div class="row flex-grow-1">
                 <div class="col">
                     <form action="{% url 'make_booking' %}">
                         <button type="submit">Make a Booking</button>

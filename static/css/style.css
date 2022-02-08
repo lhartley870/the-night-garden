@@ -163,6 +163,10 @@ button {
     min-height: 300px;
 }
 
+.empty-card {
+    max-height: 350px;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

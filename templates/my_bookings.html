@@ -13,7 +13,6 @@
                 <div class="col d-flex justify-content-center align-items-center">
                     <div>
                         <h1>My Bookings</h1>
-                        {% if user.is_authenticated %}
                         {% if user.is_superuser %}
                         <h2>Current bookings for {{ user.username }}</h2>
                         {% else %}
@@ -89,7 +88,6 @@
                     <form action="{% url 'make_booking' %}">
                         <button type="submit" class="main-pg-button">Make a Booking</button>
                     </form>
-                    {% endif %}
                 </div>
             </div>
 

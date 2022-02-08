@@ -62,12 +62,22 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
-                {% empty %}
-                <p>You have no current bookings</p>
-                {% endfor %}
 
+                {% empty %}
+                <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
+                    <div class="card h-75 d-flex justify-content-center align-items-center">
+                        <div>
+                            <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
+                                alt="restaurant logo of a pink tree">
+                            <div class="card-body">
+                                <p class="card-text">You have no current bookings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
             </div>
             
             <div class="row flex-grow-1 d-flex justify-content-center align-items-center">

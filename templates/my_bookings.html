@@ -4,9 +4,11 @@
 
 <div class="container-fluid h-100 text-center">
 
+    <!-- One main row and column contain the main page content -->
     <div class="row h-100">
         <div class="col d-flex flex-column justify-content-center">
 
+            <!-- First row contains the page heading and user's name heading -->
             <div class="row flex-grow-1 header-row">
                 <div class="col d-flex justify-content-center align-items-center">
                     <div>
@@ -21,11 +23,11 @@
                 </div>
             </div>
 
+            <!-- Second row contains a card for each booking-->
             <div class="row flex-grow-1 d-flex justify-content-center align-items-center bookings-row">
                 
                 {% for booking in bookings %}
                 <div class="col-12 py-2 col-md-6 py-md-4 col-lg-4 py-xxl-5">
-
                     <div class="card booking-card">
                         <!-- Alternating butterfly and tree logos to appear at the top of each booking card -->
                         {% if forloop.counter|divisibleby:2 %}
@@ -64,6 +66,7 @@
                     </div>
                 </div>
 
+                <!-- If there is no booking an alternative card is displayed -->
                 {% empty %}
                 <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
                     <div class="card h-75 d-flex justify-content-center align-items-center empty-card">
@@ -80,6 +83,7 @@
                 {% endfor %}
             </div>
             
+            <!-- Third row contains the 'Make a Booking' button -->
             <div class="row flex-grow-1 button-row">
                 <div class="col d-flex justify-content-center align-items-center ">
                     <form action="{% url 'make_booking' %}">
@@ -93,5 +97,4 @@
     </div>           
 </div>
     
-
 {% endblock %}

@@ -206,8 +206,17 @@ button {
 /* for small screen sizes of 768px and up */
 @media screen and (min-width:768px) {
 
+    .bookings-row {
+        max-height: 1100px;
+    }
+
     .booking-card {
         width: 90%; 
+    }
+
+    .card img {
+        margin: 0 auto;
+        width: 15vw;
     }
 }
 
@@ -226,6 +235,19 @@ button {
 
     .intro-inner-container {
         min-height: 600px;
+    }
+
+    .bookings-row {
+        max-height: 800px;
+    }
+}
+
+/* for medium screen sizes of 1024px and up */
+@media screen and (min-width:1024px) {
+
+    .card img {
+        margin: 0 auto;
+        width: 10vw;
     }
 }
 
@@ -260,6 +282,16 @@ button {
     .intro-inner-container {
         min-height: 800px;
     }
+
+    .bookings-row {
+        max-height: 1000px;
+    }
+
+    .header-row,
+    .button-row {
+        min-height: 150px;
+        max-height: 225px;
+    }
 }
 
 /* for extra large screen sizes of 2000px and up */
@@ -285,6 +317,12 @@ button {
     .intro-inner-container {
         min-height: 1000px;
     }
+
+    .header-row,
+    .button-row {
+        min-height: 200px;
+        max-height: 300px;
+    }
 }
 
 /* for extra large screen sizes of 2500px and up */
@@ -292,6 +330,16 @@ button {
 
     .intro-inner-container {
         min-height: 1500px;
+    }
+
+    .bookings-row {
+        max-height: 1200px;
+    }
+
+    .header-row,
+    .button-row {
+        min-height: 300px;
+        max-height: 450px;
     }
 }
 
@@ -317,5 +365,15 @@ button {
 
     .intro-inner-container {
         min-height: 2000px;
+    }
+
+    .bookings-row {
+        max-height: 1500px;
+    }
+
+    .header-row,
+    .button-row {
+        min-height: 500px;
+        max-height: 750px;
     }
 }

@@ -8,18 +8,20 @@
         <div class="col d-flex flex-column">
 
             <div class="row flex-grow-1">
-                <div class="col">
-                    <h1>My Bookings</h1>
-                    {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                    <h2>Current bookings for {{ user.username }}</h2>
-                    {% else %}
-                    <h2>Current bookings for {{ user.first_name }} {{ user.last_name }}</h2>
-                    {% endif %}
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div>
+                        <h1>My Bookings</h1>
+                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                        <h2>Current bookings for {{ user.username }}</h2>
+                        {% else %}
+                        <h2>Current bookings for {{ user.first_name }} {{ user.last_name }}</h2>
+                        {% endif %}
+                    </div> 
                 </div>
             </div>
 
-            <div class="row flex-grow-2">
+            <div class="row flex-grow-2 d-flex justify-content-center align-items-center">
                 
                 {% for booking in bookings %}
                 <div class="col-12">
@@ -68,7 +70,7 @@
 
             </div>
             
-            <div class="row flex-grow-1">
+            <div class="row flex-grow-1 d-flex justify-content-center align-items-center">
                 <div class="col">
                     <form action="{% url 'make_booking' %}">
                         <button type="submit">Make a Booking</button>

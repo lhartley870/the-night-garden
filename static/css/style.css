@@ -96,6 +96,73 @@ footer {
     background-color: rgba(61, 108, 119, 0.5);
 }
 
+/* my bookings page */
+
+.header-row,
+.button-row {
+    min-height: 100px;
+    max-height: 150px;
+}
+
+h1 {
+    font-size: 1.6em;
+    font-family: 'Oregano', cursive;
+}
+
+h2 {
+    font-size: 1em;
+}
+
+h3 {
+    font-size: 1.1em;
+}
+
+.card {
+    background-color: #FFF6EA;
+    color: #3D6C77;
+    font-size: 0.9em;
+}
+
+.card img {
+    margin: 0 auto;
+    width: 20vw;
+}
+
+.change-booking-form {
+    display: inline-block;
+}
+
+button {
+    border-radius: 15px; 
+    font-family: 'Oregano', cursive;
+}
+
+.change-booking-button {
+    background-color: #FFDBE0;
+    color: #3D6C77;
+    font-size: 1.2em; 
+    padding: 8px;
+}
+
+.change-booking-button:hover {
+    box-shadow: 0 0 10px 7px #B9DBAB;
+}
+
+.main-pg-button {
+    background-color: #B9DBAB;
+    color: #37606D;
+    font-size: 1.4em; 
+    padding: 10px;
+}
+
+.main-pg-button:hover {
+    box-shadow: 0 0 10px 7px #FFF6EA;
+} 
+
+.empty-booking {
+    min-height: 300px;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

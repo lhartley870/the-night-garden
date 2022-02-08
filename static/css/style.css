@@ -171,6 +171,11 @@ button {
     .navbar-brand img {
         margin-right: 0.6em;
     }
+
+    .booking-card {
+        margin: 0 auto;
+        width: 90%;
+    }
 }
 
 /* for small screen sizes of 425px and up */
@@ -180,6 +185,10 @@ button {
         height: 30vw;
         width: 30vw;
     }
+
+    .booking-card {
+        width: 70%; 
+    }
 }
 
 /* for small screen sizes of 600px and up */
@@ -187,6 +196,18 @@ button {
 
     .intro-inner-container {
         min-height: 450px;
+    }
+
+    .booking-card {
+        width: 50%; 
+    }
+}
+
+/* for small screen sizes of 768px and up */
+@media screen and (min-width:768px) {
+
+    .booking-card {
+        width: 90%; 
     }
 }
 

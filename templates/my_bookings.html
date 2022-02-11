@@ -52,6 +52,7 @@
                                         {% endif %}
                                     </p>
                                     <form action="{% url 'edit_booking' booking_id=booking.id %}" class="change-booking-form me-2">
+                                        {% csrf_token %}
                                         <button type="submit" class="change-booking-button">Edit Booking</button>
                                     </form>
                                     <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST" class="change-booking-form ms-2">
@@ -94,6 +95,7 @@
             <div class="row flex-grow-1 button-row">
                 <div class="col d-flex justify-content-center align-items-center ">
                     <form action="{% url 'make_booking' %}">
+                        {% csrf_token %}
                         <button type="submit" class="main-pg-button">Make a Booking</button>
                     </form>
                 </div>

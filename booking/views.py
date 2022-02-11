@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
+from django.core.paginator import Paginator
 from .forms import BookingForm
 from .models import Table, Booking, TimeSlot
 
@@ -518,12 +519,20 @@ class MyBookingsPg(View):
             date=current_date,
             time_slot__time__lt=current_time
         )
+
+        # Pagination code adapted from Django documentation.
+        paginator = Paginator(bookings, 6)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         return render(
             request,
             "my_bookings.html",
             {
-                "bookings": bookings
-            })
+                "bookings": bookings,
+                "page_obj": page_obj
+            }
+        )
 
 
 class BookingFormPage(View, TableSelectionMixin):

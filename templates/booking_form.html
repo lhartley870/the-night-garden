@@ -1,11 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-    <form method="post">
-        {{ booking_form }}
-        {% csrf_token %}
-        <button type="submit">Book</button>
-    </form>
-    {% endif %}
+{% load crispy_forms_tags %}
+
+<div class="container-fluid h-100 px-0 overflow-hidden intro-outer-container">
+    <div class="row h-100 g-0">
+        <!-- Column containing booking form -->
+        <div class="col-12 d-flex justify-content-center align-items-center intro-inner-container col-md-6 px-md-0">
+            <div class="w-75 px-sm-5">
+                <!-- Row containing heading -->
+                <div class="row">
+                    <div class="col text-center">
+                        <h1>Make a Booking</h1>
+                    </div>
+                </div>
+                <!-- Row containing booking form -->
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                         <form method="post">
+                            {{ booking_form | crispy }}
+                            {% csrf_token %}
+                            <button type="submit">Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column containing background image, and information on large bookings -->
+        <div class="col-12 intro-inner-container booking-invite-outer-container col-md-6">
+            <div class="h-100 d-flex justify-content-center align-items-center booking-invite-inner-container">
+                <div class="d-flex justify-content-center align-items-center text-center w-75 px-sm-5 px-md-0">
+                    <p class="mb-0">
+                        If you wish to book for a party of over 10 guests or wish to book the entire venue
+                        for a private event please get in touch with us via email or telephone
+                    </p>
+                    <p> 
+                        029 9496 0015 | infothenightgarden@gmail.com
+                    </p> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

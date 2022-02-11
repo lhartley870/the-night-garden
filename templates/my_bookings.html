@@ -22,66 +22,74 @@
                 </div>
             </div>
 
-            <!-- Second row contains a card for each booking-->
+            <!-- Second row contains the user's bookings -->
             <div class="row flex-grow-1 d-flex justify-content-center align-items-center bookings-row">
-                
-                {% for booking in bookings %}
-                <div class="col-12 py-2 col-md-6 py-md-4 col-lg-4 py-xxl-5">
-                    <div class="card booking-card">
-                        <!-- Alternating butterfly and tree logos to appear at the top of each booking card -->
-                        {% if forloop.counter|divisibleby:2 %}
-                        <img src="https://res.cloudinary.com/lhartley/image/upload/v1644164468/pink_butterfly_logo_xnvv16.svg" class="card-img-top" 
-                            alt="restaurant logo of a pink butterfly">
-                        {% else %}
-                        <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
-                            alt="restaurant logo of a pink tree">
-                        {% endif %}
-                        <div class="card-body">
-                            <h3 class="card-title">{{ booking.date_string }}</h3>
-                            <p class="card-text">{{ booking }}</p>
-                            <p class="card-text">
-                                {% if booking.approved %}
-                                <i class="fas fa-check-circle"> Approved</i>
-                                {% else %}
-                                <i class="fas fa-times-circle"> Awaiting Confirmation</i>
-                                {% endif %}
-                            </p>
-                            <form action="{% url 'edit_booking' booking_id=booking.id %}" class="change-booking-form me-2">
-                                <button type="submit" class="change-booking-button">Edit Booking</button>
-                            </form>
-                            <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST" class="change-booking-form ms-2">
-                                {% csrf_token %}
-                                <!-- Asks the user to confirm that they want to cancel the booking  -->
-                                <!-- 
-                                    Code for the user to confirm that they want to cancel taken from an answer given by 
-                                    Raghav Rach and edited by Besnik on this Stack Overflow post - 
-                                    https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
-                                -->
-                                <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');" class="change-booking-button">
-                                    Cancel Booking
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <div class="col">
 
-                <!-- If there is no booking an alternative card is displayed -->
-                {% empty %}
-                <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
-                    <div class="card h-75 d-flex justify-content-center align-items-center empty-card">
-                        <div>
-                            <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
-                                alt="restaurant logo of a pink tree">
-                            <div class="card-body">
-                                <p class="card-text">You have no current bookings</p>
+                    <!-- First sub-row contains the cards for each booking / the 'no bookings' card -->
+                    <div class="row">
+            
+                        <!-- Cards for each booking if there is at least one booking -->
+                        {% for booking in page_obj %}
+                        <div class="col-12 py-2 col-md-6 py-md-4 col-lg-4 py-xxl-5">
+                            <div class="card booking-card">
+                                <!-- Alternating butterfly and tree logos to appear at the top of each booking card -->
+                                {% if forloop.counter|divisibleby:2 %}
+                                <img src="https://res.cloudinary.com/lhartley/image/upload/v1644164468/pink_butterfly_logo_xnvv16.svg" class="card-img-top" 
+                                    alt="restaurant logo of a pink butterfly">
+                                {% else %}
+                                <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
+                                    alt="restaurant logo of a pink tree">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ booking.date_string }}</h3>
+                                    <p class="card-text">{{ booking }}</p>
+                                    <p class="card-text">
+                                        {% if booking.approved %}
+                                        <i class="fas fa-check-circle"> Approved</i>
+                                        {% else %}
+                                        <i class="fas fa-times-circle"> Awaiting Confirmation</i>
+                                        {% endif %}
+                                    </p>
+                                    <form action="{% url 'edit_booking' booking_id=booking.id %}" class="change-booking-form me-2">
+                                        <button type="submit" class="change-booking-button">Edit Booking</button>
+                                    </form>
+                                    <form action="{% url 'cancel_booking' booking_id=booking.id %}" method="POST" class="change-booking-form ms-2">
+                                        {% csrf_token %}
+                                        <!-- Asks the user to confirm that they want to cancel the booking  -->
+                                        <!-- 
+                                            Code for the user to confirm that they want to cancel taken from an answer given by 
+                                            Raghav Rach and edited by Besnik on this Stack Overflow post - 
+                                            https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
+                                        -->
+                                        <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');" class="change-booking-button">
+                                            Cancel Booking
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- If there is no booking an alternative card is displayed -->
+                        {% empty %}
+                        <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
+                            <div class="card h-75 d-flex justify-content-center align-items-center empty-card">
+                                <div>
+                                    <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
+                                        alt="restaurant logo of a pink tree">
+                                    <div class="card-body">
+                                        <p class="card-text">You have no current bookings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
                     </div>
+               
                 </div>
-                
-                {% endfor %}
             </div>
-            
+
             <!-- Third row contains the 'Make a Booking' button -->
             <div class="row flex-grow-1 button-row">
                 <div class="col d-flex justify-content-center align-items-center ">

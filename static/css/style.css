@@ -167,6 +167,24 @@ button {
     max-height: 350px;
 }
 
+a {
+    color: #B9EEF8;
+}
+
+a:hover, 
+a:focus {
+    color: #FFDBE0;
+}
+
+.pagination {
+    font-size: 0.9em;
+    width: 100%;
+}
+
+.pagination li {
+    width: 33.3%;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */
@@ -180,6 +198,11 @@ button {
         margin: 0 auto;
         width: 90%;
     }
+
+    .pagination {
+        width: 90%;
+    }
+    
 }
 
 /* for small screen sizes of 425px and up */
@@ -193,6 +216,10 @@ button {
     .booking-card {
         width: 70%; 
     }
+
+    .pagination {
+        width: 80%; 
+    }
 }
 
 /* for small screen sizes of 600px and up */
@@ -205,13 +232,17 @@ button {
     .booking-card {
         width: 50%; 
     }
+
+    .pagination {
+        width: 60%; 
+    }
 }
 
 /* for small screen sizes of 768px and up */
 @media screen and (min-width:768px) {
 
     .bookings-row {
-        max-height: 1100px;
+        max-height: 1200px;
     }
 
     .booking-card {
@@ -242,7 +273,7 @@ button {
     }
 
     .bookings-row {
-        max-height: 800px;
+        max-height: 900px;
     }
 }
 
@@ -288,7 +319,7 @@ button {
     }
 
     .bookings-row {
-        max-height: 1000px;
+        max-height: 1200px;
     }
 
     .header-row,

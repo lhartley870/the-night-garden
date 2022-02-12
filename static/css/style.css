@@ -75,11 +75,11 @@ footer {
 
 /* home page */
 
-.intro-outer-container {
+.main-page-content-outer-container {
     font-size: 0.9em;
 }
 
-.intro-inner-container {
+.main-page-content-inner-container {
     min-height: 342px;
 }
 
@@ -88,11 +88,11 @@ footer {
     width: 50vw;
 }
 
-.booking-invite-outer-container {
+.secondary-content-outer-container {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644182225/tea_lights_lryeuj.jpg') center center / cover no-repeat; 
 }
 
-.booking-invite-inner-container {
+.secondary-content-inner-container {
     background-color: rgba(61, 108, 119, 0.5);
 }
 
@@ -224,7 +224,7 @@ a:focus {
 /* for small screen sizes of 600px and up */
 @media screen and (min-width:600px) {
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 450px;
     }
 
@@ -267,7 +267,7 @@ a:focus {
         width: 60px; 
     }
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 600px;
     }
 
@@ -292,7 +292,7 @@ a:focus {
         font-size: 18px;
     }
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 700px;
     }
 }
@@ -313,7 +313,7 @@ a:focus {
         width: 80px; 
     }
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 800px;
     }
 
@@ -347,7 +347,7 @@ a:focus {
         margin-right: 1em;
     }
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 1000px;
     }
 
@@ -360,7 +360,7 @@ a:focus {
 /* for extra large screen sizes of 2500px and up */
 @media screen and (min-width:2500px) {
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 1500px;
     }
 
@@ -394,7 +394,7 @@ a:focus {
         margin-right: 2em;
     }
 
-    .intro-inner-container {
+    .main-page-content-inner-container {
         min-height: 2000px;
     }
 

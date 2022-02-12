@@ -67,6 +67,10 @@ https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover
     visibility: visible;
 }
 
+.navbar-dark .navbar-nav .nav-link.active {
+    color: rgba(61, 108, 119, 1);
+}
+
 /* footer */
 
 footer {
@@ -149,7 +153,7 @@ button {
 
 .main-pg-button {
     background-color: #D4E9CE;
-    color: #37606D;
+    color: #3D6C77;
     font-size: 1.4em; 
     padding: 10px;
 }

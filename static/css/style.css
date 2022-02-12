@@ -184,6 +184,75 @@ a:focus {
     width: 33.3%;
 }
 
+/* make a booking page */
+
+.booking-form-container {
+    background-color: #D4E9CE;
+}
+
+.booking-form {
+    color: #3D6C77;
+    width: 100%;
+}
+
+.form-group {
+    margin-top: 5%;
+}
+
+.form-control,
+.gj-datepicker,
+.gj-datepicker-bootstrap [role=right-icon] button,
+#id_date {
+    border: none;
+    background-color: #FFF6EA;
+}
+
+.booking-form-container,
+.gj-datepicker {
+    border-radius: 0.25rem;
+}
+
+.form-control, 
+.gj-datepicker {
+    border: 2px solid #3D6C77;
+}
+
+.form-control,
+.fa-calendar,
+.form-control:focus {
+    color: #37606D;
+}
+
+.booking-button {
+    background-color: #3D6C77;
+    color: #D4E9CE;
+    font-size: 1.4em; 
+    padding: 10px;
+}
+
+.invalid-feedback {
+    color: #C32232;
+}
+
+.booking-button:hover {
+        box-shadow: 0 0 10px 7px #2F4858;
+    }
+
+/* styling for the open datepicker */
+.gj-picker-bootstrap {
+    background-color: #FFF6EA ;
+}
+
+div [role=body] {
+    color: #007A6A;
+}
+
+.gj-picker-bootstrap table tr td.disabled div, 
+.gj-picker-bootstrap table tr td.other-month div {
+    color: #806A60;
+    text-decoration-line: line-through;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

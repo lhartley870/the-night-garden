@@ -28,6 +28,7 @@ $(document).ready(function() {
             let date = new Date();
             date.setDate(date.getDate()+93);
             return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        }
+        },
+        uiLibrary: 'bootstrap4',
     });
 });

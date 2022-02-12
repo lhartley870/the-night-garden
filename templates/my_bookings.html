@@ -9,7 +9,7 @@
         <div class="col d-flex flex-column justify-content-center">
 
             <!-- First row contains the page heading and user's name heading -->
-            <div class="row flex-grow-1 header-row">
+            <div class="row flex-grow-1 top-bottom-content-row">
                 <div class="col d-flex justify-content-center align-items-center">
                     <div>
                         <h1>My Bookings</h1>
@@ -123,7 +123,7 @@
             </div>
 
             <!-- Third row contains the 'Make a Booking' button -->
-            <div class="row flex-grow-1 button-row">
+            <div class="row flex-grow-1 top-bottom-content-row">
                 <div class="col d-flex justify-content-center align-items-center ">
                     <form action="{% url 'make_booking' %}">
                         {% csrf_token %}

@@ -98,8 +98,7 @@ footer {
 
 /* my bookings page */
 
-.header-row,
-.button-row {
+.top-bottom-content-row {
     min-height: 100px;
     max-height: 150px;
 }
@@ -159,11 +158,11 @@ button {
     box-shadow: 0 0 10px 7px #FFF6EA;
 } 
 
-.empty-booking {
+#empty-booking {
     min-height: 300px;
 }
 
-.empty-card {
+#empty-card {
     max-height: 350px;
 }
 
@@ -241,7 +240,7 @@ a:focus {
 /* for small screen sizes of 768px and up */
 @media screen and (min-width:768px) {
 
-    .bookings-row {
+    #bookings-row {
         max-height: 1200px;
     }
 
@@ -272,7 +271,7 @@ a:focus {
         min-height: 600px;
     }
 
-    .bookings-row {
+    #bookings-row {
         max-height: 900px;
     }
 }
@@ -318,12 +317,11 @@ a:focus {
         min-height: 800px;
     }
 
-    .bookings-row {
+    #bookings-row {
         max-height: 1200px;
     }
 
-    .header-row,
-    .button-row {
+    .top-bottom-content-row {
         min-height: 150px;
         max-height: 225px;
     }
@@ -353,8 +351,7 @@ a:focus {
         min-height: 1000px;
     }
 
-    .header-row,
-    .button-row {
+    .top-bottom-content-row {
         min-height: 200px;
         max-height: 300px;
     }
@@ -367,12 +364,11 @@ a:focus {
         min-height: 1500px;
     }
 
-    .bookings-row {
+    #bookings-row {
         max-height: 1200px;
     }
 
-    .header-row,
-    .button-row {
+    .top-bottom-content-row {
         min-height: 300px;
         max-height: 450px;
     }
@@ -402,12 +398,11 @@ a:focus {
         min-height: 2000px;
     }
 
-    .bookings-row {
+    #bookings-row {
         max-height: 1500px;
     }
 
-    .header-row,
-    .button-row {
+    .top-bottom-content-row {
         min-height: 500px;
         max-height: 750px;
     }

@@ -23,7 +23,7 @@
             </div>
 
             <!-- Second row contains the user's bookings -->
-            <div class="row flex-grow-1 d-flex justify-content-center align-items-center bookings-row">
+            <div class="row flex-grow-1 d-flex justify-content-center align-items-center" id="bookings-row">
                 <div class="col">
 
                     <!-- First sub-row contains the cards for each booking / the 'no bookings' card -->
@@ -73,8 +73,8 @@
 
                         <!-- If there is no booking an alternative card is displayed -->
                         {% empty %}
-                        <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center empty-booking">
-                            <div class="card h-75 d-flex justify-content-center align-items-center empty-card">
+                        <div class="col-12 h-100 booking-column d-flex justify-content-center align-items-center" id="empty-booking">
+                            <div class="card h-75 d-flex justify-content-center align-items-center" id="empty-card">
                                 <div>
                                     <img src="https://res.cloudinary.com/lhartley/image/upload/v1644258589/tree_only_logo_qkrudo.svg" class="card-img-top" 
                                         alt="restaurant logo of a pink tree">

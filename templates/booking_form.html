@@ -16,11 +16,13 @@
                 </div>
                 <!-- Row containing booking form -->
                 <div class="row">
-                    <div class="col d-flex justify-content-center align-items-center">
-                         <form method="post">
+                    <div class="col d-flex justify-content-center align-items-center booking-form-container">
+                         <form method="post" class="booking-form">
                             {{ booking_form | crispy }}
                             {% csrf_token %}
-                            <button type="submit">Book</button>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="booking-button my-3">Make Booking</button>
+                            </div>
                         </form>
                     </div>
                 </div>

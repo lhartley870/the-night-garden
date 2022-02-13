@@ -23,11 +23,11 @@
             </div>
 
             <!-- Second row contains the user's bookings -->
-            <div class="row flex-grow-1 d-flex justify-content-center align-items-center" id="bookings-row">
+            <div class="row flex-grow-1" id="bookings-row">
                 <div class="col">
 
                     <!-- First sub-row contains the cards for each booking / the 'no bookings' card -->
-                    <div class="row">
+                    <div class="row d-flex justify-content-center align-items-center">
             
                         <!-- Cards for each booking if there is at least one booking -->
                         {% for booking in page_obj %}

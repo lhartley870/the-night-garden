@@ -80,7 +80,7 @@ footer {
 }
 
 .main-page-content-inner-container {
-    min-height: 400px;
+    min-height: 450px;
 }
 
 .tree-logo {
@@ -298,7 +298,7 @@ div [role=body] {
 @media screen and (min-width:600px) {
 
     .main-page-content-inner-container {
-        min-height: 450px;
+        min-height: 500px;
     }
 
     .booking-card {
@@ -364,10 +364,6 @@ div [role=body] {
     body {
         font-size: 18px;
     }
-
-    .main-page-content-inner-container {
-        min-height: 700px;
-    }
 }
 
 /* for large screen sizes of 1400px and up */
@@ -390,6 +386,11 @@ div [role=body] {
         min-height: 800px;
     }
 
+    .tree-logo {
+        height: 25vw;
+        width: 25vw;
+    }
+
     #bookings-row {
         max-height: 1200px;
     }
@@ -397,6 +398,10 @@ div [role=body] {
     .top-bottom-content-row {
         min-height: 150px;
         max-height: 225px;
+    }
+
+    .form-group {
+        margin-top: 10%;
     }
 }
 
@@ -421,12 +426,16 @@ div [role=body] {
     }
 
     .main-page-content-inner-container {
-        min-height: 1000px;
+        min-height: 900px;
     }
 
     .top-bottom-content-row {
         min-height: 200px;
         max-height: 300px;
+    }
+
+    .booking-form-container {
+        padding: 5%;
     }
 }
 
@@ -434,7 +443,7 @@ div [role=body] {
 @media screen and (min-width:2500px) {
 
     .main-page-content-inner-container {
-        min-height: 1500px;
+        min-height: 900px;
     }
 
     #bookings-row {
@@ -468,7 +477,7 @@ div [role=body] {
     }
 
     .main-page-content-inner-container {
-        min-height: 2000px;
+        min-height: 1200px;
     }
 
     #bookings-row {

@@ -46,9 +46,9 @@
                                     <p class="card-text">{{ booking }}</p>
                                     <p class="card-text">
                                         {% if booking.approved %}
-                                        <i class="fas fa-check-circle"> Approved</i>
+                                        <i class="fas fa-check-circle"></i> Approved
                                         {% else %}
-                                        <i class="fas fa-times-circle"> Awaiting Confirmation</i>
+                                        <i class="fas fa-times-circle"></i> Awaiting Confirmation
                                         {% endif %}
                                     </p>
                                     <form action="{% url 'edit_booking' booking_id=booking.id %}" class="change-booking-form me-2">

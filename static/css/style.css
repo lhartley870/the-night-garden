@@ -433,10 +433,6 @@ div [role=body] {
         min-height: 200px;
         max-height: 300px;
     }
-
-    .booking-form-container {
-        padding: 5%;
-    }
 }
 
 /* for extra large screen sizes of 2500px and up */
@@ -453,6 +449,10 @@ div [role=body] {
     .top-bottom-content-row {
         min-height: 300px;
         max-height: 450px;
+    }
+
+    .form-group {
+        margin-top: 8%;
     }
 }
 

@@ -492,12 +492,12 @@ class TableSelectionMixin:
         return allocated_tables
 
 
-class HomePage(View):
+class Home(View):
     def get(self, request):
         return render(request, "index.html",)
 
 
-class MyBookingsPg(View):
+class MyBookings(View):
     # The solution of using the @cache_control decorator to control what
     # happens if a user logs out of their account and then presses the
     # back button was taken from an answer given by Mahmood on this Stack
@@ -535,7 +535,7 @@ class MyBookingsPg(View):
         )
 
 
-class BookingFormPage(View, TableSelectionMixin):
+class MakeBooking(View, TableSelectionMixin):
     # The solution of using the @cache_control decorator to control what
     # happens if a user logs out of their account and then presses the
     # back button was taken from an answer given by Mahmood on this Stack
@@ -582,7 +582,7 @@ class BookingFormPage(View, TableSelectionMixin):
         booking_form = BookingForm(initial=initial_data)
         return render(
             request,
-            "booking_form.html",
+            "make_booking.html",
             {
                 "booking_form": booking_form,
             }
@@ -627,14 +627,14 @@ class BookingFormPage(View, TableSelectionMixin):
 
         return render(
             request,
-            "booking_form.html",
+            "make_booking.html",
             {
                  "booking_form": booking_form,
             }
         )
 
 
-class EditBookingPage(View, TableSelectionMixin):
+class EditBooking(View, TableSelectionMixin):
     # The solution of using the @cache_control decorator to control what
     # happens if a user logs out of their account and then presses the
     # back button was taken from an answer given by Mahmood on this Stack
@@ -711,7 +711,7 @@ class EditBookingPage(View, TableSelectionMixin):
 
         return render(
             request,
-            "booking_form.html",
+            "make_booking.html",
             {
                  "booking_form": booking_form,
             }

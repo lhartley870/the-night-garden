@@ -7,16 +7,16 @@
     <div class="row h-100 g-0">
         <!-- Column containing booking form -->
         <div class="col-12 d-flex justify-content-center align-items-center main-page-content-inner-container col-md-6 px-md-0">
-            <div class="w-75 px-sm-5">
+            <div class="px-sm-5 px-md-3 px-xxl-5 booking-form-outer-container">
                 <!-- Row containing heading -->
-                <div class="row">
+                <div class="row pb-xxl-4">
                     <div class="col text-center">
-                        <h1>Make a Booking</h1>
+                        <h1 class="mb-xxl-0">Make a Booking</h1>
                     </div>
                 </div>
                 <!-- Row containing booking form -->
-                <div class="row">
-                    <div class="col d-flex justify-content-center align-items-center booking-form-container">
+                <div class="row py-xxl-4">
+                    <div class="col d-flex justify-content-center align-items-center booking-form-inner-container">
                          <form method="post" class="booking-form">
                             {{ booking_form | crispy }}
                             {% csrf_token %}
@@ -26,21 +26,21 @@
                         </form>
                     </div>
                 </div>
+                <!-- Row containing information on large bookings -->
+                <div class="row pt-2 pt-xxl-4">
+                    <div class="col d-flex justify-content-center align-items-center">
+                         <p class="text-center mb-0">
+                            Please get in touch with us to book for parties of over 10 guests
+                            or for private events
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Column containing background image, and information on large bookings -->
-        <div class="col-12 main-page-content-inner-container secondary-content-outer-container col-md-6">
-            <div class="h-100 d-flex justify-content-center align-items-center secondary-content-inner-container">
-                <div class="d-flex justify-content-center align-items-center text-center w-75 px-sm-5 px-md-0">
-                    <p class="mb-0">
-                        If you wish to book for a party of over 10 guests or wish to book the entire venue
-                        for a private event please get in touch with us via email or telephone
-                    </p>
-                    <p> 
-                        029 9496 0015 | infothenightgarden@gmail.com
-                    </p> 
-                </div>
+        <!-- Column containing background image -->
+        <div class="col-12 main-page-content-inner-container make-booking-pg-image-outer-container col-md-6">
+            <div class="h-100 image-inner-container"></div>
             </div>
         </div>
     </div>

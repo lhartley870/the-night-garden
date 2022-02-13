@@ -1,12 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit A Booking</h1>
-    {% if user.is_authenticated %}
-    <form method="post">
-        {{ booking_form }}
-        {% csrf_token %}
-        <button type="submit">Update Booking</button>
-    </form>
-    {% endif %}
+{% load crispy_forms_tags %}
+
+<div class="container-fluid h-100 px-0 overflow-hidden main-page-content-outer-container">
+    <div class="row h-100 g-0">
+        <!-- Column containing edit booking form -->
+        <div class="col-12 d-flex align-items-center justify-content-center main-page-content-inner-container col-md-6">
+            <div class="row g-0 w-100 d-flex justify-content-center">
+                <div class="col-12 w-75 d-flex flex-column justify-content-center px-sm-5 px-md-2 px-lg-3 px-xl-4 px-xxl-5">
+                    <!-- Row containing heading -->
+                    <div class="row pb-xxl-4">
+                        <div class="col text-center">
+                            <h1 class="mb-xxl-0">Edit a Booking</h1>
+                        </div>
+                    </div>
+                    <!-- Row containing edit booking form -->
+                    <div class="row py-xxl-4">
+                        <div class="col d-flex justify-content-center align-items-center booking-form-container">
+                            <form method="post" class="booking-form px-xxl-4">
+                                {{ booking_form | crispy }}
+                                {% csrf_token %}
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="booking-button my-3 my-xxl-5">Update Booking</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column containing background image -->
+        <div class="col-12 main-page-content-inner-container edit-booking-pg-image-outer-container col-md-6">
+            <div class="h-100 image-inner-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

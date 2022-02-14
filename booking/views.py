@@ -724,3 +724,8 @@ class CancelBooking(View):
         booking.delete()
 
         return redirect('my_bookings')
+
+
+class Menus(View):
+    def get(self, request):
+        return render(request, "menus.html",)

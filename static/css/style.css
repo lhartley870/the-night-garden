@@ -263,6 +263,22 @@ div [role=body] {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644781255/garden_entrance_v9d3oh.jpg') center center / cover no-repeat; 
 }
 
+/* menus page */
+
+#winter-menu-container {
+    background-color: #FFF6EA;
+    color: #3D6C77;
+}
+
+#winter-menu-link {
+    color: #747201;
+}
+
+#winter-menu-link:hover, 
+#winter-menu-link:focus {
+    color: #B15739;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid h-100 px-0 overflow-hidden main-page-content-outer-container">
+    <div class="row h-100 g-0">
+
+        <!-- Summer menu column -->
+        <div class="col-12 d-flex justify-content-center align-items-center main-page-content-inner-container col-md-6">
+            <div class="row g-0 d-flex justify-content-center">
+                <div class="col-12 w-75 d-flex flex-column justify-content-center px-sm-5 px-md-2 px-lg-3 px-xl-4 px-xxl-5">
+                    <!-- Row containing heading -->
+                    <div class="row pb-xxl-4">
+                        <div class="col text-center">
+                            <h1 class="mb-xxl-0">Summer Menu</h1>
+                        </div>
+                    </div>
+                    <!-- Row containing summer menu information -->
+                    <div class="row">
+                        <div class="col text-center">
+                            <p class="mb-0">
+                                We serve our seasonal summer menu from May until September (inclusive).
+                                Three courses are served at £35 per person.
+                            </p> 
+                        </div>
+                    </div>
+                    <!-- Row containing restaurant pink logo -->
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <img class="tree-logo" src="https://res.cloudinary.com/lhartley/image/upload/v1644234196/tree_logo_ul1ws6.svg" 
+                                alt="restaurant logo of a pink tree, stars and a butterfly">
+                        </div>
+                    </div>
+                    <!-- Row containing summer menu download link -->
+                    <div class="row">
+                        <div class="col text-center">
+                            <p class="mb-0">
+                                View and download our summer menu here
+                            </p>
+                            <p>
+                                <a href="{{ MEDIA_URL }}media/summer_menu.pdf" target="_blank">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <span>Summer Menu</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

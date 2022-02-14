@@ -24,5 +24,6 @@ urlpatterns = [
          name='edit_booking'),
     path('cancel-booking/<int:booking_id>',
          views.CancelBooking.as_view(),
-         name='cancel_booking')
+         name='cancel_booking'),
+    path('menus', views.Menus.as_view(), name='menus'),
 ]

@@ -55,20 +55,31 @@
             <div class="collapse navbar-collapse" id="navbarItems">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">
+                        <!-- 
+                            Code for adding an active class depending on whether the user is on the current page
+                            adapted from an answer given by hassanrazadev on this Stack Overflow post -
+                            https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page
+                        -->
+                        <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %} class="nav-link active"
+                            aria-label="You are on the Home page" {% else %} class="nav-link" 
+                            aria-label="Go to the Home page (does not open in a new tab)"{% endif %}>
                             Home
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'my_bookings' %}">
+                        <a href="{% url 'my_bookings' %}" {% if request.resolver_match.url_name == 'my_bookings' %} class="nav-link active"
+                            aria-label="You are on the My Bookings page" {% else %} class="nav-link"
+                            aria-label="Go to the My Bookings page (does not open in a new tab)" {% endif %}>
                             My Bookings
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'make_booking' %}">
+                        <a href="{% url 'make_booking' %}" {% if request.resolver_match.url_name == 'make_booking' %} class="nav-link active"
+                            aria-label="You are on the Make a Booking page" {% else %} class="nav-link"
+                            aria-label="Go to the Make a Booking page (does not open in a new tab)" {% endif %}>
                             Make a Booking
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
@@ -80,7 +91,8 @@
                             on this Stack Overflow post - 
                             https://stackoverflow.com/questions/694477/getting-django-admin-url-for-an-object
                         -->
-                        <a class="nav-link" href="{% url 'admin:index' %}">
+                        <a href="{% url 'admin:index' %}" {% if request.resolver_match.url_name != 'admin:index' %}
+                            aria-label="Go to the Admin Panel page (does not open in a new tab)" {% endif %} class="nav-link">
                             Admin
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
@@ -88,20 +100,26 @@
                     {% endif %}
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_signup' %}">
+                        <a href="{% url 'account_signup' %}" {% if request.resolver_match.url_name == 'account_signup' %} class="nav-link active"
+                            aria-label="You are on the Signup page" {% else %} class="nav-link" 
+                            aria-label="Go to the Signup page (does not open in a new tab)" {% endif %}>
                             Register
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">
+                        <a href="{% url 'account_login' %}" {% if request.resolver_match.url_name == 'account_login' %} class="nav-link active"
+                            aria-label="You are on the Login page" {% else %} class="nav-link" 
+                            aria-label="Go to the Login page (does not open in a new tab)" {% endif %}>
                             Login
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'menus' %}">
+                        <a href="{% url 'menus' %}" {% if request.resolver_match.url_name == 'menus' %} class="nav-link active"
+                            aria-label="You are on the Menus page" {% else %} class="nav-link" 
+                            aria-label="Go to the Menus page (does not open in a new tab)" {% endif %}>
                             Menus
                             <span><i class="fas fa-leaf"></i></span>
                         </a>
@@ -114,7 +132,9 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">
+                        <a href="{% url 'account_logout' %}" {% if request.resolver_match.url_name == 'account_logout' %} class="nav-link active"
+                            aria-label="You are on the Logout page" {% else %} class="nav-link" 
+                            aria-label="Go to the Logout page (does not open in a new tab)" {% endif %}>
                             Logout
                             <span><i class="fas fa-leaf"></i></span>
                         </a>

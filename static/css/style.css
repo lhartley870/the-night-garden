@@ -199,6 +199,10 @@ a:focus {
     margin-top: 5%;
 }
 
+.form-control {
+    font-size: 1em;
+}
+
 .form-control,
 .gj-datepicker,
 .gj-datepicker-bootstrap [role=right-icon] button,
@@ -291,6 +295,12 @@ div [role=body] {
 
 #signup-pg-image-outer-container {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644929032/blue_flowers_sjrsuv.jpg') center center / cover no-repeat; 
+}
+
+/* login page */
+
+#login-pg-image-outer-container {
+    background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644929035/champagne_pouring_su8zef.jpg') center center / cover no-repeat; 
 }
 
 /* media queries */

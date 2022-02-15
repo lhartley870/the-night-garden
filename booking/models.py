@@ -72,7 +72,7 @@ class Booking(models.Model):
         date = self.date.strftime("%d %B %Y")
         return (
             f'Booking #{self.id} on {date} '
-            f'for {self.party_size} guests at {self.time_slot}'
+            f'for {self.party_size} guest(s) at {self.time_slot}'
         )
 
     def date_string(self):

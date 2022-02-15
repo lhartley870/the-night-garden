@@ -615,6 +615,15 @@ class MakeBooking(View, TableSelectionMixin):
                     for table in allocated_tables:
                         booking.tables.add(table.id)
 
+                created_booking = Booking.objects.filter(
+                    booker=request.user
+                ).order_by(
+                    'created_on'
+                ).last()
+                messages.success(request,
+                                 'Your {} has been '
+                                 'submitted for approval'.format(
+                                     created_booking))
                 # HttpResponseRedirect returned after successfully dealing
                 # with POST data as recommended by the Django documentation as
                 # this prevents data from being posted twice if a user hits
@@ -699,6 +708,11 @@ class EditBooking(View, TableSelectionMixin):
                     for table in allocated_tables:
                         booking.tables.add(table.id)
 
+                edited_booking = get_object_or_404(Booking, id=booking_id)
+                messages.success(request,
+                                 'Your edited {} has been '
+                                 'submitted for approval'.format(
+                                     edited_booking))
                 # HttpResponseRedirect returned after successfully dealing
                 # with POST data as recommended by the Django documentation as
                 # this prevents data from being posted twice if a user hits
@@ -720,9 +734,12 @@ class EditBooking(View, TableSelectionMixin):
 
 class CancelBooking(View):
     def post(self, request, booking_id):
-        booking = get_object_or_404(Booking, id=booking_id)
+        booking = get_object_or_404(Booking, id=booking_id)        
+        messages.success(request,
+                         'Your {} has been '
+                         'successfully cancelled'.format(booking))
         booking.delete()
-
+    
         return redirect('my_bookings')
 
 

@@ -186,11 +186,11 @@ a:focus {
 
 /* make a booking page */
 
-.booking-form-container {
+.form-container {
     background-color: #D4E9CE;
 }
 
-.booking-form {
+.form {
     color: #3D6C77;
     width: 100%;
 }
@@ -207,7 +207,7 @@ a:focus {
     background-color: #FFF6EA;
 }
 
-.booking-form-container,
+.form-container,
 .gj-datepicker {
     border-radius: 0.25rem;
 }

@@ -279,6 +279,20 @@ div [role=body] {
     color: #B15739;
 }
 
+/* signup page */
+
+#signup_form .form-group {
+    margin-top: 2%;
+}
+
+.signup-pg-content-container {
+    min-height: 650px;
+}
+
+#signup-pg-image-outer-container {
+    background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644929032/blue_flowers_sjrsuv.jpg') center center / cover no-repeat; 
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */
@@ -386,6 +400,10 @@ div [role=body] {
     body {
         font-size: 18px;
     }
+
+    .signup-pg-content-container {
+        min-height: 750px;
+    }
 }
 
 /* for large screen sizes of 1400px and up */
@@ -425,6 +443,14 @@ div [role=body] {
     .form-group {
         margin-top: 10%;
     }
+
+    .signup-pg-content-container {
+        min-height: 850px;
+    }
+
+    #signup_form .form-group {
+        margin-top: 4%;
+    }
 }
 
 /* for extra large screen sizes of 2000px and up */
@@ -455,6 +481,14 @@ div [role=body] {
         min-height: 200px;
         max-height: 300px;
     }
+
+    .signup-pg-content-container {
+        min-height: 1000px;
+    }
+
+    #signup_form .form-group {
+        margin-top: 5%;
+    }
 }
 
 /* for extra large screen sizes of 2500px and up */
@@ -476,6 +510,11 @@ div [role=body] {
     .form-group {
         margin-top: 8%;
     }
+
+    .signup-pg-content-container {
+        min-height: 1200px;
+    }
+
 }
 
 /* for extra extra large screen sizes of 3000px and up */
@@ -509,5 +548,9 @@ div [role=body] {
     .top-bottom-content-row {
         min-height: 500px;
         max-height: 750px;
+    }
+
+    .signup-pg-content-container {
+        min-height: 1400px;
     }
 }

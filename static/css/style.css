@@ -303,6 +303,12 @@ div [role=body] {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644929035/champagne_pouring_su8zef.jpg') center center / cover no-repeat; 
 }
 
+/* logout page */
+
+#logout-pg-image-outer-container {
+    background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644182221/light_up_flowers_y7tknh.jpg') center center / cover no-repeat; 
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

@@ -315,6 +315,12 @@ div [role=body] {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644182221/light_up_flowers_y7tknh.jpg') center center / cover no-repeat; 
 }
 
+/* alerts */
+
+.alert {
+    font-size: 0.9em;
+}
+
 /* media queries */
 
 /* for small screen sizes of 375px and up */

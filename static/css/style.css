@@ -88,7 +88,7 @@ footer {
     width: 50vw;
 }
 
-.home-pg-image-outer-container {
+#home-pg-image-outer-container {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644182225/tea_lights_lryeuj.jpg') center center / cover no-repeat; 
 }
 

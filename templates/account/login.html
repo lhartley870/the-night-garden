@@ -1,4 +1,4 @@
-{% extends "account/base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load account socialaccount %}
@@ -6,19 +6,54 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 
-<h1>{% trans "Sign In" %}</h1>
+<div class="container-fluid h-100 px-0 overflow-hidden main-page-content-outer-container">
+    <div class="row h-100 g-0">
+        
+        <!-- Column containing login form -->
+        <div class="col-12 d-flex align-items-center justify-content-center main-page-content-inner-container col-md-6 order-md-2">
+            <div class="row g-0 w-100 d-flex justify-content-center">
+                <div class="col-12 w-75 d-flex flex-column justify-content-center px-sm-5 px-md-2 px-lg-3 px-xl-4 px-xxl-5">
+                    <!-- Row containing heading -->
+                    <div class="row pb-xxl-4">
+                        <div class="col text-center">
+                            <h1 class="mb-xxl-0">{% trans "Sign In" %}</h1>
+                        </div>
+                    </div>
+                    <!-- Row containing 'If you have not created an account yet' text -->
+                    <div class="row pb-xxl-4">
+                        <div class="col text-center">
+                            <p>
+                                {% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Row containing login form -->
+                    <div class="row py-xxl-4">
+                        <div class="col d-flex justify-content-center align-items-center form-container">
+                            <form class="login form px-xxl-4" method="POST" action="{% url 'account_login' %}">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                {% endif %}
+                                <div class="d-flex justify-content-center">
+                                    <button class="booking-button my-2 my-xxl-3" type="submit">{% trans "Sign In" %}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
+        <!-- Column containing background image -->
+        <div class="col-12 main-page-content-inner-container col-md-6 order-md-1" id="login-pg-image-outer-container">
+            <div class="h-100 image-inner-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

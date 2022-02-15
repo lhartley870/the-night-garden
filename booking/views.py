@@ -620,6 +620,11 @@ class MakeBooking(View, TableSelectionMixin):
                 ).order_by(
                     'created_on'
                 ).last()
+                # Use of .format() to add the booking details to
+                # the success message taken from an answer given by
+                # Glenn D.J. on this Stack Overflow post -
+                # https://stackoverflow.com/questions/64956279/django-show-
+                # message-only-when-form-has-changed
                 messages.success(request,
                                  'Your {} has been '
                                  'submitted for approval'.format(
@@ -734,12 +739,12 @@ class EditBooking(View, TableSelectionMixin):
 
 class CancelBooking(View):
     def post(self, request, booking_id):
-        booking = get_object_or_404(Booking, id=booking_id)        
+        booking = get_object_or_404(Booking, id=booking_id)
         messages.success(request,
                          'Your {} has been '
                          'successfully cancelled'.format(booking))
         booking.delete()
-    
+
         return redirect('my_bookings')
 
 

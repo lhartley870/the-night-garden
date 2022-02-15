@@ -257,13 +257,13 @@ div [role=body] {
     text-decoration-line: line-through;
 }
 
-.make-booking-pg-image-outer-container {
+#make-booking-pg-image-outer-container {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644754119/wooden_table_dining_hficla.jpg') center center / cover no-repeat; 
 }
 
 /* edit booking page */
 
-.edit-booking-pg-image-outer-container {
+#edit-booking-pg-image-outer-container {
     background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644781255/garden_entrance_v9d3oh.jpg') center center / cover no-repeat; 
 }
 

@@ -525,12 +525,19 @@ class MyBookings(View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
+        booking_dates = [booking.date for booking in bookings]
+        duplicate_booking_dates = [
+            booking_date for booking_date in booking_dates
+            if booking_dates.count(booking_date) > 1
+        ]
+
         return render(
             request,
             "my_bookings.html",
             {
                 "bookings": bookings,
-                "page_obj": page_obj
+                "page_obj": page_obj,
+                "duplicate_booking_dates": duplicate_booking_dates,
             }
         )
 

@@ -95,7 +95,8 @@ class BookingForm(forms.ModelForm):
         """
         __init__ method included so that the date widget can be
         made readonly to avoid users filling in the date field manually
-        rather than using the datepicker.
+        rather than using the datepicker and so that the identity of the
+        user can be used in the clean methods.
         """
         self.user = user
         super().__init__(*args, **kwargs)
@@ -147,16 +148,47 @@ class BookingForm(forms.ModelForm):
         return capacity_booked
 
     def clean_date(self):
+        """
+        Method to clean the time field.
+
+        This method makes sure that if the user tries to manipulate
+        the booking id number in the url on the Edit Booking page to
+        try and edit another user's booking, a ValidationError is raised.
+
+        This method also prevents the user from making more than one booking
+        per day by raising a ValidationError. In the case of the user editing
+        a booking where the edited booking is for the same date as the original
+        booking (so only the time_slot or party_size is changing), the original
+        booking is excluded from the check.
+        """
         user = self.user
         date = self.cleaned_data['date']
 
+        # If the booking is a new booking, self.instance.id will be None
+        # and all existing bookings for the user on the same date as the
+        # new booking will be taken into account when checking if the user
+        # already has a booking for that date.
         if self.instance.id is None:
             same_date_bookings = Booking.objects.filter(booker=user, date=date)
+        # If the booking is an edited booking, self.instance.id will be the
+        # booking id and the else statement will apply.
         else:
+            # This checks whether the booker who made the original booking
+            # is the same as the user who is trying to edit the booking.
             current_booking = get_object_or_404(Booking, id=self.instance.id)
             if current_booking.booker != user:
-                raise ValidationError("You cannot change another guest's booking")
+                raise ValidationError(
+                    "You cannot change another guest's booking"
+                )
+            # The else statement applies if the booker who made the original
+            # booking and the user who is trying to edit the booking are the
+            # same.
             else:
+                # If the user is editing a booking but only changing the
+                # party_size or time_slot (so the date is not changing),
+                # the existing booking needs to be excluded so that it
+                # does not count when checking whether the user already
+                # has a booking for that date.
                 same_date = current_booking.date == date
                 if same_date:
                     same_date_bookings = Booking.objects.filter(
@@ -164,9 +196,16 @@ class BookingForm(forms.ModelForm):
                     ).exclude(
                         id=self.instance.id
                     )
+                # The else statement applies if the date of the original
+                # booking and the date of the edited booking are different.
                 else:
-                    same_date_bookings = Booking.objects.filter(booker=user, date=date)
+                    same_date_bookings = Booking.objects.filter(booker=user,
+                                                                date=date)
 
+        # If the number of bookings the user has on the same date as the
+        # new or edited booking requested is more than 0, a ValidationError
+        # is raised to prevent the user from having more than one booking per
+        # day.
         if len(same_date_bookings) > 0:
             raise ValidationError('You can only have one booking per day')
 
@@ -176,23 +215,12 @@ class BookingForm(forms.ModelForm):
         """
         Method to clean the time_slot field.
 
-        This method makes sure that the selected time slot still has enough
+        This method makes sure that the selected time slot has enough
         capacity to cater for the number of guests selected by the user for
         the booking and if the booking is for today, checks that the time_slot
         is not in the past.
 
-        This check is to cater for the situation where:
-        1. user1 selects an available time slot (as only
-        available time slots for the date and number of guests chosen that are
-        notin the past will be able to be selected in the time dropdown when
-        the JavaScript fetch call is made) but does not book straight away;
-        2. In the meantime another user (user2) makes a booking for that date
-        and time slot that means the time slot is now unavailable for user1 or
-        the booking is for today and the time slot becomes a time in the past;
-        and
-        3. user1 later clicks 'Book' for that time slot without having
-        refreshed the page.
-        If the time slot can no longer accommodate user1's booking on the
+        If the time slot cannot accommodate the user's booking on the
         selected date or the time slot is now in the past then a
         ValidationError is raised to inform the user.
 
@@ -207,6 +235,9 @@ class BookingForm(forms.ModelForm):
         time_slot = self.cleaned_data['time_slot']
         party_size = self.cleaned_data['party_size']
 
+        # The if statement is required because the date could be
+        # None if a ValidationError has been raised in the
+        # clean_date method.
         if date and time_slot and party_size:
             tables = self.get_timeslot_tables(time_slot)
             time_slot_capacity = self.get_timeslot_capacity(tables)
@@ -221,18 +252,20 @@ class BookingForm(forms.ModelForm):
                 raise ValidationError('You cannot book for a time in the past')
 
             # If the booking is a new booking, self.instance.id will be None
-            # and all current bookings will be taken into account when calculating
-            # the available seating capacity.
+            # and all current bookings will be taken into account when
+            # calculating the available seating capacity.
             if self.instance.id is None:
                 current_bookings = self.get_current_bookings(date, time_slot)
             # If the booking is an edited booking, self.instance.id will be the
-            # booking id. If the user is editing a booking but only changing the
-            # party_size i.e. the date and time_slot are not changing, the existing
-            # booking needs to be excluded from the current_bookings so that the
-            # table(s) allocated to the original booking will be included
-            # in the available seating capacity calculated for the edited booking.
+            # booking id. If the user is editing a booking but only changing
+            # the party_size i.e. the date and time_slot are not changing,
+            # the existing booking needs to be excluded from the
+            # current_bookings so that the table(s) allocated to the original
+            # booking will be included in the available seating capacity
+            # calculated for the edited booking.
             else:
-                current_booking = get_object_or_404(Booking, id=self.instance.id)
+                current_booking = get_object_or_404(Booking,
+                                                    id=self.instance.id)
                 same_date = current_booking.date == date
                 same_time_slot = current_booking.time_slot == time_slot
 
@@ -243,7 +276,8 @@ class BookingForm(forms.ModelForm):
                         id=self.instance.id
                     )
                 else:
-                    current_bookings = self.get_current_bookings(date, time_slot)
+                    current_bookings = self.get_current_bookings(date,
+                                                                 time_slot)
 
             if len(current_bookings) > 0:
                 capacity_booked = self.get_capacity_booked(current_bookings)

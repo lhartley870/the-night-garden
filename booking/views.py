@@ -739,7 +739,7 @@ class EditBooking(View, TableSelectionMixin):
 
         return render(
             request,
-            "make_booking.html",
+            "edit_booking.html",
             {
                  "booking_form": booking_form,
             }

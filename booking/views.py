@@ -586,7 +586,7 @@ class MakeBooking(View, TableSelectionMixin):
         initial_data = {
             'date': current_date
         }
-        booking_form = BookingForm(initial=initial_data)
+        booking_form = BookingForm(user=None, initial=initial_data)
         return render(
             request,
             "make_booking.html",
@@ -596,7 +596,7 @@ class MakeBooking(View, TableSelectionMixin):
         )
 
     def post(self, request, *args, **kwargs):
-        booking_form = BookingForm(data=request.POST)
+        booking_form = BookingForm(user=request.user, data=request.POST)
 
         if booking_form.is_valid():
             edit = False
@@ -665,7 +665,7 @@ class EditBooking(View, TableSelectionMixin):
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, booking_id):
         booking = get_object_or_404(Booking, id=booking_id)
-        booking_form = BookingForm(instance=booking)
+        booking_form = BookingForm(user=None, instance=booking)
         return render(
             request,
             "edit_booking.html",
@@ -676,7 +676,8 @@ class EditBooking(View, TableSelectionMixin):
 
     def post(self, request, booking_id):
         booking = get_object_or_404(Booking, id=booking_id)
-        booking_form = BookingForm(data=request.POST, instance=booking)
+        booking_form = BookingForm(user=request.user, data=request.POST,
+                                   instance=booking)
 
         # If the user is editing a booking but only changing the party_size
         # i.e. the date and time_slot are not changing, edit needs to be set

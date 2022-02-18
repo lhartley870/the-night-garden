@@ -146,6 +146,32 @@ class BookingForm(forms.ModelForm):
         )
         return capacity_booked
 
+    def clean_date(self):
+        user = self.user
+        date = self.cleaned_data['date']
+
+        if self.instance.id is None:
+            same_date_bookings = Booking.objects.filter(booker=user, date=date)
+        else:
+            current_booking = get_object_or_404(Booking, id=self.instance.id)
+            if current_booking.booker != user:
+                raise ValidationError("You cannot change another guest's booking")
+            else:
+                same_date = current_booking.date == date
+                if same_date:
+                    same_date_bookings = Booking.objects.filter(
+                        booker=user, date=date
+                    ).exclude(
+                        id=self.instance.id
+                    )
+                else:
+                    same_date_bookings = Booking.objects.filter(booker=user, date=date)
+
+        if len(same_date_bookings) > 0:
+            raise ValidationError('You can only have one booking per day')
+
+        return date
+
     def clean_time_slot(self):
         """
         Method to clean the time_slot field.

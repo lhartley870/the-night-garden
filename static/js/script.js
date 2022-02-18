@@ -31,4 +31,15 @@ $(document).ready(function() {
         },
         uiLibrary: 'bootstrap4',
     });
+
+    /* This code is necessary to make sure that errors for the time field in the booking form on the Make a
+    Booking and Edit a Booking pages can be seen by the user as currently they are not visible due to the inclusion
+    of the datepicker */
+    let date_error = $('#error_1_id_date').html()
+
+    if (date_error !== undefined) {
+        $('#div_id_date').after(`<p id="date-error">${date_error}</p>`)
+        $('#date-error').addClass("error-feedback")
+        $('.gj-datepicker').addClass("error-container")
+    }
 });

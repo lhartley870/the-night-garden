@@ -51,6 +51,7 @@
                                         <i class="fas fa-times-circle"></i> Awaiting Confirmation
                                         {% endif %}
                                     </p>
+                                    {% if booking.date not in duplicate_booking_dates and booking.party_size <= 10 %}
                                     <form action="{% url 'edit_booking' booking_id=booking.id %}" class="change-booking-form me-2">
                                         {% csrf_token %}
                                         <button type="submit" class="change-booking-button">Edit Booking</button>
@@ -67,6 +68,7 @@
                                             Cancel Booking
                                         </button>
                                     </form>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

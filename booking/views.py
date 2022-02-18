@@ -707,6 +707,7 @@ class EditBooking(View, TableSelectionMixin):
             else:
                 booking = booking_form.save(commit=False)
                 booking.booker = request.user
+                booking.approved = False
                 # The table(s) allocated to the existing booking need to be
                 # removed before the newly allocated table(s) are added.
                 booking.tables.clear()

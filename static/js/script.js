@@ -32,7 +32,7 @@ $(document).ready(function() {
         uiLibrary: 'bootstrap4',
     });
 
-    /* This code is necessary to make sure that errors for the time field in the booking form on the Make a
+    /* This code is necessary to make sure that errors for the date field in the booking form on the Make a
     Booking and Edit a Booking pages can be seen by the user as currently they are not visible due to the inclusion
     of the datepicker */
     let date_error = $('#error_1_id_date').html()

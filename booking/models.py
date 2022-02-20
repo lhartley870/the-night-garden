@@ -23,10 +23,10 @@ class NameField(models.CharField):
     def get_prep_value(self, value):
         return str(value).lower()
 
-        
+
 class Table(models.Model):
     SIZE = [(2, 2), (4, 4), (6, 6), (8, 8)]
-    name = models.CharField(max_length=15, unique=True)
+    name = NameField(max_length=15, unique=True)
     size = models.PositiveSmallIntegerField(choices=SIZE)
 
     class Meta:
@@ -34,22 +34,6 @@ class Table(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        """
-        Customised save method added to convert all table names
-        to lowercase characters before being entered in the database.
-        This prevents the same names with different uppercase and
-        lowercase characters from getting around the requirement for
-        the table name field to be 'unique'.
-        """
-        # Code for converting a model field to lowercase before
-        # saving it in the database taken from an answer given
-        # by Mattia on this Stack Overflow post -
-        # https://stackoverflow.com/questions/48574940/how-do-you-
-        # make-a-lowercase-field-in-a-django-model/48596135
-        self.name = self.name.lower()
-        return super(Table, self).save(*args, **kwargs)
 
 
 class TimeSlot(models.Model):

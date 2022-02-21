@@ -80,6 +80,10 @@ class TestModels(TestCase):
 
     # Test the created_on default method for the Booking model.
     def test_created_on_timestamp(self):
+        # Code for testing the created_on method adapted from an answer
+        # given by neverwalkaloner and edited by vidstige on this
+        # Stack Overflow post - https://stackoverflow.com/questions/
+        # 49874923/how-to-test-auto-now-add-in-django
         mocked = datetime.datetime(2022, 3, 2, 0, 0, 0, tzinfo=pytz.utc)
         with mock.patch('django.utils.timezone.now',
                         mock.Mock(return_value=mocked)):

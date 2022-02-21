@@ -1,9 +1,10 @@
 import datetime
-import pytz
 from unittest import mock
+import pytz
 from django.test import TestCase
 from django.contrib.auth.models import User
-from .models import Table, TimeSlot, Booking, NameField
+from .models import Table, TimeSlot, Booking
+
 
 # Create your tests here.
 class TestModels(TestCase):
@@ -43,7 +44,9 @@ class TestModels(TestCase):
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
-        self.time_slot2 = TimeSlot.objects.create(time='19:00')
+        self.time_slot2 = TimeSlot.objects.create(
+            time=datetime.time(19, 00, 00)
+        )
         self.time_slot2.tables.add(self.table3, self.table4)
 
         self.booking = Booking.objects.create(
@@ -70,11 +73,11 @@ class TestModels(TestCase):
     def test_booking_string_method_returns_expected_sentence(self):
         self.assertEqual(str(self.booking),
                          'Booking #1 on 12 March 2022 for 4 guest(s) at 18:30')
-    
+
     # Test the date_string method for the Booking model.
     def test_booking_date_string_method_returns_formatted_date(self):
         self.assertEqual(self.booking.date_string(), '12 March 2022')
-    
+
     # Test the created_on default method for the Booking model.
     def test_created_on_timestamp(self):
         mocked = datetime.datetime(2022, 3, 2, 0, 0, 0, tzinfo=pytz.utc)
@@ -89,6 +92,7 @@ class TestModels(TestCase):
             self.booking.tables.add(self.table3,)
             self.assertEqual(booking2.created_on, mocked)
 
-    # Test that the Booking model approved field has the expected default value.
+    # Test that the Booking model approved field has the expected
+    # default value.
     def test_approved_defaults_to_false(self):
         self.assertFalse(self.booking.approved)

@@ -1,4 +1,5 @@
 import datetime
+from django.urls import reverse
 from django.test import TestCase
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -90,3 +91,33 @@ class TestAdmin(TestCase):
         obj = booking_admin.get_object(None, booking.id)
         admin_booking_date = booking_admin.booking_date(obj)
         self.assertEqual(admin_booking_date, '2022-03-12')
+    
+    # Test the admin approval of booking1 created in setUp above.
+    def test_approve_bookings(self):
+
+        self.username = 'admin5'
+        self.password = 'staff**'
+        self.user = User.objects.create_superuser(
+            self.username, 
+            'admin@example.com',
+            self.password
+        )
+        
+        # Check the number of bookings which are already approved.
+        approved_bookings = Booking.objects.filter(approved=True).count()
+        self.assertFalse(self.booking1.approved)
+
+        data = {'action': 'approve_bookings',
+                '_selected_action': [self.booking1.id, ]}
+        change_url = reverse('admin:booking_booking_changelist')
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.post(change_url, data, follow=True)
+        self.client.logout()
+
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the number of approved bookings has gone up by 1.
+        self.assertEqual(
+            Booking.objects.filter(approved=True).count(),
+            approved_bookings+1
+        )

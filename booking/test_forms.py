@@ -115,3 +115,17 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('last_name', form.errors.keys())
         self.assertEqual(form.errors['last_name'][0], 'This field is required.')
+    
+    # Test that the CustomSignUpForm first name field must be letters only.
+    def test_customsignupform_first_name_field_is_letters(self):
+        form = CustomSignUpForm({'first_name': '11112222abc'})
+        self.assertFalse(form.is_valid())
+        self.assertIn('first_name', form.errors.keys())
+        self.assertEqual(form.errors['first_name'][0], 'Only letters are allowed.')
+
+    # Test that the CustomSignUpForm last name field must be letters only.
+    def test_customsignupform_last_name_field_is_letters(self):
+        form = CustomSignUpForm({'last_name': '11112222abc'})
+        self.assertFalse(form.is_valid())
+        self.assertIn('last_name', form.errors.keys())
+        self.assertEqual(form.errors['last_name'][0], 'Only letters are allowed.')

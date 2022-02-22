@@ -129,3 +129,13 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('last_name', form.errors.keys())
         self.assertEqual(form.errors['last_name'][0], 'Only letters are allowed.')
+
+    # Test that the CustomSignUpForm first name widget is a TextField.
+    def test_customsignupform_first_name_widget_is_textfield(self):
+        form = CustomSignUpForm()
+        self.assertEqual(form.fields['first_name'].widget.__class__.__name__, 'TextInput')
+
+    # Test that the CustomSignUpForm last name widget is a TextField.
+    def test_customsignupform_last_name_widget_is_textfield(self):
+        form = CustomSignUpForm()
+        self.assertEqual(form.fields['last_name'].widget.__class__.__name__, 'TextInput')

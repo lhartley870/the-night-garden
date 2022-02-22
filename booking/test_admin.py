@@ -61,6 +61,10 @@ class TestAdmin(TestCase):
     # Test the allocated_tables mixin method for the TimeSlotAdmin
     # ModelAdmin object.
     def test_timeslot_allocated_tables(self):
+        # Code for testing django admin custom functions adapted from
+        # answers given by giantas and Alex V on this Stack Overflow
+        # post - https://stackoverflow.com/questions/40724534/coverage
+        # -test-django-admin-custom-functions
         time_slot = self.time_slot1
         time_slot_admin = TimeSlotAdmin(TimeSlot, admin.site)
         obj = time_slot_admin.get_object(None, time_slot.id)
@@ -94,7 +98,11 @@ class TestAdmin(TestCase):
     
     # Test the admin approval of booking1 created in setUp above.
     def test_approve_bookings(self):
-
+        # Code for testing admin actions in django adapted from
+        # answers given by catavaran, Wtower and radtek on this
+        # Stack Overflow post - https://stackoverflow.com/questions
+        # /29026779/testing-custom-admin-actions-in-django
+        
         self.username = 'admin5'
         self.password = 'staff**'
         self.user = User.objects.create_superuser(

@@ -4,17 +4,26 @@ from django.contrib.auth.models import User
 from .forms import TimeSlotForm, CustomSignUpForm, BookingForm
 from .models import Table, TimeSlot, Booking
 
+
 # Create your tests here.
 class TestForms(TestCase):
 
     def setUp(self):
 
-        self.user = User.objects.create_user(
+        self.user1 = User.objects.create_user(
             username='usertest',
             password='123',
             email='usertest@gmail.com',
             first_name='Joe',
             last_name='Bloggs',
+        )
+
+        self.user2 = User.objects.create_user(
+            username='usertest2',
+            password='456',
+            email='usertest2@gmail.com',
+            first_name='John',
+            last_name='Smith',
         )
 
         self.table1 = Table.objects.create(
@@ -41,6 +50,40 @@ class TestForms(TestCase):
         self.time_2 = datetime.time(16, 15, 00)
         self.time_3 = datetime.time(17, 15, 00)
         self.time_4 = datetime.time(23, 00, 00)
+
+        self.time_slot1 = TimeSlot.objects.create(
+            time=datetime.time(17, 30, 2)
+        )
+        self.time_slot1.tables.add(self.table1, self.table2)
+
+        self.time_slot2 = TimeSlot.objects.create(
+            time=datetime.time(20, 30, 00)
+        )
+        self.time_slot2.tables.add(self.table3, self.table4)
+
+        self.booking1 = Booking.objects.create(
+            date=datetime.date(2022, 3, 12),
+            booker=self.user1,
+            party_size=4,
+            time_slot=self.time_slot1,
+        )
+        self.booking1.tables.add(self.table2,)
+
+        self.booking2 = Booking.objects.create(
+            date=datetime.date(2022, 3, 15),
+            booker=self.user1,
+            party_size=6,
+            time_slot=self.time_slot2,
+        )
+        self.booking2.tables.add(self.table3,)
+
+        self.booking3 = Booking.objects.create(
+            date=datetime.date(2022, 3, 20),
+            booker=self.user2,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking3.tables.add(self.table1)
 
     # Test that the TimeSlotForm time field is required.
     def test_timeslotform_time_field_is_required(self):
@@ -151,21 +194,21 @@ class TestForms(TestCase):
 
     # Test that BookingForm date field is required. 
     def test_bookingform_date_field_is_required(self): 
-        form = BookingForm(user=self.user, data={'date': ''})
+        form = BookingForm(user=self.user1, data={'date': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('date', form.errors.keys())
         self.assertEqual(form.errors['date'][0], 'This field is required.')
 
     # Test that BookingForm party size field is required. 
     def test_bookingform_party_size_field_is_required(self):
-        form = BookingForm(user=self.user, data={'party_size': ''})
+        form = BookingForm(user=self.user1, data={'party_size': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('party_size', form.errors.keys())
         self.assertEqual(form.errors['party_size'][0], 'This field is required.')
 
     # Test that BookingForm time slot field is required. 
     def test_bookingform_time_slot_field_is_required(self):
-        form = BookingForm(user=self.user, data={'time_slot': ''})
+        form = BookingForm(user=self.user1, data={'time_slot': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('time_slot', form.errors.keys())
         self.assertEqual(form.errors['time_slot'][0], 'This field is required.')
@@ -173,15 +216,16 @@ class TestForms(TestCase):
     # Test that the date, party size and time slot fields are named as explicit
     # fields in the BookingForm.
     def test_fields_are_explicit_in_bookingform_metaclass(self):
-        form = BookingForm(user=self.user)
+        form = BookingForm(user=self.user1)
         self.assertEqual(form.Meta.fields, ('date', 'party_size', 'time_slot'))
 
     # Test that the BookingForm party size widget is a Select.
     def test_bookingform_party_size_widget_is_select(self):
-        form = BookingForm(user=self.user)
+        form = BookingForm(user=self.user1)
         self.assertEqual(form.fields['party_size'].widget.__class__.__name__, 'Select')
 
     # Test that the BookingForm date widget is readonly.
     def test_bookingform_date_widget_is_readonly(self):
-        form = BookingForm(user=self.user)
+        form = BookingForm(user=self.user1)
         self.assertTrue(form.fields['date'].widget.attrs['readonly'])
+    

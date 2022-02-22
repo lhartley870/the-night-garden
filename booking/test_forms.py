@@ -175,3 +175,13 @@ class TestForms(TestCase):
     def test_fields_are_explicit_in_bookingform_metaclass(self):
         form = BookingForm(user=self.user)
         self.assertEqual(form.Meta.fields, ('date', 'party_size', 'time_slot'))
+
+    # Test that the BookingForm party size widget is a Select.
+    def test_bookingform_party_size_widget_is_select(self):
+        form = BookingForm(user=self.user)
+        self.assertEqual(form.fields['party_size'].widget.__class__.__name__, 'Select')
+
+    # Test that the BookingForm date widget is readonly.
+    def test_bookingform_date_widget_is_readonly(self):
+        form = BookingForm(user=self.user)
+        self.assertTrue(form.fields['date'].widget.attrs['readonly'])

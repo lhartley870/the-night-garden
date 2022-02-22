@@ -372,10 +372,6 @@ div [role=body] {
 /* for small screen sizes of 600px and up */
 @media screen and (min-width:600px) {
 
-    .main-page-content-inner-container {
-        min-height: 500px;
-    }
-
     .booking-card {
         width: 50%; 
     }
@@ -461,10 +457,6 @@ div [role=body] {
         width: 80px; 
     }
 
-    .main-page-content-inner-container {
-        min-height: 800px;
-    }
-
     .tree-logo {
         height: 25vw;
         width: 25vw;
@@ -513,7 +505,7 @@ div [role=body] {
     }
 
     .main-page-content-inner-container {
-        min-height: 900px;
+        min-height: 800px;
     }
 
     .top-bottom-content-row {

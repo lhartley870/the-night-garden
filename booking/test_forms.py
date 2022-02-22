@@ -101,3 +101,17 @@ class TestForms(TestCase):
         self.assertEqual(
             form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
         )
+    
+    # Test that the CustomSignUpForm first name field is required. 
+    def test_customsignupform_first_name_field_is_required(self):
+        form = CustomSignUpForm({'first_name': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('first_name', form.errors.keys())
+        self.assertEqual(form.errors['first_name'][0], 'This field is required.')
+
+    # Test that the CustomSignUpForm last name field is required. 
+    def test_customsignupform_last_name_field_is_required(self):
+        form = CustomSignUpForm({'last_name': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('last_name', form.errors.keys())
+        self.assertEqual(form.errors['last_name'][0], 'This field is required.')

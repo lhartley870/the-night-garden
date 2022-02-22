@@ -125,7 +125,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %} class="nav-link active"
+                        aria-label="You are on the Contact Us page" {% else %} class="nav-link" 
+                        aria-label="Go to the Contact Us page (does not open in a new tab)" {% endif %}>
                             Contact Us
                             <span><i class="fas fa-leaf"></i></span>
                         </a>

@@ -1,5 +1,6 @@
 import datetime
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .forms import TimeSlotForm, CustomSignUpForm, BookingForm
 from .models import Table, TimeSlot, Booking
 
@@ -7,6 +8,14 @@ from .models import Table, TimeSlot, Booking
 class TestForms(TestCase):
 
     def setUp(self):
+
+        self.user = User.objects.create_user(
+            username='usertest',
+            password='123',
+            email='usertest@gmail.com',
+            first_name='Joe',
+            last_name='Bloggs',
+        )
 
         self.table1 = Table.objects.create(
             name='rose',
@@ -139,3 +148,30 @@ class TestForms(TestCase):
     def test_customsignupform_last_name_widget_is_textfield(self):
         form = CustomSignUpForm()
         self.assertEqual(form.fields['last_name'].widget.__class__.__name__, 'TextInput')
+
+    # Test that BookingForm date field is required. 
+    def test_bookingform_date_field_is_required(self): 
+        form = BookingForm(user=self.user, data={'date': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('date', form.errors.keys())
+        self.assertEqual(form.errors['date'][0], 'This field is required.')
+
+    # Test that BookingForm party size field is required. 
+    def test_bookingform_party_size_field_is_required(self):
+        form = BookingForm(user=self.user, data={'party_size': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('party_size', form.errors.keys())
+        self.assertEqual(form.errors['party_size'][0], 'This field is required.')
+
+    # Test that BookingForm time slot field is required. 
+    def test_bookingform_time_slot_field_is_required(self):
+        form = BookingForm(user=self.user, data={'time_slot': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('time_slot', form.errors.keys())
+        self.assertEqual(form.errors['time_slot'][0], 'This field is required.')
+
+    # Test that the date, party size and time slot fields are named as explicit
+    # fields in the BookingForm.
+    def test_fields_are_explicit_in_bookingform_metaclass(self):
+        form = BookingForm(user=self.user)
+        self.assertEqual(form.Meta.fields, ('date', 'party_size', 'time_slot'))

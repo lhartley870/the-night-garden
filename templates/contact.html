@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid h-100 px-0 overflow-hidden main-page-content-outer-container">
+    <div class="row h-100 g-0">
+
+        <!-- Column containing restaurant contact information -->
+        <div class="col-12 d-flex justify-content-center align-items-center main-page-content-inner-container col-md-6 order-md-2">
+            <div class="row g-0 d-flex justify-content-center">
+                <div class="col-12 w-75 d-flex flex-column justify-content-center px-sm-5 px-md-2 px-lg-3 px-xl-4 px-xxl-5">
+                    <!-- Row containing heading -->
+                    <div class="row pb-xxl-4">
+                        <div class="col text-center">
+                            <h1 class="mb-xxl-0">Contact Us</h1>
+                        </div>
+                    </div>
+                    <!-- Row containing information on opening hours and sitting times -->
+                    <div class="row">
+                        <div class="col text-center">
+                            <p class="mb-0">
+                                We are open Wednesday to Sunday with 2 hour sittings at 5:30pm, 6pm, 7:30pm, 8pm, 9:30pm and 10pm.
+                                We are closed Mondays and Tuesdays and from 24 December until after the New Year.
+                                Outdoor heaters and blankets are provided during the winter months.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Row containing restaurant butterfly logo -->
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <img id="butterfly-logo" src="https://res.cloudinary.com/lhartley/image/upload/v1644164468/pink_butterfly_logo_xnvv16.svg" 
+                                alt="restaurant logo of a pink butterfly">
+                        </div>
+                    </div>
+                    <!-- Row containing information on restaurant location and contact details -->
+                    <div class="row">
+                        <div class="col text-center">
+                            <p class="mb-0">
+                                We are located at 24 Park Gardens, Bute Park & Arboretum, Castle St, Cardiff CF10 1BJ, signposted inside the Park.
+                                If you have any queries, please get in touch by telephone on 029 9496 0015 or by email at infothenightgarden@gmail.com.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column containing background image -->
+        <div class="col-12 main-page-content-inner-container col-md-6 order-md-1" id="contact-pg-image-outer-container">
+            <div class="h-100 image-inner-container"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

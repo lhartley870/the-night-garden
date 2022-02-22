@@ -27,3 +27,23 @@ class TestForms(TestCase):
             name='violet',
             size=8
         )
+
+    # Test that the TimeSlotForm time field is required.
+    def test_timeslotform_time_field_is_required(self):
+        form = TimeSlotForm({'time': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('time', form.errors.keys())
+        self.assertEqual(form.errors['time'][0], 'This field is required.')
+
+    # Test that the TimeSlotForm tables field is required.
+    def test_timeslotform_tables_field_is_required(self):
+        form = TimeSlotForm({'tables': ''})
+        self.assertFalse(form.is_valid())
+        self.assertIn('tables', form.errors.keys())
+        self.assertEqual(form.errors['tables'][0], 'This field is required.')
+    
+    # Test that the time and tables fields are named as explicit
+    # fields in the TimeSlotForm.
+    def test_fields_are_explicit_in_timeslotform_metaclass(self):
+        form = TimeSlotForm()
+        self.assertEqual(form.Meta.fields, ('time', 'tables')) 

@@ -759,4 +759,9 @@ class CancelBooking(View):
 
 class Menus(View):
     def get(self, request):
-        return render(request, "menus.html",)
+        return render(request, "menus.html")
+
+
+class ContactUs(View):
+    def get(self, request):
+        return render(request, "contact.html")

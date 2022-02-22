@@ -26,4 +26,5 @@ urlpatterns = [
          views.CancelBooking.as_view(),
          name='cancel_booking'),
     path('menus', views.Menus.as_view(), name='menus'),
+    path('contact', views.ContactUs.as_view(), name='contact'),
 ]

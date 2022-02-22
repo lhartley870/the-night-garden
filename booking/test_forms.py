@@ -28,6 +28,11 @@ class TestForms(TestCase):
             size=8
         )
 
+        self.time_1 = datetime.time(18, 30, 2)
+        self.time_2 = datetime.time(16, 15, 00)
+        self.time_3 = datetime.time(17, 15, 00)
+        self.time_4 = datetime.time(23, 00, 00)
+
     # Test that the TimeSlotForm time field is required.
     def test_timeslotform_time_field_is_required(self):
         form = TimeSlotForm({'time': ''})
@@ -46,4 +51,53 @@ class TestForms(TestCase):
     # fields in the TimeSlotForm.
     def test_fields_are_explicit_in_timeslotform_metaclass(self):
         form = TimeSlotForm()
-        self.assertEqual(form.Meta.fields, ('time', 'tables')) 
+        self.assertEqual(form.Meta.fields, ('time', 'tables'))
+    
+    # Test the TimeSlotForm clean_time method for a valid time.
+    def test_timeslot_form_clean_time_method_valid_time(self):
+        data = {
+            "time": self.time_1,
+            "tables": (self.table1, self.table2)
+        }
+
+        form = TimeSlotForm(data)
+        self.assertTrue(form.is_valid())
+    
+    # Test the TimeSlotForm clean_time method for an invalid early time.
+    def test_timeslot_form_clean_time_method_invalid_early_time(self):
+        data = {
+            "time": self.time_2,
+            "tables": (self.table1, self.table2)
+        }
+
+        form = TimeSlotForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
+        )
+
+    # Test the TimeSlotForm clean_time method for an invalid early time after 5pm.
+    def test_timeslot_form_clean_time_method_invalid_early_time_after_5(self):
+        data = {
+            "time": self.time_3,
+            "tables": (self.table1, self.table2)
+        }
+
+        form = TimeSlotForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
+        )
+
+    # Test the TimeSlotForm clean_time method for an invalid late time.
+    def test_timeslot_form_clean_time_method_invalid_late_time(self):
+        data = {
+            "time": self.time_4,
+            "tables": (self.table1, self.table2)
+        }
+
+        form = TimeSlotForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
+        )

@@ -300,6 +300,17 @@ div [role=body] {
     color: #B15739;
 }
 
+/* contact page */
+
+#contact-pg-image-outer-container {
+    background: #3D6C77 url('https://res.cloudinary.com/lhartley/image/upload/v1644171038/garden-path_qjgba3.jpg') center center / cover no-repeat; 
+}
+
+#butterfly-logo {
+    height: 20vw;
+    width: 20vw;
+}
+
 /* signup page */
 
 #signup_form .form-group {

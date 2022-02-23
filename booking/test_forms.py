@@ -46,13 +46,13 @@ class TestForms(TestCase):
             size=8
         )
 
-        self.time_1 = datetime.time(18, 30, 2)
+        self.time_1 = datetime.time(18, 30, 00)
         self.time_2 = datetime.time(16, 15, 00)
         self.time_3 = datetime.time(17, 15, 00)
         self.time_4 = datetime.time(23, 00, 00)
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(17, 30, 2)
+            time=datetime.time(17, 30, 00)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
@@ -228,38 +228,24 @@ class TestForms(TestCase):
     def test_bookingform_date_widget_is_readonly(self):
         form = BookingForm(user=self.user1)
         self.assertTrue(form.fields['date'].widget.attrs['readonly'])
-    
+
     # Test the BookingForm clean_date method for a valid date and new booking.
     def test_booking_form_clean_date_method_valid_date_new_booking(self):
-       
-        self.time_slot3 = TimeSlot.objects.create(
-            time=datetime.time(22, 00, 00)
-        )
-        self.time_slot3.tables.add(self.table1, self.table2)
-
         data = {
             "date": datetime.date(2022, 3, 25),
             "party_size": 4,
-            "time_slot": self.time_slot3,
+            "time_slot": self.time_slot1,
         }
-
         form = BookingForm(user=self.user1, data=data)
         self.assertTrue(form.is_valid())
 
     # Test the BookingForm clean_date method for an invalid date and new booking.
     def test_booking_form_clean_date_method_invalid_date_new_booking(self):
-       
-        self.time_slot3 = TimeSlot.objects.create(
-            time=datetime.time(22, 00, 00)
-        )
-        self.time_slot3.tables.add(self.table1, self.table2)
-
         data = {
             "date": datetime.date(2022, 3, 12),
             "party_size": 4,
-            "time_slot": self.time_slot3,
+            "time_slot": self.time_slot1,
         }
-
         form = BookingForm(user=self.user1, data=data)
         self.assertFalse(form.is_valid())
         self.assertEqual(

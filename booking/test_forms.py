@@ -251,3 +251,14 @@ class TestForms(TestCase):
         self.assertEqual(
             form.errors['date'], ["You can only have one booking per day"]
         )
+
+    # Test the BookingForm clean_date method for editing a booking to another valid date.
+    def test_booking_form_clean_date_method_valid_date_edited_booking(self):
+        data = {
+            "date": datetime.date(2022, 3, 13),
+            "party_size": 4,
+            "time_slot": self.time_slot1,
+        }
+        self.client.login(username='usertest', password='123')
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertTrue(form.is_valid())

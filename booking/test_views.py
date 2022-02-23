@@ -84,3 +84,22 @@ class TestForms(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'contact.html')
+    
+    # Check that a booking can be deleted.
+    def test_can_delete_booking(self):
+        self.client.login(username='usertest', password='123')
+
+        booking2 = Booking.objects.create(
+            date=datetime.date(2022, 4, 25),
+            booker=self.user,
+            party_size=4,
+            time_slot=self.time_slot1,
+        )
+        booking2.tables.add(self.table2)
+
+        response = self.client.post(reverse(
+                                    'cancel_booking',
+                                    args=[booking2.id]))
+        self.assertRedirects(response, reverse('my_bookings'))
+        booking2_matches = Booking.objects.filter(id=booking2.id)
+        self.assertEqual(len(booking2_matches), 0)

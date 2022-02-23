@@ -59,11 +59,13 @@ class TestModels(TestCase):
 
     # Test the string method for the Table model.
     def test_table_string_method_returns_table_name(self):
-        self.assertEqual(str(self.table1), 'rose')
+        table = Table.objects.get(pk=self.table1.pk)
+        self.assertEqual(str(table.name), 'rose')
 
     # Test the NameField field subclass for the Table model.
     def test_namefield_creates_lowercase_table_name(self):
-        self.assertEqual(self.table2.name, 'lily')
+        table = Table.objects.get(pk=self.table2.pk)
+        self.assertEqual(table.name, 'lily')
 
     # Test the string method for the TimeSlot model.
     def test_timeslot_string_method_returns_time_in_hrs_and_mins(self):

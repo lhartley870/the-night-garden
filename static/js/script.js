@@ -1,12 +1,14 @@
 // wait for the DOM to finish loading before adding interactivity
-// add a Gijgo datepicker to the date field of the booking form
 $(document).ready(function() {
-
     addDatepicker();
     displayDateFieldErrors();
     fadeOutAlerts();
 });
 
+/**
+ * This function adds a Gijgo datepicker to the date field of the booking form
+ * on the Make a Booking and the Edit a Booking pages.
+ */
 function addDatepicker() {
     /* configuration for the Gijgo datepicker and the minDate and maxDate function
     code taken and adapted from the gijgo website - https://gijgo.com/ */
@@ -40,10 +42,12 @@ function addDatepicker() {
     });
 }
 
+/**
+ * This function is necessary to make sure that any errors for the date field in the booking form on the
+ * Make a Booking and Edit a Booking pages can be seen by the user as without this function, error messages are
+ * not visible due to the inclusion of the datepicker and the way it changes the usual form structure.
+ */
 function displayDateFieldErrors() {
-   /* This code is necessary to make sure that errors for the date field in the booking form on the Make a
-    Booking and Edit a Booking pages can be seen by the user as currently they are not visible due to the inclusion
-    of the datepicker */
     let date_error = $('#error_1_id_date').html()
 
     if (date_error !== undefined) {
@@ -53,6 +57,9 @@ function displayDateFieldErrors() {
     }
 }
 
+/**
+ * This function fades out success alerts.
+ */
 function fadeOutAlerts() {
     $(".alert-success").fadeTo(9000, 0).slideUp(500);
 }

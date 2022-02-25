@@ -79,13 +79,21 @@ All of the restaurant logo illustrations used on the website were generated with
 
 With thanks, the photos appearing on the website were taken by the following photographers: 
 
-* 
+* From [Unsplash](https://unsplash.com/):
+   * Home Page - [Tea lights photo](https://unsplash.com/photos/lInmrunal_M) by Mister B.
+   * Register Page - [Blue flowers photo](https://unsplash.com/photos/qzoSJlPxS9k) by Tomoko Uji.
+   * Login Page - [Woman pouring champage at an outdoor dining table photo](https://unsplash.com/photos/RygIdTavhkQ) by Dave Lastovskiy.
+   * Make a Booking Page - [Wine and food served in ceramic bowls photo](https://unsplash.com/photos/xIFbDeGcy44) by Stefan Johnson.
+   * Edit a Booking Page - [Leaves silhouette over entranceway with amber lights in the background photo](https://unsplash.com/photos/rfGVU1diIns) by Artem Kniaz.
+   * Contact Us Page - [Purple flowers surrounding a lit up path photo](https://unsplash.com/photos/R_c77Rx9UzM) by Cee.
+   * Logout Page - [Light up flowers photo](https://unsplash.com/photos/F2fsUga_HU8) by Arisa Chattasa.
       
 ### Content
 
-* 
+* The recipe names shown on the summer and winter menus were taken from the [BBC Good Food website](https://www.bbcgoodfood.com/) and the [Delicious Magazine website](https://www.deliciousmagazine.co.uk/).
 
 ### Acknowledgments
 
 Many thanks to:
-* 
+* My mentor, Brian Macharia, for his help and guidance.
+* The Code Institute tutors for their support. 

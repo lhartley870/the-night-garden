@@ -1,6 +1,13 @@
 // wait for the DOM to finish loading before adding booking form interactivity
 // add a Gijgo datepicker to the date field of the booking form
 $(document).ready(function() {
+
+    addDatepicker();
+    displayDateFieldErrors();
+
+});
+
+function addDatepicker() {
     /* configuration for the Gijgo datepicker and the minDate and maxDate function
     code taken and adapted from the gijgo website - https://gijgo.com/ */
     $('#id_date').datepicker({
@@ -31,8 +38,10 @@ $(document).ready(function() {
         },
         uiLibrary: 'bootstrap4',
     });
+}
 
-    /* This code is necessary to make sure that errors for the date field in the booking form on the Make a
+function displayDateFieldErrors() {
+   /* This code is necessary to make sure that errors for the date field in the booking form on the Make a
     Booking and Edit a Booking pages can be seen by the user as currently they are not visible due to the inclusion
     of the datepicker */
     let date_error = $('#error_1_id_date').html()
@@ -42,4 +51,4 @@ $(document).ready(function() {
         $('#date-error').addClass("error-feedback")
         $('.gj-datepicker').addClass("error-container")
     }
-});
+}

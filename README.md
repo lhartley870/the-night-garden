@@ -7,7 +7,7 @@ The site's admin user can manage the restaurant tables and time slots for sittin
 
 The live project can be viewed [here](https://the-night-garden.herokuapp.com/). 
 
-![Responsive view of live website Home page](/readme-documents/screenshots/home-page-screenshot.png)
+![Responsive view of live website Home page](/readme-documents/screenshots/home-pg-screenshot.png)
 
 ## Restaurant Business Model
 The restaurant is currently designed to have an intimate feel and so only holds a maximum of 32 guests at any one time. The restaurant has 2 hour 'sittings' at 5:30pm, 6pm, 7:30pm, 8pm, 9:30pm and 10pm.

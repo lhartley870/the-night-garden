@@ -230,7 +230,7 @@ a:focus {
 .form-control,
 .fa-calendar,
 .form-control:focus {
-    color: #37606D;
+    color: #3D6C77;
 }
 
 .booking-button {
@@ -260,6 +260,9 @@ div [role=body] {
 .gj-picker-bootstrap table tr td.disabled div, 
 .gj-picker-bootstrap table tr td.other-month div {
     color: #806A60;
+}
+
+.gj-picker-bootstrap table tr td.disabled div {
     text-decoration-line: line-through;
 }
 
@@ -556,7 +559,6 @@ div [role=body] {
     .signup-pg-content-container {
         min-height: 1200px;
     }
-
 }
 
 /* for extra extra large screen sizes of 3000px and up */

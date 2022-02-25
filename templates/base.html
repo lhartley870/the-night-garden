@@ -143,6 +143,11 @@
                     </li>
                     {% endif %}
                 </ul>
+                <span class="navbar-text">
+                    {% if user.is_authenticated %}
+                    <i class="fa-solid fa-user-large"></i> {{ user.username }}
+                    {% endif %}
+                </span>
             </div>
         </div>
     </nav>

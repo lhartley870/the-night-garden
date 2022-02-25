@@ -1,10 +1,10 @@
-// wait for the DOM to finish loading before adding booking form interactivity
+// wait for the DOM to finish loading before adding interactivity
 // add a Gijgo datepicker to the date field of the booking form
 $(document).ready(function() {
 
     addDatepicker();
     displayDateFieldErrors();
-
+    fadeOutAlerts();
 });
 
 function addDatepicker() {
@@ -51,4 +51,8 @@ function displayDateFieldErrors() {
         $('#date-error').addClass("error-feedback")
         $('.gj-datepicker').addClass("error-container")
     }
+}
+
+function fadeOutAlerts() {
+    $(".alert-success").fadeTo(10000, 0).slideUp(500);
 }

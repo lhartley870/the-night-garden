@@ -23,7 +23,7 @@ function addDatepicker() {
             new Date(2022, 11, 29),
             new Date(2022, 11, 30),
             new Date(2022, 11, 31),
-            new Date(2023, 00, 01),
+            new Date(2023, 0, 01),
         ],
         format: 'yyyy-mm-dd',
         iconsLibrary: 'fontawesome',
@@ -48,12 +48,12 @@ function addDatepicker() {
  * not visible due to the inclusion of the datepicker and the way it changes the usual form structure.
  */
 function displayDateFieldErrors() {
-    let date_error = $('#error_1_id_date').html()
+    let date_error = $('#error_1_id_date').html();
 
     if (date_error !== undefined) {
-        $('#div_id_date').after(`<p id="date-error">${date_error}</p>`)
-        $('#date-error').addClass("error-feedback")
-        $('.gj-datepicker').addClass("error-container")
+        $('#div_id_date').after(`<p id="date-error">${date_error}</p>`);
+        $('#date-error').addClass("error-feedback");
+        $('.gj-datepicker').addClass("error-container");
     }
 }
 

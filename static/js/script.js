@@ -54,5 +54,5 @@ function displayDateFieldErrors() {
 }
 
 function fadeOutAlerts() {
-    $(".alert-success").fadeTo(10000, 0).slideUp(500);
+    $(".alert-success").fadeTo(9000, 0).slideUp(500);
 }

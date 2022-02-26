@@ -457,3 +457,10 @@ class TestForms(TestCase):
         # https://stackoverflow.com/questions/17685023/how-do-i-test-
         # django-querysets-are-equal
         self.assertQuerysetEqual(form.get_timeslot_tables(time_slot), time_slot_tables, transform=lambda x: x)
+
+    # Test BookingForm get_timeslot_capacity method.
+    def test_booking_form_get_timeslot_capacity_method(self):
+        form = BookingForm(user=None)
+        time_slot = self.time_slot1
+        time_slot_tables = Table.objects.filter(table_timeslots=time_slot)
+        self.assertEqual(form.get_timeslot_capacity(time_slot_tables), 6)

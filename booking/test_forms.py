@@ -72,19 +72,21 @@ class TestForms(TestCase):
         self.time_3 = time(17, 15)
         self.time_4 = time(23, 00)
 
+        self.time_now = datetime.datetime.now()
+        self.one_hour_ago = self.time_now - timedelta(hours=1)
+        self.one_hour_forward = self.time_now + timedelta(hours=1)
+        self.two_hours_forward = self.time_now + timedelta(hours=2)
+        self.four_hours_forward = self.time_now + timedelta(hours=4)
+
         self.time_slot1 = TimeSlot.objects.create(
-            time=time(17, 30)
+            time=time(self.two_hours_forward.hour, self.two_hours_forward.minute)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=time(20, 00)
+            time=time(self.four_hours_forward.hour, self.four_hours_forward.minute)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
-
-        self.time_now = datetime.datetime.now()
-        self.one_hour_ago = self.time_now - timedelta(hours=1)
-        self.one_hour_forward = self.time_now + timedelta(hours=1)
 
         self.time_slot3 = TimeSlot.objects.create(
             time=time(self.one_hour_ago.hour, self.one_hour_ago.minute)

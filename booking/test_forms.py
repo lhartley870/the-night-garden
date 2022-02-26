@@ -262,3 +262,43 @@ class TestForms(TestCase):
         self.client.login(username='usertest', password='123')
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_date method for editing a booking to another invalid date.
+    def test_booking_form_clean_date_method_invalid_date_edited_booking(self):
+        data = {
+            "date": datetime.date(2022, 3, 15),
+            "party_size": 4,
+            "time_slot": self.time_slot1,
+        }
+        self.client.login(username='usertest', password='123')
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['date'], ["You can only have one booking per day"]
+        )
+
+    # Test the BookingForm clean_date method for editing a booking for the same date
+    # but with a different party_size.
+    def test_booking_form_clean_date_method_same_date_edited_booking(self):
+        data = {
+            "date": datetime.date(2022, 3, 12),
+            "party_size": 3,
+            "time_slot": self.time_slot1,
+        }
+        self.client.login(username='usertest', password='123')
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_date method for editing another user's booking.
+    def test_booking_form_clean_date_method_edit_another_user_booking(self):
+        data = {
+            "date": datetime.date(2022, 3, 17),
+            "party_size": 3,
+            "time_slot": self.time_slot1,
+        }
+        self.client.login(username='usertest', password='123')
+        form = BookingForm(user=self.user1, data=data, instance=self.booking3)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['date'], ["You cannot change another guest's booking"]
+        )

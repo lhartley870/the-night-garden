@@ -9,6 +9,7 @@ from .models import Table, TimeSlot, Booking
 # Create your tests here.
 class TestForms(TestCase):
 
+    # Set up test users, tables, times, time_slots and bookings.
     def setUp(self):
 
         self.user1 = User.objects.create_user(
@@ -79,12 +80,18 @@ class TestForms(TestCase):
         self.four_hours_forward = self.time_now + timedelta(hours=4)
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=time(self.two_hours_forward.hour, self.two_hours_forward.minute)
+            time=time(
+                self.two_hours_forward.hour,
+                self.two_hours_forward.minute
+            )
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=time(self.four_hours_forward.hour, self.four_hours_forward.minute)
+            time=time(
+                self.four_hours_forward.hour,
+                self.four_hours_forward.minute
+            )
         )
         self.time_slot2.tables.add(self.table3, self.table4)
 
@@ -137,13 +144,13 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('tables', form.errors.keys())
         self.assertEqual(form.errors['tables'][0], 'This field is required.')
-    
+
     # Test that the time and tables fields are named as explicit
     # fields in the TimeSlotForm.
     def test_fields_are_explicit_in_timeslotform_metaclass(self):
         form = TimeSlotForm()
         self.assertEqual(form.Meta.fields, ('time', 'tables'))
-    
+
     # Test the TimeSlotForm clean_time method for a valid time.
     def test_timeslot_form_clean_time_method_valid_time(self):
         data = {
@@ -153,7 +160,7 @@ class TestForms(TestCase):
 
         form = TimeSlotForm(data)
         self.assertTrue(form.is_valid())
-    
+
     # Test the TimeSlotForm clean_time method for an invalid early time.
     def test_timeslot_form_clean_time_method_invalid_early_time(self):
         data = {
@@ -167,7 +174,8 @@ class TestForms(TestCase):
             form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
         )
 
-    # Test the TimeSlotForm clean_time method for an invalid early time after 5pm.
+    # Test the TimeSlotForm clean_time method for an invalid early time
+    # after 5pm.
     def test_timeslot_form_clean_time_method_invalid_early_time_after_5(self):
         data = {
             "time": self.time_3,
@@ -192,65 +200,89 @@ class TestForms(TestCase):
         self.assertEqual(
             form.errors['time'], ["Time slots must be between 17:30 and 22:00"]
         )
-    
-    # Test that the CustomSignUpForm first name field is required. 
+
+    # Test that the CustomSignUpForm first name field is required.
     def test_customsignupform_first_name_field_is_required(self):
         form = CustomSignUpForm({'first_name': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('first_name', form.errors.keys())
-        self.assertEqual(form.errors['first_name'][0], 'This field is required.')
+        self.assertEqual(
+            form.errors['first_name'][0],
+            'This field is required.'
+        )
 
-    # Test that the CustomSignUpForm last name field is required. 
+    # Test that the CustomSignUpForm last name field is required.
     def test_customsignupform_last_name_field_is_required(self):
         form = CustomSignUpForm({'last_name': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('last_name', form.errors.keys())
-        self.assertEqual(form.errors['last_name'][0], 'This field is required.')
-    
+        self.assertEqual(
+            form.errors['last_name'][0],
+            'This field is required.'
+        )
+
     # Test that the CustomSignUpForm first name field must be letters only.
     def test_customsignupform_first_name_field_is_letters(self):
         form = CustomSignUpForm({'first_name': '11112222abc'})
         self.assertFalse(form.is_valid())
         self.assertIn('first_name', form.errors.keys())
-        self.assertEqual(form.errors['first_name'][0], 'Only letters are allowed.')
+        self.assertEqual(
+            form.errors['first_name'][0],
+            'Only letters are allowed.'
+        )
 
     # Test that the CustomSignUpForm last name field must be letters only.
     def test_customsignupform_last_name_field_is_letters(self):
         form = CustomSignUpForm({'last_name': '11112222abc'})
         self.assertFalse(form.is_valid())
         self.assertIn('last_name', form.errors.keys())
-        self.assertEqual(form.errors['last_name'][0], 'Only letters are allowed.')
+        self.assertEqual(
+            form.errors['last_name'][0],
+            'Only letters are allowed.'
+        )
 
     # Test that the CustomSignUpForm first name widget is a TextField.
     def test_customsignupform_first_name_widget_is_textfield(self):
         form = CustomSignUpForm()
-        self.assertEqual(form.fields['first_name'].widget.__class__.__name__, 'TextInput')
+        self.assertEqual(
+            form.fields['first_name'].widget.__class__.__name__,
+            'TextInput'
+        )
 
     # Test that the CustomSignUpForm last name widget is a TextField.
     def test_customsignupform_last_name_widget_is_textfield(self):
         form = CustomSignUpForm()
-        self.assertEqual(form.fields['last_name'].widget.__class__.__name__, 'TextInput')
+        self.assertEqual(
+            form.fields['last_name'].widget.__class__.__name__,
+            'TextInput'
+        )
 
-    # Test that BookingForm date field is required. 
-    def test_bookingform_date_field_is_required(self): 
+    # Test that BookingForm date field is required.
+    def test_bookingform_date_field_is_required(self):
         form = BookingForm(user=self.user1, data={'date': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('date', form.errors.keys())
         self.assertEqual(form.errors['date'][0], 'This field is required.')
 
-    # Test that BookingForm party size field is required. 
+    # Test that BookingForm party size field is required.
     def test_bookingform_party_size_field_is_required(self):
         form = BookingForm(user=self.user1, data={'party_size': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('party_size', form.errors.keys())
-        self.assertEqual(form.errors['party_size'][0], 'This field is required.')
+        self.assertEqual(
+            form.errors['party_size'][0],
+            'This field is required.'
+        )
 
-    # Test that BookingForm time slot field is required. 
+    # Test that BookingForm time slot field is required.
     def test_bookingform_time_slot_field_is_required(self):
         form = BookingForm(user=self.user1, data={'time_slot': ''})
         self.assertFalse(form.is_valid())
         self.assertIn('time_slot', form.errors.keys())
-        self.assertEqual(form.errors['time_slot'][0], 'This field is required.')
+        self.assertEqual(
+            form.errors['time_slot'][0],
+            'This field is required.'
+        )
 
     # Test that the date, party size and time slot fields are named as explicit
     # fields in the BookingForm.
@@ -261,7 +293,10 @@ class TestForms(TestCase):
     # Test that the BookingForm party size widget is a Select.
     def test_bookingform_party_size_widget_is_select(self):
         form = BookingForm(user=self.user1)
-        self.assertEqual(form.fields['party_size'].widget.__class__.__name__, 'Select')
+        self.assertEqual(
+            form.fields['party_size'].widget.__class__.__name__,
+            'Select'
+        )
 
     # Test that the BookingForm date widget is readonly.
     def test_bookingform_date_widget_is_readonly(self):
@@ -278,7 +313,8 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_date method for an invalid date and new booking.
+    # Test the BookingForm clean_date method for an invalid date
+    # and new booking.
     def test_booking_form_clean_date_method_invalid_date_new_booking(self):
         data = {
             "date": self.today + timedelta(days=14),
@@ -291,7 +327,8 @@ class TestForms(TestCase):
             form.errors['date'], ["You can only have one booking per day"]
         )
 
-    # Test the BookingForm clean_date method for editing a booking to another valid date.
+    # Test the BookingForm clean_date method for editing a booking
+    # to another valid date.
     def test_booking_form_clean_date_method_valid_date_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=15),
@@ -301,7 +338,8 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_date method for editing a booking to another invalid date.
+    # Test the BookingForm clean_date method for editing a
+    # booking to another invalid date.
     def test_booking_form_clean_date_method_invalid_date_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=17),
@@ -314,8 +352,8 @@ class TestForms(TestCase):
             form.errors['date'], ["You can only have one booking per day"]
         )
 
-    # Test the BookingForm clean_date method for editing a booking for the same date
-    # but with a different party_size.
+    # Test the BookingForm clean_date method for editing a booking for
+    # the same date but with a different party_size.
     def test_booking_form_clean_date_method_same_date_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=14),
@@ -325,7 +363,8 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_date method for editing another user's booking.
+    # Test the BookingForm clean_date method for editing another
+    # user's booking.
     def test_booking_form_clean_date_method_edit_another_user_booking(self):
         data = {
             "date": self.today + timedelta(days=19),
@@ -337,8 +376,9 @@ class TestForms(TestCase):
         self.assertEqual(
             form.errors['date'], ["You cannot change another guest's booking"]
         )
-    
-    # Test the BookingForm clean_time_slot method for a new booking today for a time in the past.
+
+    # Test the BookingForm clean_time_slot method for a new booking today
+    # for a time in the past.
     def test_booking_form_clean_time_new_booking_today_time_in_past(self):
         data = {
             "date": self.today,
@@ -348,10 +388,12 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data)
         self.assertFalse(form.is_valid())
         self.assertEqual(
-            form.errors['time_slot'], ["You cannot book for a time in the past"]
+            form.errors['time_slot'],
+            ["You cannot book for a time in the past"]
         )
 
-    # Test the BookingForm clean_time_slot method for a new booking today for a time in the future.
+    # Test the BookingForm clean_time_slot method for a new booking today
+    # for a time in the future.
     def test_booking_form_clean_time_new_booking_today_time_in_future(self):
         data = {
             "date": self.today,
@@ -361,7 +403,8 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_time_slot method for an edited booking today for a time in the past.
+    # Test the BookingForm clean_time_slot method for an edited booking
+    # today for a time in the past.
     def test_booking_form_clean_time_edited_booking_today_time_in_past(self):
         data = {
             "date": self.today,
@@ -371,10 +414,12 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertFalse(form.is_valid())
         self.assertEqual(
-            form.errors['time_slot'], ["You cannot book for a time in the past"]
+            form.errors['time_slot'],
+            ["You cannot book for a time in the past"]
         )
 
-    # Test the BookingForm clean_time_slot method for an edited booking today for a time in the future.
+    # Test the BookingForm clean_time_slot method for an edited booking
+    # today for a time in the future.
     def test_booking_form_clean_time_edited_booking_today_time_in_future(self):
         data = {
             "date": self.today,
@@ -384,8 +429,9 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_time_slot method for a new booking not today where there
-    # is enough seating capacity for the booking in the chosen time_slot.
+    # Test the BookingForm clean_time_slot method for a new booking
+    # not today where there is enough seating capacity for the booking
+    # in the chosen time_slot.
     def test_booking_form_clean_time_valid_new_booking(self):
         data = {
             "date": self.today + timedelta(days=22),
@@ -395,8 +441,9 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_time_slot method for an edited booking on a
-    # different date where there is enough seating capacity for the amended booking.
+    # Test the BookingForm clean_time_slot method for an edited booking
+    # on a different date where there is enough seating capacity for the
+    # amended booking.
     def test_booking_form_clean_time_valid_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=22),
@@ -406,10 +453,11 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_time_slot method for an edited booking for the same
-    # date and time_slot as the original booking but for a different party_size
-    # where there is enough seating capacity for the amended booking taking into
-    # account the seating capacity that was allocated to the original booking.
+    # Test the BookingForm clean_time_slot method for an edited booking for
+    # the same date and time_slot as the original booking but for a different
+    # party_size where there is enough seating capacity for the amended booking
+    # taking into account the seating capacity that was allocated to the
+    # original booking.
     def test_booking_form_clean_time_valid_same_day_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=14),
@@ -419,8 +467,9 @@ class TestForms(TestCase):
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
-    # Test the BookingForm clean_time_slot method for a new booking not today where there
-    # is not enough seating capacity for the booking in the chosen time_slot.
+    # Test the BookingForm clean_time_slot method for a new booking not today
+    # where there is not enough seating capacity for the booking in the
+    # chosen time_slot.
     def test_booking_form_clean_time_invalid_new_booking(self):
         data = {
             "date": self.today + timedelta(days=22),
@@ -433,8 +482,9 @@ class TestForms(TestCase):
             form.errors['time_slot'], ["Sorry this booking is unavailable"]
         )
 
-    # Test the BookingForm clean_time_slot method for an edited booking not today where there
-    # is not enough seating capacity for the booking in the chosen time_slot.
+    # Test the BookingForm clean_time_slot method for an edited booking
+    # not today where there is not enough seating capacity for the booking
+    # in the chosen time_slot.
     def test_booking_form_clean_time_invalid_edited_booking(self):
         data = {
             "date": self.today + timedelta(days=22),
@@ -456,7 +506,10 @@ class TestForms(TestCase):
         # an answer given by dspacejs on this Stack Overflow post -
         # https://stackoverflow.com/questions/17685023/how-do-i-test-
         # django-querysets-are-equal
-        self.assertQuerysetEqual(form.get_timeslot_tables(time_slot), time_slot_tables, transform=lambda x: x)
+        self.assertQuerysetEqual(
+            form.get_timeslot_tables(time_slot),
+            time_slot_tables, transform=lambda x: x
+        )
 
     # Test BookingForm get_timeslot_capacity method.
     def test_booking_form_get_timeslot_capacity_method(self):
@@ -468,10 +521,13 @@ class TestForms(TestCase):
     # Test BookingForm get_current_bookings method.
     def test_booking_form_get_current_bookings_method(self):
         form = BookingForm(user=None)
-        date = self.today + timedelta(days=14)
+        test_date = self.today + timedelta(days=14)
         time_slot = self.time_slot1
         booking = Booking.objects.filter(id=self.booking1.id)
-        self.assertQuerysetEqual(form.get_current_bookings(date, time_slot), booking, transform=lambda x: x)
+        self.assertQuerysetEqual(
+            form.get_current_bookings(test_date, time_slot),
+            booking, transform=lambda x: x
+        )
 
     # Test BookingForm get_capacity_booked method.
     def test_booking_form_get_capacity_booked_method(self):

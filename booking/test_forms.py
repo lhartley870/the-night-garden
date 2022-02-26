@@ -1,5 +1,5 @@
 import datetime
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .forms import TimeSlotForm, CustomSignUpForm, BookingForm
@@ -47,20 +47,54 @@ class TestForms(TestCase):
             size=8
         )
 
-        self.time_1 = datetime.time(18, 30)
-        self.time_2 = datetime.time(16, 15)
-        self.time_3 = datetime.time(17, 15)
-        self.time_4 = datetime.time(23, 00)
+        self.table5 = Table.objects.create(
+            name='dahlia',
+            size=2
+        )
+
+        self.table6 = Table.objects.create(
+            name='poppy',
+            size=4
+        )
+
+        self.table7 = Table.objects.create(
+            name='primrose',
+            size=8
+        )
+
+        self.table8 = Table.objects.create(
+            name='daffodil',
+            size=2
+        )
+
+        self.time_1 = time(18, 30)
+        self.time_2 = time(16, 15)
+        self.time_3 = time(17, 15)
+        self.time_4 = time(23, 00)
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(17, 30)
+            time=time(17, 30)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=datetime.time(20, 00)
+            time=time(20, 00)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
+
+        self.time_now = datetime.datetime.now()
+        self.one_hour_ago = self.time_now - timedelta(hours=1)
+        self.one_hour_forward = self.time_now + timedelta(hours=1)
+
+        self.time_slot3 = TimeSlot.objects.create(
+            time=time(self.one_hour_ago.hour, self.one_hour_ago.minute)
+        )
+        self.time_slot3.tables.add(self.table5, self.table6)
+
+        self.time_slot4 = TimeSlot.objects.create(
+            time=time(self.one_hour_forward.hour, self.one_hour_forward.minute)
+        )
+        self.time_slot4.tables.add(self.table7, self.table8)
 
         self.today = date.today()
 
@@ -300,4 +334,113 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['date'], ["You cannot change another guest's booking"]
+        )
+    
+    # Test the BookingForm clean_time_slot method for a new booking today for a time in the past.
+    def test_booking_form_clean_time_new_booking_today_time_in_past(self):
+        data = {
+            "date": self.today,
+            "party_size": 2,
+            "time_slot": self.time_slot3,
+        }
+        form = BookingForm(user=self.user1, data=data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time_slot'], ["You cannot book for a time in the past"]
+        )
+
+    # Test the BookingForm clean_time_slot method for a new booking today for a time in the future.
+    def test_booking_form_clean_time_new_booking_today_time_in_future(self):
+        data = {
+            "date": self.today,
+            "party_size": 2,
+            "time_slot": self.time_slot4,
+        }
+        form = BookingForm(user=self.user1, data=data)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_time_slot method for an edited booking today for a time in the past.
+    def test_booking_form_clean_time_edited_booking_today_time_in_past(self):
+        data = {
+            "date": self.today,
+            "party_size": 2,
+            "time_slot": self.time_slot3,
+        }
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time_slot'], ["You cannot book for a time in the past"]
+        )
+
+    # Test the BookingForm clean_time_slot method for an edited booking today for a time in the future.
+    def test_booking_form_clean_time_edited_booking_today_time_in_future(self):
+        data = {
+            "date": self.today,
+            "party_size": 2,
+            "time_slot": self.time_slot4,
+        }
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_time_slot method for a new booking not today where there
+    # is enough seating capacity for the booking in the chosen time_slot.
+    def test_booking_form_clean_time_valid_new_booking(self):
+        data = {
+            "date": self.today + timedelta(days=22),
+            "party_size": 4,
+            "time_slot": self.time_slot1,
+        }
+        form = BookingForm(user=self.user1, data=data)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_time_slot method for an edited booking on a
+    # different date where there is enough seating capacity for the amended booking.
+    def test_booking_form_clean_time_valid_edited_booking(self):
+        data = {
+            "date": self.today + timedelta(days=22),
+            "party_size": 4,
+            "time_slot": self.time_slot1,
+        }
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_time_slot method for an edited booking for the same
+    # date and time_slot as the original booking but for a different party_size
+    # where there is enough seating capacity for the amended booking taking into
+    # account the seating capacity that was allocated to the original booking.
+    def test_booking_form_clean_time_valid_same_day_edited_booking(self):
+        data = {
+            "date": self.today + timedelta(days=14),
+            "party_size": 6,
+            "time_slot": self.time_slot1,
+        }
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertTrue(form.is_valid())
+
+    # Test the BookingForm clean_time_slot method for a new booking not today where there
+    # is not enough seating capacity for the booking in the chosen time_slot.
+    def test_booking_form_clean_time_invalid_new_booking(self):
+        data = {
+            "date": self.today + timedelta(days=22),
+            "party_size": 6,
+            "time_slot": self.time_slot1,
+        }
+        form = BookingForm(user=self.user1, data=data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time_slot'], ["Sorry this booking is unavailable"]
+        )
+
+    # Test the BookingForm clean_time_slot method for an edited booking not today where there
+    # is not enough seating capacity for the booking in the chosen time_slot.
+    def test_booking_form_clean_time_invalid_edited_booking(self):
+        data = {
+            "date": self.today + timedelta(days=22),
+            "party_size": 6,
+            "time_slot": self.time_slot1,
+        }
+        form = BookingForm(user=self.user1, data=data, instance=self.booking1)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['time_slot'], ["Sorry this booking is unavailable"]
         )

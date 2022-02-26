@@ -1,4 +1,5 @@
 import datetime
+from datetime import date, timedelta
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .forms import TimeSlotForm, CustomSignUpForm, BookingForm
@@ -57,12 +58,14 @@ class TestForms(TestCase):
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=datetime.time(20, 30)
+            time=datetime.time(20, 00)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
 
+        self.today = date.today()
+
         self.booking1 = Booking.objects.create(
-            date=datetime.date(2022, 3, 12),
+            date=self.today + timedelta(days=14),
             booker=self.user1,
             party_size=4,
             time_slot=self.time_slot1,
@@ -70,7 +73,7 @@ class TestForms(TestCase):
         self.booking1.tables.add(self.table2,)
 
         self.booking2 = Booking.objects.create(
-            date=datetime.date(2022, 3, 15),
+            date=self.today + timedelta(days=17),
             booker=self.user1,
             party_size=6,
             time_slot=self.time_slot2,
@@ -78,7 +81,7 @@ class TestForms(TestCase):
         self.booking2.tables.add(self.table3,)
 
         self.booking3 = Booking.objects.create(
-            date=datetime.date(2022, 3, 20),
+            date=self.today + timedelta(days=22),
             booker=self.user2,
             party_size=2,
             time_slot=self.time_slot1,
@@ -232,7 +235,7 @@ class TestForms(TestCase):
     # Test the BookingForm clean_date method for a valid date and new booking.
     def test_booking_form_clean_date_method_valid_date_new_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 25),
+            "date": self.today + timedelta(days=27),
             "party_size": 4,
             "time_slot": self.time_slot1,
         }
@@ -242,7 +245,7 @@ class TestForms(TestCase):
     # Test the BookingForm clean_date method for an invalid date and new booking.
     def test_booking_form_clean_date_method_invalid_date_new_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 12),
+            "date": self.today + timedelta(days=14),
             "party_size": 4,
             "time_slot": self.time_slot1,
         }
@@ -255,22 +258,20 @@ class TestForms(TestCase):
     # Test the BookingForm clean_date method for editing a booking to another valid date.
     def test_booking_form_clean_date_method_valid_date_edited_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 13),
+            "date": self.today + timedelta(days=15),
             "party_size": 4,
             "time_slot": self.time_slot1,
         }
-        self.client.login(username='usertest', password='123')
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
     # Test the BookingForm clean_date method for editing a booking to another invalid date.
     def test_booking_form_clean_date_method_invalid_date_edited_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 15),
+            "date": self.today + timedelta(days=17),
             "party_size": 4,
             "time_slot": self.time_slot1,
         }
-        self.client.login(username='usertest', password='123')
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertFalse(form.is_valid())
         self.assertEqual(
@@ -281,22 +282,20 @@ class TestForms(TestCase):
     # but with a different party_size.
     def test_booking_form_clean_date_method_same_date_edited_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 12),
+            "date": self.today + timedelta(days=14),
             "party_size": 3,
             "time_slot": self.time_slot1,
         }
-        self.client.login(username='usertest', password='123')
         form = BookingForm(user=self.user1, data=data, instance=self.booking1)
         self.assertTrue(form.is_valid())
 
     # Test the BookingForm clean_date method for editing another user's booking.
     def test_booking_form_clean_date_method_edit_another_user_booking(self):
         data = {
-            "date": datetime.date(2022, 3, 17),
+            "date": self.today + timedelta(days=19),
             "party_size": 3,
             "time_slot": self.time_slot1,
         }
-        self.client.login(username='usertest', password='123')
         form = BookingForm(user=self.user1, data=data, instance=self.booking3)
         self.assertFalse(form.is_valid())
         self.assertEqual(

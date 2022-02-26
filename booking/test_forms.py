@@ -464,3 +464,11 @@ class TestForms(TestCase):
         time_slot = self.time_slot1
         time_slot_tables = Table.objects.filter(table_timeslots=time_slot)
         self.assertEqual(form.get_timeslot_capacity(time_slot_tables), 6)
+
+    # Test BookingForm get_current_bookings method.
+    def test_booking_form_get_current_bookings_method(self):
+        form = BookingForm(user=None)
+        date = self.today + timedelta(days=14)
+        time_slot = self.time_slot1
+        booking = Booking.objects.filter(id=self.booking1.id)
+        self.assertQuerysetEqual(form.get_current_bookings(date, time_slot), booking, transform=lambda x: x)

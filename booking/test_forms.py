@@ -46,18 +46,18 @@ class TestForms(TestCase):
             size=8
         )
 
-        self.time_1 = datetime.time(18, 30, 00)
-        self.time_2 = datetime.time(16, 15, 00)
-        self.time_3 = datetime.time(17, 15, 00)
-        self.time_4 = datetime.time(23, 00, 00)
+        self.time_1 = datetime.time(18, 30)
+        self.time_2 = datetime.time(16, 15)
+        self.time_3 = datetime.time(17, 15)
+        self.time_4 = datetime.time(23, 00)
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(17, 30, 00)
+            time=datetime.time(17, 30)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=datetime.time(20, 30, 00)
+            time=datetime.time(20, 30)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
 

@@ -47,6 +47,13 @@ class TestForms(TestCase):
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'index.html')
 
+    # Get register/signup page and check correct templates are rendered.
+    def test_get_register_page(self):
+        response = self.client.get(reverse('account_signup'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'account/signup.html')
+
     # Get my bookings page and check correct templates are rendered.
     def test_get_my_bookings_page(self):
         self.client.login(username='usertest', password='123')
@@ -84,7 +91,7 @@ class TestForms(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'contact.html')
-    
+
     # Check that a booking can be deleted.
     def test_can_delete_booking(self):
         self.client.login(username='usertest', password='123')

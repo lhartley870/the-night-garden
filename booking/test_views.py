@@ -405,6 +405,34 @@ class TestViews(TestCase):
                 booking_form.__dict__['initial']['date'],
         )
 
+    # Check that user can make a valid booking and is redirected to the 
+    # my_bookings page.
+    def test_can_make_valid_booking(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=18),
+                        'party_size': 2,
+                        'time_slot': self.time_slot1.id
+                        })
+        self.assertRedirects(response, reverse('my_bookings'))
+
+    # Check that user making an invalid booking remains on the 
+    # make_booking page.
+    def test_make_invalid_booking(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=14),
+                        'party_size': 2,
+                        'time_slot': self.time_slot1.id
+                        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'make_booking.html')
+
     # Get edit booking page and check correct templates are rendered.
     def test_get_edit_booking_page(self):
         self.client.login(username='usertest', password='123')

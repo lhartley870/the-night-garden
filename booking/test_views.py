@@ -54,6 +54,13 @@ class TestForms(TestCase):
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'account/signup.html')
 
+    # Get login page and check correct templates are rendered.
+    def test_login_page(self):
+        response = self.client.get(reverse('account_login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'account/login.html')
+
     # Get my bookings page and check correct templates are rendered.
     def test_get_my_bookings_page(self):
         self.client.login(username='usertest', password='123')

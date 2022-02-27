@@ -1,20 +1,30 @@
 import datetime
+from datetime import date, timedelta, time
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from .models import Table, TimeSlot, Booking
 
 
 # Create your tests here.
-class TestForms(TestCase):
+class TestViews(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.user1 = User.objects.create_user(
             username='usertest',
             password='123',
             email='usertest@gmail.com',
             first_name='Joe',
             last_name='Bloggs',
+        )
+
+        self.user2 = User.objects.create_user(
+            username='usertest2',
+            password='456',
+            email='usertest2@gmail.com',
+            first_name='John',
+            last_name='Smith',
         )
 
         self.table1 = Table.objects.create(
@@ -27,18 +37,34 @@ class TestForms(TestCase):
             size=4
         )
 
+        self.time_now = datetime.datetime.now()
+        self.two_hours_forward = self.time_now + timedelta(hours=2)
+
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(18, 30, 00)
+            time=time(
+                self.two_hours_forward.hour,
+                self.two_hours_forward.minute
+            )
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
+        self.today = date.today()
+
         self.booking1 = Booking.objects.create(
-            date=datetime.date(2022, 3, 12),
+            date=self.today + timedelta(days=14),
             booker=self.user,
             party_size=4,
             time_slot=self.time_slot1,
         )
         self.booking1.tables.add(self.table2)
+
+        self.booking2 = Booking.objects.create(
+            date=self.today + timedelta(days=16),
+            booker=self.user,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking1.tables.add(self.table1)
 
     # Get home page and check correct templates are rendered.
     def test_get_home_page(self):
@@ -111,17 +137,17 @@ class TestForms(TestCase):
     def test_can_delete_booking(self):
         self.client.login(username='usertest', password='123')
 
-        booking2 = Booking.objects.create(
-            date=datetime.date(2022, 4, 25),
-            booker=self.user,
+        booking = Booking.objects.create(
+            date=self.today + timedelta(days=22),
+            booker=self.user1,
             party_size=4,
             time_slot=self.time_slot1,
         )
-        booking2.tables.add(self.table2)
+        booking.tables.add(self.table2)
 
         response = self.client.post(reverse(
                                     'cancel_booking',
-                                    args=[booking2.id]))
+                                    args=[booking.id]))
         self.assertRedirects(response, reverse('my_bookings'))
-        booking2_matches = Booking.objects.filter(id=booking2.id)
-        self.assertEqual(len(booking2_matches), 0)
+        booking_matches = Booking.objects.filter(id=booking.id)
+        self.assertEqual(len(booking_matches), 0)

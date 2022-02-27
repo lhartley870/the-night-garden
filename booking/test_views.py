@@ -27,6 +27,14 @@ class TestViews(TestCase):
             last_name='Smith',
         )
 
+        self.user3 = User.objects.create_user(
+            username='usertest3',
+            password='789',
+            email='usertest3@gmail.com',
+            first_name='Lucy',
+            last_name='Jones',
+        )
+
         self.table1 = Table.objects.create(
             name='rose',
             size=2
@@ -37,8 +45,44 @@ class TestViews(TestCase):
             size=4
         )
 
+        self.table3 = Table.objects.create(
+            name='freesia',
+            size=2
+        )
+
+        self.table4 = Table.objects.create(
+            name='orchid',
+            size=2
+        )
+
+        self.table5 = Table.objects.create(
+            name='tulip',
+            size=6
+        )
+
+        self.table6 = Table.objects.create(
+            name='primrose',
+            size=2
+        )
+
+        self.table7 = Table.objects.create(
+            name='dahlia',
+            size=2
+        )
+
+        self.table8 = Table.objects.create(
+            name='poppy',
+            size=4
+        )
+
+        self.table9 = Table.objects.create(
+            name='violet',
+            size=8
+        )
+
         self.time_now = datetime.datetime.now()
         self.two_hours_forward = self.time_now + timedelta(hours=2)
+        self.two_half_hours_forward = self.time_now + timedelta(hours=2, minutes=30)
 
         self.time_slot1 = TimeSlot.objects.create(
             time=time(
@@ -46,13 +90,33 @@ class TestViews(TestCase):
                 self.two_hours_forward.minute
             )
         )
-        self.time_slot1.tables.add(self.table1, self.table2)
+        self.time_slot1.tables.add(
+            self.table1,
+            self.table2,
+            self.table3,
+            self.table4,
+            self.table5
+        )
+
+        self.time_slot2 = TimeSlot.objects.create(
+            time=time(
+                self.two_half_hours_forward.hour,
+                self.two_half_hours_forward.minute
+            )
+        )
+
+        self.time_slot2.tables.add(
+            self.table6,
+            self.table7,
+            self.table8,
+            self.table9
+        )
 
         self.today = date.today()
 
         self.booking1 = Booking.objects.create(
             date=self.today + timedelta(days=14),
-            booker=self.user,
+            booker=self.user1,
             party_size=4,
             time_slot=self.time_slot1,
         )
@@ -60,11 +124,59 @@ class TestViews(TestCase):
 
         self.booking2 = Booking.objects.create(
             date=self.today + timedelta(days=16),
-            booker=self.user,
+            booker=self.user1,
             party_size=2,
             time_slot=self.time_slot1,
         )
         self.booking1.tables.add(self.table1)
+
+        self.booking3 = Booking.objects.create(
+            date=self.today + timedelta(days=17),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking3.tables.add(self.table1)
+    
+        self.booking4 = Booking.objects.create(
+            date=self.today + timedelta(days=18),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking4.tables.add(self.table1)
+
+        self.booking5 = Booking.objects.create(
+            date=self.today + timedelta(days=19),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking5.tables.add(self.table1)
+
+        self.booking6 = Booking.objects.create(
+            date=self.today + timedelta(days=20),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking6.tables.add(self.table1)
+
+        self.booking7 = Booking.objects.create(
+            date=self.today + timedelta(days=21),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking7.tables.add(self.table1)
+
+        self.booking8 = Booking.objects.create(
+            date=self.today + timedelta(days=22),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        self.booking8.tables.add(self.table1)
 
     # Get home page and check correct templates are rendered.
     def test_get_home_page(self):
@@ -94,6 +206,163 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'my_bookings.html')
+
+    # Check context rendered for my_bookings page context is correct
+    # where the user has no bookings.
+    def test_my_bookings_page_context_no_bookings(self):
+        self.client.login(username='usertest2', password='456')
+        response = self.client.get(reverse('my_bookings'))
+        bookings = Booking.objects.filter(booker=self.user2)
+        duplicate_booking_dates = []
+        self.assertQuerysetEqual(
+            response.context['bookings'],
+            bookings,
+            transform=lambda x: x
+        )
+        self.assertEqual(len(response.context['page_obj']), 0)
+        self.assertEqual(
+            response.context['duplicate_booking_dates'],
+            duplicate_booking_dates
+        )
+
+    # Check context rendered for my_bookings page context is correct
+    # where the user has 6 future bookings with no duplicate booking
+    # dates.
+    def test_my_bookings_context_6_future_bookings_no_duplicate_dates(self):
+        self.client.login(username='usertest3', password='789')
+        response = self.client.get(reverse('my_bookings'))
+        bookings = Booking.objects.filter(booker=self.user3)
+        duplicate_booking_dates = []
+        self.assertQuerysetEqual(
+            response.context['bookings'],
+            bookings,
+            transform=lambda x: x
+        )
+        self.assertEqual(len(response.context['page_obj']), 6)
+        self.assertEqual(
+            response.context['duplicate_booking_dates'],
+            duplicate_booking_dates
+        )
+
+    # Check context rendered for my_bookings page context is correct
+    # where the user has 6 future bookings and one past booking on a previous
+    # date with no duplicate booking dates.
+    def test_my_bookings_context_1_past_booking_no_duplicate_dates(self):
+        # Create a new past booking for user3 for yesterday.
+        booking9 = Booking.objects.create(
+            date=self.today - timedelta(days=1),
+            booker=self.user3,
+            party_size=2,
+            time_slot=self.time_slot1,
+        )
+        booking9.tables.add(self.table1)
+
+        self.client.login(username='usertest3', password='789')
+        response = self.client.get(reverse('my_bookings'))
+        # booking9 for yesterday should be excluded from the bookings
+        # variable.
+        bookings = Booking.objects.filter(
+            booker=self.user3
+        ).exclude(
+            id=booking9.id
+        )
+        duplicate_booking_dates = []
+        self.assertQuerysetEqual(
+            response.context['bookings'],
+            bookings,
+            transform=lambda x: x
+        )
+        self.assertEqual(len(response.context['page_obj']), 6)
+        self.assertEqual(
+            response.context['duplicate_booking_dates'],
+            duplicate_booking_dates
+        )
+
+    # Check context rendered for my_bookings page context is correct
+    # where the user has 6 future bookings and one past booking today
+    # with no duplicate booking dates.
+    def test_my_bookings_context_1_past_booking_today_no_duplicate_dates(self):
+        # Create a new booking for user3 for today for a time that has passed.
+        one_hour_ago = self.time_now - timedelta(hours=1)
+        time_slot2 = TimeSlot.objects.create(
+            time=time(one_hour_ago.hour, one_hour_ago.minute)
+        )
+        time_slot2.tables.add(self.table5)
+
+        booking9 = Booking.objects.create(
+            date=self.today,
+            booker=self.user3,
+            party_size=6,
+            time_slot=time_slot2,
+        )
+        booking9.tables.add(self.table5)
+
+        self.client.login(username='usertest3', password='789')
+        response = self.client.get(reverse('my_bookings'))
+        # booking9 for today for a time that has passed should be excluded
+        # from the bookings variable.
+        bookings = Booking.objects.filter(
+            booker=self.user3
+        ).exclude(
+            id=booking9.id
+        )
+        duplicate_booking_dates = []
+        self.assertQuerysetEqual(
+            response.context['bookings'],
+            bookings,
+            transform=lambda x: x
+        )
+        self.assertEqual(len(response.context['page_obj']), 6)
+        self.assertEqual(
+            response.context['duplicate_booking_dates'],
+            duplicate_booking_dates
+        )
+
+    # Check context rendered for my_bookings page context is correct
+    # where the user has 6 future bookings made by the user and 2 future
+    # bookings made by admin for the user for a large party of 20 over 
+    # 2 timeslots so there are duplicate booking dates.
+    def test_my_bookings_context_duplicate_dates(self):
+        # Create a new booking for user3 for today for 16 guests for time_slot1.
+        booking9 = Booking.objects.create(
+            date=self.today,
+            booker=self.user3,
+            party_size=16,
+            time_slot=self.time_slot1,
+        )
+        booking9.tables.add(
+            self.table1,
+            self.table2,
+            self.table3,
+            self.table4,
+            self.table5
+        )
+        # Create a new booking for user3 for today for 4 guests for time_slot2.
+        booking10 = Booking.objects.create(
+            date=self.today,
+            booker=self.user3,
+            party_size=4,
+            time_slot=self.time_slot2,
+        )
+        booking10.tables.add(self.table8)
+
+        self.client.login(username='usertest3', password='789')
+        response = self.client.get(reverse('my_bookings'))
+        bookings = Booking.objects.filter(booker=self.user3)
+
+        # Today's date should appear twice in duplicate_booking_dates
+        # - once for booking9 and once for booking10.
+        duplicate_booking_dates = [booking9.date, booking10.date]
+        self.assertQuerysetEqual(
+            response.context['bookings'],
+            bookings,
+            transform=lambda x: x
+        )
+        self.assertEqual(len(response.context['page_obj']), 6)
+        self.assertEqual(
+            response.context['duplicate_booking_dates'],
+            duplicate_booking_dates
+        )
 
     # Get make booking page and check correct templates are rendered.
     def test_get_make_booking_page(self):

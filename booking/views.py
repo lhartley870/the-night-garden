@@ -607,7 +607,7 @@ class MakeBooking(View, TableSelectionMixin):
             # run, an appropriate message is returned to the user.
             if allocated_tables is None:
                 messages.error(request,
-                               'Sorry this booking is no longer available')
+                               'Sorry this booking is unavailable')
             else:
                 booking = booking_form.save(commit=False)
                 booking.booker = request.user
@@ -703,7 +703,7 @@ class EditBooking(View, TableSelectionMixin):
             # run, an appropriate message is returned to the user.
             if allocated_tables is None:
                 messages.error(request,
-                               'Sorry this booking is no longer available')
+                               'Sorry this booking is unavailable')
             else:
                 booking = booking_form.save(commit=False)
                 booking.booker = request.user

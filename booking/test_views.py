@@ -99,6 +99,14 @@ class TestForms(TestCase):
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'contact.html')
 
+    # Get logout page and check correct templates are rendered.
+    def test_logout_page(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.get(reverse('account_logout'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'account/logout.html')
+
     # Check that a booking can be deleted.
     def test_can_delete_booking(self):
         self.client.login(username='usertest', password='123')

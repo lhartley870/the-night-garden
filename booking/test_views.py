@@ -3,8 +3,8 @@ from datetime import date, timedelta, time
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator
 from .models import Table, TimeSlot, Booking
+from .forms import BookingForm
 
 
 # Create your tests here.
@@ -325,7 +325,7 @@ class TestViews(TestCase):
     def test_my_bookings_context_duplicate_dates(self):
         # Create a new booking for user3 for today for 16 guests for time_slot1.
         booking9 = Booking.objects.create(
-            date=self.today,
+            date=self.today + timedelta(days=23),
             booker=self.user3,
             party_size=16,
             time_slot=self.time_slot1,
@@ -339,7 +339,7 @@ class TestViews(TestCase):
         )
         # Create a new booking for user3 for today for 4 guests for time_slot2.
         booking10 = Booking.objects.create(
-            date=self.today,
+            date=self.today + timedelta(days=23),
             booker=self.user3,
             party_size=4,
             time_slot=self.time_slot2,
@@ -371,6 +371,39 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'make_booking.html')
+
+    # Check context rendered for make_booking page is correct.
+    def test_my_bookings_context(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.get(reverse('make_booking'))
+        initial_date = self.today
+        closed_day = self.today.weekday() == 0 or self.today.weekday() == 1
+        christmas_closed_dates = [
+            date(2022, 12, 24),
+            date(2022, 12, 25),
+            date(2022, 12, 28),
+            date(2022, 12, 29),
+            date(2022, 12, 30),
+            date(2022, 12, 31),
+            date(2023, 1, 1)
+        ]
+        if closed_day:
+            if self.today.weekday() == 0:
+                initial_date = self.today + timedelta(days=2)
+            else:
+                initial_date = self.today + timedelta(days=1)
+
+        if self.today in christmas_closed_dates:
+            initial_date = date(2023, 1, 4)
+
+        initial_data = {
+            'date': initial_date
+        }
+        booking_form = BookingForm(user=None, initial=initial_data)
+        self.assertEqual(
+                response.context['booking_form'].__dict__['initial']['date'],
+                booking_form.__dict__['initial']['date'],
+        )
 
     # Get edit booking page and check correct templates are rendered.
     def test_get_edit_booking_page(self):

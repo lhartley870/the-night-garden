@@ -441,6 +441,34 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'edit_booking.html')
 
+    # Check that user can validly edit a booking and is redirected to
+    # the my_bookings page.
+    def test_can_edit_booking(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('edit_booking', args=[self.booking1.id]),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 2,
+                        'time_slot': self.time_slot1.id
+                        })
+        self.assertRedirects(response, reverse('my_bookings'))
+
+    # Check that user invalidly editing a booking remains on the 
+    # edit_booking page.
+    def test_edit_invalid_booking(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('edit_booking', args=[self.booking1.id]),
+                    data={
+                        'date': self.today + timedelta(days=16),
+                        'party_size': 2,
+                        'time_slot': self.time_slot1.id
+                        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'edit_booking.html')
+
     # Get menus page and check correct templates are rendered.
     def test_get_menus_page(self):
         response = self.client.get(reverse('menus'))

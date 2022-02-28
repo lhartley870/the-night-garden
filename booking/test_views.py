@@ -481,7 +481,7 @@ class TestViews(TestCase):
         response = self.client.post(
                     reverse('edit_booking', args=[self.booking1.id]),
                     data={
-                        'date': self.today + timedelta(days=20),
+                        'date': self.today + timedelta(days=14),
                         'party_size': 1,
                         'time_slot': self.time_slot1.id
                         })

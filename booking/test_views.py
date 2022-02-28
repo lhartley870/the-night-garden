@@ -83,6 +83,7 @@ class TestViews(TestCase):
         self.time_now = datetime.datetime.now()
         self.two_hours_forward = self.time_now + timedelta(hours=2)
         self.two_half_hours_forward = self.time_now + timedelta(hours=2, minutes=30)
+        self.three_hours_forward = self.time_now + timedelta(hours=3)
 
         self.time_slot1 = TimeSlot.objects.create(
             time=time(
@@ -110,6 +111,13 @@ class TestViews(TestCase):
             self.table7,
             self.table8,
             self.table9
+        )
+
+        self.time_slot3 = TimeSlot.objects.create(
+            time=time(
+                self.three_hours_forward.hour,
+                self.three_hours_forward.minute
+            )
         )
 
         self.today = date.today()
@@ -301,10 +309,15 @@ class TestViews(TestCase):
         response = self.client.get(reverse('my_bookings'))
         # booking9 for today for a time that has passed should be excluded
         # from the bookings variable.
+        current_date = self.today
+        current_time = self.time_now
         bookings = Booking.objects.filter(
             booker=self.user3
         ).exclude(
-            id=booking9.id
+            date__lt=current_date
+        ).exclude(
+            date=current_date,
+            time_slot__time__lt=current_time
         )
         duplicate_booking_dates = []
         self.assertQuerysetEqual(
@@ -509,3 +522,27 @@ class TestViews(TestCase):
         self.assertRedirects(response, reverse('my_bookings'))
         booking_matches = Booking.objects.filter(id=booking.id)
         self.assertEqual(len(booking_matches), 0)
+
+    # Test TableSelectionMixin - only 1 table available to book. 
+    def test_one_table_available(self):
+        self.time_slot3.tables.add(self.table5)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 2,
+                        'time_slot': self.time_slot3.id
+                        })
+        created_booking = Booking.objects.filter(
+            booker=self.user1
+        ).order_by(
+            'created_on'
+        ).last()
+        booking_table = created_booking.tables.all()
+        table5 = Table.objects.filter(id=self.table5.id)
+        self.assertQuerysetEqual(
+            booking_table,
+            table5,
+            transform=lambda x: x
+        )

@@ -570,3 +570,29 @@ class TestViews(TestCase):
             table1,
             transform=lambda x: x
         )
+
+    # Test TableSelectionMixin - 2 exact match tables available to book. 
+    def test_two_match_tables_available(self):
+        self.time_slot3.tables.add(self.table1, self.table3)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 2,
+                        'time_slot': self.time_slot3.id
+                        })
+        created_booking = Booking.objects.filter(
+            booker=self.user1
+        ).order_by(
+            'created_on'
+        ).last()
+        tables = created_booking.tables.all()
+        tables_1_and_3 = [
+            str(Table.objects.filter(id=self.table1.id)),
+            str(Table.objects.filter(id=self.table3.id))
+        ]
+        self.assertIn(
+            str(tables),
+            tables_1_and_3,
+        )

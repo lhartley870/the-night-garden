@@ -468,6 +468,33 @@ class TestViews(TestCase):
                         })
         self.assertRedirects(response, reverse('my_bookings'))
 
+    # Check that user can validly edit a booking for the same date and
+    # time_slot but for a different party_size.
+    def test_can_edit_booking_same_day(self):
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('edit_booking', args=[self.booking1.id]),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 1,
+                        'time_slot': self.time_slot1.id
+                        })
+        self.assertRedirects(response, reverse('my_bookings'))
+
+    # Check that user can validly edit a booking to one with a multiple
+    # table allocation.
+    def test_can_edit_booking_multiple_table_allocation(self):
+        self.time_slot3.tables.add(self.table1, self.table2)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('edit_booking', args=[self.booking1.id]),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 6,
+                        'time_slot': self.time_slot3.id
+                        })
+        self.assertRedirects(response, reverse('my_bookings'))
+
     # Check that user invalidly editing a booking remains on the 
     # edit_booking page.
     def test_edit_invalid_booking(self):

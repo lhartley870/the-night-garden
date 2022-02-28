@@ -893,7 +893,6 @@ class TestViews(TestCase):
             'created_on'
         ).last()
         booking_tables = created_booking.tables.all()
-        print(booking_tables)
         table1 = Table.objects.filter(id=self.table1.id)
         table4 = Table.objects.filter(id=self.table4.id)
         table9 = Table.objects.filter(id=self.table9.id)
@@ -903,8 +902,110 @@ class TestViews(TestCase):
             f'<QuerySet {tables_1_and_9}>',
             f'<QuerySet {tables_4_and_9}>'
         ]
-        print(all_table_combinations)
         self.assertIn(
             str(booking_tables),
             all_table_combinations,
+        )
+
+    # Test TableSelectionMixin - no exact match tables available to book,
+    # some tables are smaller and some are larger than the party_size -
+    # there are no match combinations of tables - there is only 1
+    # table/combination with the smallest capacity greater than the
+    # party_size - expect that table/combination of tables to be allocated
+    # to the booking.
+    def test_mixed_tables_no_match_combo_one_combo_min_capacity(self):
+        self.time_slot3.tables.add(self.table1, self.table4, self.table9)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 5,
+                        'time_slot': self.time_slot3.id
+                        })
+        created_booking = Booking.objects.filter(
+            booker=self.user1
+        ).order_by(
+            'created_on'
+        ).last()
+        booking_tables = created_booking.tables.all()
+        table9 = Table.objects.filter(id=self.table9.id)
+        self.assertQuerysetEqual(
+            booking_tables,
+            table9,
+            transform=lambda x: x
+        )
+
+    # Test TableSelectionMixin - no exact match tables available to book,
+    # some tables are smaller and some are larger than the party_size -
+    # there are no match combinations of tables - there is more than 1
+    # table/combination with the smallest capacity greater than the party_size
+    # - of those there is only 1 table/combination with the smallest number of
+    # tables - expect that table/combination of tables to be allocated to
+    # the booking.
+    def test_mixed_tables_no_match_combo_two_combo_min_capacity_sm_num(self):
+        self.table10 = Table.objects.create(
+            name='daffodil',
+            size=10
+        )
+        self.time_slot3.tables.add(self.table5, self.table8, self.table10)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 7,
+                        'time_slot': self.time_slot3.id
+                        })
+        created_booking = Booking.objects.filter(
+            booker=self.user1
+        ).order_by(
+            'created_on'
+        ).last()
+        booking_tables = created_booking.tables.all()
+        table10 = Table.objects.filter(id=self.table10.id)
+        self.assertQuerysetEqual(
+            booking_tables,
+            table10,
+            transform=lambda x: x
+        )
+
+    # Test TableSelectionMixin - no exact match tables available to book,
+    # some tables are smaller and some are larger than the party_size -
+    # there are no match combinations of tables - there is more than 1
+    # table/combination with the smallest capacity greater than the party_size
+    # - of those there are 2 tables/combinations with the smallest number of
+    # tables - expect one of those tables/combinations of tables to be allocated to
+    # the booking.
+    def test_mixed_tables_no_match_combo_two_combo_min_capacity_2_sm_num(self):
+        self.table10 = Table.objects.create(
+            name='daffodil',
+            size=10
+        )
+        self.table11 = Table.objects.create(
+            name='hyacinth',
+            size=10
+        )
+        self.time_slot3.tables.add(self.table5, self.table8, self.table10, self.table11)
+        self.client.login(username='usertest', password='123')
+        response = self.client.post(
+                    reverse('make_booking'),
+                    data={
+                        'date': self.today + timedelta(days=20),
+                        'party_size': 7,
+                        'time_slot': self.time_slot3.id
+                        })
+        created_booking = Booking.objects.filter(
+            booker=self.user1
+        ).order_by(
+            'created_on'
+        ).last()
+        booking_table = created_booking.tables.all()
+        tables_10_and_11 = [
+            str(Table.objects.filter(id=self.table10.id)),
+            str(Table.objects.filter(id=self.table11.id))
+        ]
+        self.assertIn(
+            str(booking_table),
+            tables_10_and_11,
         )

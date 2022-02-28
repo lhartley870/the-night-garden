@@ -1036,3 +1036,10 @@ class TestViews(TestCase):
             str(booking_table),
             tables_10_and_11,
         )
+
+    # Test TableSelectionMixin select_tables method where there are
+    # no available tables.
+    def test_tableselectionmixin_select_tables_returns_none(self):
+        mixin = TableSelectionMixin()
+        result = mixin.select_tables(available_tables=[], party_size=2)
+        self.assertEqual(result, None)

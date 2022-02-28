@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Table, TimeSlot, Booking
 from .forms import BookingForm
+from .views import TableSelectionMixin
 from itertools import chain
 
 
@@ -83,7 +84,10 @@ class TestViews(TestCase):
 
         self.time_now = datetime.datetime.now()
         self.two_hours_forward = self.time_now + timedelta(hours=2)
-        self.two_half_hours_forward = self.time_now + timedelta(hours=2, minutes=30)
+        self.two_half_hours_forward = self.time_now + timedelta(
+            hours=2,
+            minutes=30
+        )
         self.three_hours_forward = self.time_now + timedelta(hours=3)
 
         self.time_slot1 = TimeSlot.objects.create(
@@ -146,7 +150,7 @@ class TestViews(TestCase):
             time_slot=self.time_slot1,
         )
         self.booking3.tables.add(self.table1)
-    
+
         self.booking4 = Booking.objects.create(
             date=self.today + timedelta(days=18),
             booker=self.user3,
@@ -269,7 +273,7 @@ class TestViews(TestCase):
         self.client.login(username='usertest3', password='789')
         response = self.client.get(reverse('my_bookings'))
         # booking9 for yesterday should be excluded from the bookings
-        # variable.
+        # variable.
         bookings = Booking.objects.filter(
             booker=self.user3
         ).exclude(
@@ -334,10 +338,11 @@ class TestViews(TestCase):
 
     # Check context rendered for my_bookings page context is correct
     # where the user has 6 future bookings made by the user and 2 future
-    # bookings made by admin for the user for a large party of 20 over 
+    # bookings made by admin for the user for a large party of 20 over
     # 2 timeslots so there are duplicate booking dates.
     def test_my_bookings_context_duplicate_dates(self):
-        # Create a new booking for user3 for today for 16 guests for time_slot1.
+        # Create a new booking for user3 for today for 16 guests for
+        # time_slot1.
         booking9 = Booking.objects.create(
             date=self.today + timedelta(days=23),
             booker=self.user3,
@@ -419,7 +424,7 @@ class TestViews(TestCase):
                 booking_form.__dict__['initial']['date'],
         )
 
-    # Check that user can make a valid booking and is redirected to the 
+    # Check that user can make a valid booking and is redirected to the
     # my_bookings page.
     def test_can_make_valid_booking(self):
         self.client.login(username='usertest', password='123')
@@ -432,7 +437,7 @@ class TestViews(TestCase):
                         })
         self.assertRedirects(response, reverse('my_bookings'))
 
-    # Check that user making an invalid booking remains on the 
+    # Check that user making an invalid booking remains on the
     # make_booking page.
     def test_make_invalid_booking(self):
         self.client.login(username='usertest', password='123')
@@ -450,7 +455,10 @@ class TestViews(TestCase):
     # Get edit booking page and check correct templates are rendered.
     def test_get_edit_booking_page(self):
         self.client.login(username='usertest', password='123')
-        response = self.client.get(reverse('edit_booking', args=[self.booking1.id]))
+        response = self.client.get(reverse(
+            'edit_booking',
+            args=[self.booking1.id])
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'edit_booking.html')
@@ -495,7 +503,7 @@ class TestViews(TestCase):
                         })
         self.assertRedirects(response, reverse('my_bookings'))
 
-    # Check that user invalidly editing a booking remains on the 
+    # Check that user invalidly editing a booking remains on the
     # edit_booking page.
     def test_edit_invalid_booking(self):
         self.client.login(username='usertest', password='123')
@@ -551,17 +559,18 @@ class TestViews(TestCase):
         booking_matches = Booking.objects.filter(id=booking.id)
         self.assertEqual(len(booking_matches), 0)
 
-    # Test TableSelectionMixin - only 1 table available to book. 
+    # Test TableSelectionMixin - only 1 table available to book.
     def test_one_table_available(self):
         self.time_slot3.tables.add(self.table5)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 2,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 2,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -575,18 +584,19 @@ class TestViews(TestCase):
             transform=lambda x: x
         )
 
-    # Test TableSelectionMixin - only 1 exact match table available to book - 
-    # expect that table to be allocated to the booking. 
+    # Test TableSelectionMixin - only 1 exact match table available to book -
+    # expect that table to be allocated to the booking.
     def test_one_match_table_available(self):
         self.time_slot3.tables.add(self.table1, self.table5)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 2,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 2,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -600,18 +610,19 @@ class TestViews(TestCase):
             transform=lambda x: x
         )
 
-    # Test TableSelectionMixin - 2 exact match tables available to book, 
-    # expect one of those 2 tables to be allocated to the booking. 
+    # Test TableSelectionMixin - 2 exact match tables available to book,
+    # expect one of those 2 tables to be allocated to the booking.
     def test_two_match_tables_available(self):
         self.time_slot3.tables.add(self.table1, self.table3)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 2,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 2,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -630,17 +641,18 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are larger than the party_size - only 1 table with the
     # smallest size of the available tables - expect that smallest size
-    # table to be allocated to the booking. 
+    # table to be allocated to the booking.
     def test_all_larger_tables_one_smallest_available(self):
         self.time_slot3.tables.add(self.table5, self.table8, self.table9)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 2,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 2,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -657,17 +669,18 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are larger than the party_size - 2 tables with the same
     # smallest size of the available tables - expect one of those 2 smallest
-    # size tables to be allocated to the booking. 
+    # size tables to be allocated to the booking.
     def test_all_larger_tables_two_smallest_available(self):
         self.time_slot3.tables.add(self.table2, self.table8, self.table9)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 2,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 2,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -685,17 +698,23 @@ class TestViews(TestCase):
 
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - all tables are needed
-    # for the booking - expect all tables to be allocated to the booking. 
+    # for the booking - expect all tables to be allocated to the booking.
     def test_all_smaller_tables_all_needed(self):
-        self.time_slot3.tables.add(self.table1, self.table2, self.table3, self.table4)
+        self.time_slot3.tables.add(
+            self.table1,
+            self.table2,
+            self.table3,
+            self.table4
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 9,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 9,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -711,17 +730,18 @@ class TestViews(TestCase):
 
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - only 2 tables available
-    # - expect both tables to be allocated to the booking. 
+    # - expect both tables to be allocated to the booking.
     def test_all_smaller_tables_only_2_available(self):
         self.time_slot3.tables.add(self.table2, self.table5)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 7,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 7,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -738,17 +758,23 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - all tables are the same
     # size - expect the minumum number of tables needed to cover the
-    # party_size to be allocated to the booking. 
+    # party_size to be allocated to the booking.
     def test_all_smaller_tables_same_size(self):
-        self.time_slot3.tables.add(self.table1, self.table3, self.table4, self.table6)
+        self.time_slot3.tables.add(
+            self.table1,
+            self.table3,
+            self.table4,
+            self.table6
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 5,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 5,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -765,17 +791,18 @@ class TestViews(TestCase):
     # tables available, not all tables are the same size and not all tables
     # are needed to cover the party_size - there is 1 match combination
     # within the available tables - expect that match combination to be
-    # allocated to the booking. 
+    # allocated to the booking.
     def test_all_smaller_tables_1_match_combination(self):
         self.time_slot3.tables.add(self.table1, self.table2, self.table5)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 10,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 10,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -794,20 +821,27 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - there are more than 2 tables
     # available, not all tables are the same size and not all tables are needed
-    # to cover the party_size - there is more than 1 match combination within
-    # the available tables but only 1 match combination with the smallest
-    # number of tables - expect the match combination with the smallest number
-    # of tables to be allocated to the booking. 
+    # to cover the party_size - there is more than 1 match combination
+    # within the available tables but only 1 match combination with the
+    # smallest number of tables - expect the match combination with the
+    # smallest number of tables to be allocated to the booking.
     def test_all_smaller_tables_match_combo_smallest_num_tables(self):
-        self.time_slot3.tables.add(self.table1, self.table2, self.table3, self.table4, self.table5)
+        self.time_slot3.tables.add(
+            self.table1,
+            self.table2,
+            self.table3,
+            self.table4,
+            self.table5
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 9,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 9,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -823,24 +857,33 @@ class TestViews(TestCase):
             transform=lambda x: x
         )
 
-    # Test TableSelectionMixin - no exact match tables available to book,
-    # all tables are smaller than the party_size - there are more than 2 tables
-    # available, not all tables are the same size and not all tables are needed
-    # to cover the party_size - there is more than 1 match combination within
-    # the available tables and more than 1 match combination with the smallest
-    # number of tables - and both of those combinations have the same largest
-    # table size -  expect one of the match combinations with the smallest number
-    # of tables to be allocated to the booking. 
+    # Test TableSelectionMixin - no exact match tables available to
+    # book, all tables are smaller than the party_size - there are more
+    # than 2 tables available, not all tables are the same size and not
+    # all tables are needed to cover the party_size - there is more than
+    # 1 match combination within the available tables and more than 1 match
+    # combination with the smallest number of tables - and both of those
+    # combinations have the same largest table size -  expect one of the
+    # match combinations with the smallest number of tables to be allocated
+    # to the booking.
     def test_smaller_tables_match_combo_smallest_num_tables_same_largest(self):
-        self.time_slot3.tables.add(self.table1, self.table2, self.table3, self.table4, self.table5, self.table9)
+        self.time_slot3.tables.add(
+            self.table1,
+            self.table2,
+            self.table3,
+            self.table4,
+            self.table5,
+            self.table9
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 9,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 9,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -867,20 +910,26 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - there are more than 2 tables
     # available, not all tables are the same size and not all tables are needed
-    # to cover the party_size - there is more than 1 match combination within the
-    # available tables and more than 1 match combination with the smallest number
-    # of tables - expect the match combinations containing the largest table size
-    # to be allocated to the booking.
+    # to cover the party_size - there is more than 1 match combination within
+    # the available tables and more than 1 match combination with the smallest
+    # number of tables - expect the match combinations containing the largest
+    # table size to be allocated to the booking.
     def test_smaller_tables_match_combo_smallest_num_tables_largest_size(self):
-        self.time_slot3.tables.add(self.table2, self.table4, self.table5, self.table9)
+        self.time_slot3.tables.add(
+            self.table2,
+            self.table4,
+            self.table5,
+            self.table9
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 9,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 9,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -899,21 +948,28 @@ class TestViews(TestCase):
     # Test TableSelectionMixin - no exact match tables available to book,
     # all tables are smaller than the party_size - there are more than 2 tables
     # available, not all tables are the same size and not all tables are needed
-    # to cover the party_size - there is more than 1 match combination within the
-    # available tables, more than 1 match combination with the smallest number
-    # of tables and more than 1 match combination containing the largest size table
-    # - expect one of the match combinations containing the largest size table
-    # to be allocated to the booking.
+    # to cover the party_size - there is more than 1 match combination within
+    # the available tables, more than 1 match combination with the smallest
+    # number of tables and more than 1 match combination containing the largest
+    # size table - expect one of the match combinations containing the largest
+    # size table to be allocated to the booking.
     def test_smaller_tables_match_combo_smallest_num_tables_two_largest(self):
-        self.time_slot3.tables.add(self.table1, self.table2, self.table4, self.table5, self.table9)
+        self.time_slot3.tables.add(
+            self.table1,
+            self.table2,
+            self.table4,
+            self.table5,
+            self.table9
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 9,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 9,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -943,13 +999,14 @@ class TestViews(TestCase):
     def test_mixed_tables_no_match_combo_one_combo_min_capacity(self):
         self.time_slot3.tables.add(self.table1, self.table4, self.table9)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 5,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 5,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -977,13 +1034,14 @@ class TestViews(TestCase):
         )
         self.time_slot3.tables.add(self.table5, self.table8, self.table10)
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 7,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 7,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(
@@ -1002,8 +1060,8 @@ class TestViews(TestCase):
     # there are no match combinations of tables - there is more than 1
     # table/combination with the smallest capacity greater than the party_size
     # - of those there are 2 tables/combinations with the smallest number of
-    # tables - expect one of those tables/combinations of tables to be allocated to
-    # the booking.
+    # tables - expect one of those tables/combinations of tables to be
+    # allocated to the booking.
     def test_mixed_tables_no_match_combo_two_combo_min_capacity_2_sm_num(self):
         self.table10 = Table.objects.create(
             name='daffodil',
@@ -1013,15 +1071,21 @@ class TestViews(TestCase):
             name='hyacinth',
             size=10
         )
-        self.time_slot3.tables.add(self.table5, self.table8, self.table10, self.table11)
+        self.time_slot3.tables.add(
+            self.table5,
+            self.table8,
+            self.table10,
+            self.table11
+        )
         self.client.login(username='usertest', password='123')
-        response = self.client.post(
-                    reverse('make_booking'),
-                    data={
-                        'date': self.today + timedelta(days=20),
-                        'party_size': 7,
-                        'time_slot': self.time_slot3.id
-                        })
+        self.client.post(
+            reverse('make_booking'),
+            data={
+                'date': self.today + timedelta(days=20),
+                'party_size': 7,
+                'time_slot': self.time_slot3.id
+            }
+        )
         created_booking = Booking.objects.filter(
             booker=self.user1
         ).order_by(

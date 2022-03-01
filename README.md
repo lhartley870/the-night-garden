@@ -3,14 +3,20 @@ The Night Garden is a website for an outdoor restaurant serving evening meals in
 
 Users that do not have an account with the site can view details about the restaurant on the Home page, the Menus page and the Contact page. They also have access to a registration page in order to create an account. Registered users can login to their account via the login page which gives them access to a 'My Bookings' page showing all of their bookings, from which they can edit or delete bookings. They also have access to a 'Make a Booking' page where they can make new restaurant bookings for up to 10 guests. 
 
-The site's admin user can manage the restaurant tables and time slots for sittings. The admin decides which tables are made available for which time slots. The Admin user can also make bookings for users (this would be primarily for making large bookings of over 10 guests or for special events where the whole restaurant may be booked out for a user over several time slots). The Admin can also approve bookings for users. The booking system automatically checks whether there is capacity for a booking and books the best table configuration but the Admin has the final say over approving bookings e.g. if a user wants to book for 2 guests and they have been allocated an 8 person table by the booking system because that is the only available table for their chosen time slot, the Admin may not want to approve the booking. 
+The site's admin user can manage the restaurant tables and time slots for sittings. The admin decides which tables are made available for which time slots. The Admin user can also make bookings for users (this would be primarily for making large bookings of over 10 guests or for special events where the whole restaurant may be booked out for a user over several time slots). The Admin can also approve bookings for users. The booking system automatically checks whether there is table availability for a booking and books the best table configuration but the Admin has the final say over approving bookings e.g. if a user wants to book for 2 guests and they have been allocated an 8 person table by the booking system because that is the only available table for their chosen date and time slot, the Admin may not want to approve the booking. 
 
 The live project can be viewed [here](https://the-night-garden.herokuapp.com/). 
 
 ![Responsive view of live website Home page](/readme-documents/screenshots/home-pg-screenshot.png)
 
 ## Restaurant Business Model
-The restaurant is currently designed to have an intimate feel and so only holds a maximum of 32 guests at any one time. The restaurant has 2 hour 'sittings' at 5:30pm, 6pm, 7:30pm, 8pm, 9:30pm and 10pm.
+The restaurant is currently designed to have an intimate feel and so only holds a maximum of 32 guests at any one time. As a new restaurant, the owners have decided to have 2 hour 'sittings' at 5:30pm, 6pm, 7:30pm, 8pm, 9:30pm and 10pm with set menus for the chefs to better plan and manage meals and to see how the restaurant is initially received. These time slots may change in the future. There is a maximum of 16 guests per sitting to avoid the restuarant having more than 32 guests at any one time.
+
+The restaurant only wants guests to be able to make bookings via the website for up to 10 people. Any larger bookings are to be booked through the restaurant admin. If a user wants to book for a party of between 11 and 16 guests then the restaurant admin staff can make this booking for them. If a user wants to book out the restaurant for a special event, the staff need to be able to book out multiple overlapping time slots for that user. The restaurant wants to maintain control of large and special event bookings and so does not want users to be able to change or cancel these types of bookings through the website although the website should show a user's large or special event bookings on their 'My Bookings' page when they are logged in. A user would have to contact the restuarant by email or phone to make any changes to or cancel large or special event bookings.
+
+At the moment the restaurant has purchased enough chairs and tables to cover 32 guests being seated at any one time. They have purchased 5 x 2 person tables, 2 x 4 person tables, 1 x 6 person table and 1 x 8 person table. Any of the tables can be pushed together to make larger tables but obviously larger tables such as the 8 person table cannot be split up into smaller tables. The restaurant has already decided which tables will be allocated to which time slots although this may change in the future.
+
+The restaurant has decided to close on Mondays and Tuesdays at the moment and, in terms of holidays, to only close over the Christmas period from and including 24 December until the first non-public holiday working day after New Year that is not a Monday or Tuesday. These holiday dates are fixed for now but may change in the future as the restaurant finds its feet and determines what opening times and dates suit it best.
 
 ## UX (User Experience) 
 ### User Stories
@@ -96,7 +102,7 @@ Colour Name | Hexadecimal Code
 *  
 
 ### Libraries, Frameworks and Programs
-* 
+* [The Multi Device Website Mockup Generator](https://techsini.com/multi-mockup/index.php) was used to create the screenshots showing how the website looks on different device types in conjunction with the [Ignore X-Frame headers Google Chrome Extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe).
 
 ## Testing
 

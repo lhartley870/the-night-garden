@@ -394,7 +394,7 @@ The project was deployed according to the following steps:
 6. In the Heroku Config Vars delete the DISABLE_COLLECSTATIC environment variable.
 7. Go to the Deploy tab and deploy the branch. 
 
-Further detailed instructions can be found in this [Code Institute Cheat Sheet](readme-documents/deployment-screenshots/Django Blog Cheat Sheet v1.pdf)
+Further detailed instructions can be found in this [Code Institute Cheat Sheet](readme-documents/deployment-screenshots/ci-cheat-sheet.pdf)
 
 ## Credits 
 

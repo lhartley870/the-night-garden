@@ -49,6 +49,16 @@ These were all errors for the same issue, stated to be *'line break before binar
 
 ## Automated Testing
 
+Django testing tools were used for automated testing of the python code in the admin.py, forms.py, views.py, models.py and table_mixin.py files. Tests were run in the development environment against the sqlite3 database. The Django test results and coverage are shown here:
+
+![Coverage test results](readme-documents/coverage-results/coverage-report.png)
+
+The aspects not covered by automated testing (hence why the coverage is not 100%) were:
+* the signup method of the CustomSignUpForm class as this class extended the django-allauth SignupForm class and so was heavily integrated with the django-allauth code;
+* nested variables within methods within view classes which would have needed to be patched/mocked to test the different scenarios. These different scenarios were instead tested manually by changing the code itself. 
+
+The code in the script.js file was testing manually and the results are detailed in the manual testing document.
+
 ## Manual Testing
 
 ### Browser Testing
@@ -70,6 +80,8 @@ The website was tested on the following browsers on all of the above devices:
 The site was created using the Chrome browser and Chrome DevTools and was fully tested in that environment as it was being developed. The site was then further tested after deployment on all of the above devices and browsers.
 
 ### Manual Tests
+
+The manual testing results can be found [here](readme-documents/manual-testing/manual-tests.pdf). They largely detail manual testing of the user stories. A few test items not directly related to a particular user story are also detailed at the end of the document.
 
 ## Contrast Checker Testing
 

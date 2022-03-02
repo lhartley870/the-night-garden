@@ -140,12 +140,51 @@ Once the user clicks on 'Cancel Booking' for a booking, they receive an alert to
 ![View of Cancel Booking alert](readme-documents/screenshots/cancel-booking-alert.png)
 
 * The My Bookings Page
+A user must be signed in to access the My Bookings page. The user is automatically taken to this page on logging in but can also navigate to it via the navbar. The user is informed if they have no current bookings. If the user does have bookings, whether made by the user or by Site Admin on their behalf, they are displayed with the next upcoming booking at the top and the booking furthest in the future at the bottom. Past bookings are not displayed. On smaller screens the bookings are stacked and on larger screens up to 3 bookings appear side by side. There is a maximum of 6 bookings per page before the page is paginated and the user has to navigate to see their other bookings. The My Bookings page displays whether or not each booking has been approved or is awaiting confirmation. The Site Admin user can approve bookings via the Admin panel (either one a time or multiple bookings at a time) by selecting the checkbox next to each booking to be approved, selecting 'Approve Bookings' in the dropdown next to where it says 'Action' and clicking on 'Go'. The listed bookings should then show as being approved with a green tick. 
+
+![View of My Bookings page](readme-documents/screenshots/my-bookings-pg.png)
+
+![View of Admin approved bookings](readme-documents/screenshots/admin-approved-bookings.png)
 
 * Table Allocation Optimisation
+One of the main features of this application is its ability to automatically assign the most optimised table allocation for the user's booking. The Site Admin ultimately has the final say over approving bookings as if only one table is available to accommodate a booking, it will be assigned to the booking even if it is a large table and the booking is only for 1 or 2 guests, so the Admin may not want to approve such a booking.
+
+Broadly the steps in allocating tables to bookings are:
+1. How many available tables are there? 
+2. If none, this is fed back into the post method for the applicable view. 
+3. If one, that table is allocated.
+4. If multiple move on to the next step.
+
+5. Of the multiple tables, if only one table is a 'match' (being equal to the number of guests for even bookings and 1 over the number of guests for odd bookings), that table is allocated. If more than one table is a match, one is chosen at random.
+6. If no one table is a match move on to the next step.
+
+7. If all the tables are larger than the booking size, select the table with the smallest size needed to cover the booking. If more than one table fits this description, choose one at random.
+8. If all the tables are smaller than the booking size or some are larger and some are smaller, move on to the next step. 
+
+9. If all the tables are smaller than the booking size and there are only 2 tables, allocate those 2.
+10. If all the tables are smaller and all of the tables taken together are a 'match' for the booking, allocate all the tables to the booking.
+11. If all the tables are smaller and all are the same size, choose the minimum number needed to cover the booking.
+12. In any other case, move on to step 14.
+
+13. If some tables are smaller and some are larger than the booking size, move on to step 14.
+
+14. If there is not at least one matching combination of tables, go to step 18.
+15. If there is one matching combination of tables, allocate that combination. 
+16. If there is more than one matching combination, choose the combination with the smallest number of tables.
+17. if there is more than one such combination mentioned in 16, choose the combination with the largest size table and if there is more than one of those, choose a combination at random.
+
+18. Get the table or combination of tables with the smallest capacity over the booking size. If there is one table/combination allocate that.
+19. If there is more than one such combination mentioned at point 18, choose the combination with the smallest number of tables. 
+20. If there is more than one such combination mentioned at point 19, choose a combination at random.
 
 * Messages
+To provide user feedback, messages are displayed to the user. Success messages appear in green at the top of the page when a user logs in or out. When a user successfully makes a booking, edits a booking or cancels a booking, a message is displayed at the top of the My Bookings page. The message fades out and then the screen moves up into the space that was taken up by the message. If the user has a failed login attempt a message in a red box appears to inform the user. Error messages for individual form fields throughout the site appear in red. If there is an error the user cannot proceed until the error is rectified.
 
+![View of success message](readme-documents/screenshots/success-message.png)
 
+![View of login error message](readme-documents/screenshots/login-error-message.png)
+
+![View of field error message](readme-documents/screenshots/field-error-message.png)
 
 ### Further Feature Ideas
 * At the moment if a Site Admin user does not want to approve a user's booking, they would have to contact the user manually by email to let them know that their booking was not approved before deleting it. It would be good to have an automated mechanism whereby the Site Admin could click on a button to say that they want to delete a particular booking for a particular reason and an appropriate email template would be automatically generated and sent to the user using their email address saved in the database. A bonus would be to have a mechanism that also displays a message to the user on their 'My Bookings' page to explain why the booking has been refused. The mechanism could then automatically delete the booking from the database.

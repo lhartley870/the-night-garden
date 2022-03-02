@@ -169,8 +169,44 @@ Please see the separate [TESTING.md file](TESTING.md) for details of the project
 ## Credits 
 
 ### Code
-
-* 
+* I referenced the 'I Think Therefore I Blog' and 'Hello Django' Code Institute projects heavily whilst creating this project.
+In the html template files:
+* Code for adding a favicon to a Django project was taken from an answer given by hanleyhansen and edited by FlipperPA on [this Stack Overflow post](https://stackoverflow.com/questions/21938028/how-can-i-get-a-favicon-to-show-up-in-my-django-app)
+* Code for adding an active class depending on whether the user is on the current page was adapted from an answer given by hassanrazadev on [this Stack Overflow post](https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page)
+* The url for the admin panel was taken from an answer given by markmuetz and edited by blueyed on [this Stack Overflow post](https://stackoverflow.com/questions/694477/getting-django-admin-url-for-an-object)
+* Code for rendering messages was taken from the Code Institute 'I Think Therefore I Blog' project.
+* Code for the user to confirm that they want to cancel a booking was taken from an answer given by Raghav Rach and edited by Besnik on [this Stack Overflow post](https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete)
+* Code for the My Bookings page pagination was taken from the official Django documentation and the Code Institute 'I Think Therefore I Blog' project
+In the admin.py file:
+* Code for the display of each table's details in the Admin panel was adapted from an answer given by  karthikr and edited by Joseph jun. Melettukunnel on [this Stack Overflow post](https://stackoverflow.com/questions/18108521/many-to-many-in-list-display-django)
+In the forms.py file:
+* Code for the TimeSlotForm clean_time method was adapted from a question posted by Amistad and an answer given by Daniel Roseman on [this Stack Overflow post](https://stackoverflow.com/questions/24802244/custom-validation-in-django-admin)
+* Code for the CustomSignUpForm class was based upon code included in an article entitled ['The complete django-allauth guide' by Gajesh](https://dev.to/gajesh/the-complete-django-allauth-guide-la3)
+* Code for validating the first_name and last_name fields in the CustomSignUpForm class so that only letters are allowed was adapted from an answer given by Martijn Pieters and edited by Lord Elrond on [this Stack Overflow post](https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters)
+In the models.py file:
+* Code for the NameField class was taken from an answer given by Danil and edited by Oran on [this Stack Overflow post](https://stackoverflow.com/questions/36330677/django-model-set-default-charfield-in-lowercase)
+In the table_mixin.py file:
+* The code to remove duplicates from a list was adapated from a W3 Schools article entitled ['How to Remove Duplicates From a Python List'](https://www.w3schools.com/python/python_howto_remove_duplicates.asp)
+* Code for creating a list of all possible table combinations for a particular minimum combination size and above was adapted from a response provided by Dan H and edited by Steven C.Howell on [this Stack Overflow post](https://stackoverflow.com/questions/464864/how-to-get-all-possible-combinations-of-a-list-s-elements)
+* Code for creating a dictionary from two lists was adapted from an answer given by Dan Lenski and edited by wjandrea on [this Stack Overflow post](https://stackoverflow.com/questions/209840/how-do-i-convert-two-lists-into-a-dictionary)
+In the test_admin.py file:
+* Code for testing django admin custom functions was adapted from answers given by giantas and Alex V on [this Stack Overflow post](https://stackoverflow.com/questions/40724534/coverage-test-django-admin-custom-functions)
+* Code for testing admin actions in django adapted from answers given by catavaran, Wtower and radtek on this [Stack Overflow post](https://stackoverflow.com/questions/29026779/testing-custom-admin-actions-in-django)
+In the test_forms.py file:
+* Code for testing whether querysets are equal in django taken from an answer given by dspacejs on [this Stack Overflow post](https://stackoverflow.com/questions/17685023/how-do-i-test-django-querysets-are-equal)
+In the test_models.py file:
+* Code for testing the created_on method adapted from an answer given by neverwalkaloner and edited by vidstige on [this Stack Overflow post](https://stackoverflow.com/questions/49874923/how-to-test-auto-now-add-in-django)
+In the booking app urls.py file:
+* The solution of using the login_required decorator to control what happens if a user logs out of their account and then presses the back button was taken from an answer given by Mahmood on [this Stack Overflow post](https://stackoverflow.com/questions/28000981/django-user-re-entering-session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1)
+* The solution of using the login_required decorator in the url path for class-based views was taken from an answer given by FMZ on [this Stack Overflow post](https://stackoverflow.com/questions/28555260/django-login-required-for-class-views)
+In the views.py file:
+* Code for providing an initial value in a model form field was adapted from code provided in an article entitled ['Django Initial Value to Model forms' by challapallimanoj99@gmail.com dated 16 June 2021](https://studygyaan.com/django/how-to-give-initial-value-to-model-forms)
+* Use of .format() to add the booking details to the success message taken from an answer given by Glenn D.J. on [this Stack Overflow post](https://stackoverflow.com/questions/64956279/django-show-message-only-when-form-has-changed)
+In the settings.py file:
+* Solution for changing the format of time inputs taken from an answer given by CoffeeBasedLifeform on [this Stack Overflow post](https://stackoverflow.com/questions/48514222/django-admin-datetimefield-showing-24hr-format-time)
+In the style.css file:
+* Code for making the pink leaf icon within a navigation link visible only when hovering over or focussing on that link adapted from an answer given by Curtis
+on [this Stack Overflow post](https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover)
 
 ### Media
 

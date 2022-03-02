@@ -65,6 +65,60 @@ As a Site User I can view and download the menus for the restaurant so that I kn
 
 ## Features
 ### Existing Features
+* Navigation Bar
+The navigation bar has the same appearance across all pages of the application and allows for easy user navigation. It contains the restaurant name and a butterfly logo, either of which can be clicked on to take the user back to the Home page which is a predictable and standard website convention. On larger screens the navigation links appear horizontally across the navbar and for smaller screens the navigation bar collapses so that only the restaurant name and logo and a burger menu are shown. The user can then click on the burger icon to see the stacked navigation links.
+
+A user who has not logged in to the site can see the links for and navigate to the Home, Register, Login, Menus and Contact pages. A logged in user who is not a Site Admin can see the links for the Home, My Bookings, Make a Booking, Menus, Contact and Logout pages. A Site Admin superuser can see the same links as a non-admin logged in user with the addition of an Admin link which takes the Admin user to the Admin panel where the database data can be managed by the Admin.
+
+The navigation links are arranged in a logical order, likely to reflect the steps in the user journey through the application.
+
+A green leaf icon appears next to all of the navigation links (apart from the Admin link) to indicate to the user which page they are on. Additionally when a user hovers over or focusses on a navigation link, a pink leaf icon appears next to the link. 
+
+![Large screen view of navbar for a user not logged in](readme-documents/screenshots/navbar-user-not-logged-in.png)
+![Large screen view of navbar for an admin user logged in](readme-documents/screenshots/navbar-admin-logged-in.png)
+![Collapsed navbar](readme-documents/screenshots/collapsed-navbar.png)
+
+* Adding Tables and Timeslots
+The Admin superuser has access to the Admin panel where tables and timeslots can be created. At present the table and timeslot configuration has been set as per the restaurant's current business model (detailed above). 
+
+The Admin user can add new tables by clicking on Table and then on 'Add Table'. Table sizes are currently restricted by the restaurant to sizes of 2, 4, 6 or 8 which is reflected in the table size dropdown. Table names must be unique and the Admin user will receive an error if they try to give two tables the same name. 
+
+![View of Admin panel for adding a new table](readme-documents/screenshots/admin-panel-tables.png)
+
+The Admin user can also add new timeslots by clicking on Timeslot and then on 'Add Timeslot'. Timeslots must be between the hours of 5:30pm and 10pm to comply with the restaurant's opening and closing times. If the Admin user tries to enter a timeslot outside of these times they will receive an error message. There is a useful vertical filter for the Admin to assign particular tables to particular timeslots.
+
+![View of Admin panel for adding a new timeslot](readme-documents/screenshots/admin-panel-timeslot.png)
+
+The Admin user can also add new bookings by clicking on Booking and then on 'Add Booking'. The current registered users will appear in the dropdown for the 'booker' field and the current created timeslots in the dropdown for the 'time' field. Again, there is a useful vertical filter for the Admin to assign particular tables to the booking. The restaurant's bussiness model does not allow more than 16 guests for a timeslot and so the Admin user cannot exceed this numnber of guests per booking. It is envisaged that the Admin will largely be making bookings for large parties of between 11 and 16 guests (as users can only make bookings for between 1 and 10 guests) and for large events where a number of overlapping timeslots may need to be booked out for a user (as users can only have one booking per day and cannot make multiple bookings over several timeslots). The Admin has the option to approve a booking whilst creating it.
+
+![View of Admin panel for adding a new booking](readme-documents/screenshots/admin-panel-booking.png)
+
+* User Authentication
+A user will only have limited access to the application's features without an account. A user coming to the site for the first time can access the Register page via the navigation bar. The user needs to provide their email address, a username, their first and last names and a password to create an account. The email, first name and last name are required in case the restaurant needs to contact a user about their booking. If the email address or username entered are already taken, the user will receive an error message.
+
+![View of Register page](readme-documents/screenshots/register-pg-screenshot.png)
+
+Once a user has registered they can log in via the login page with their username and password. Once logged in a user can view their current bookings that are not in the past, make new bookings and edit and cancel their existing bookings.
+
+![View of Login page](readme-documents/screenshots/login-pg-screenshot.png)
+
+When a user wants to log out they simply navigate to the logout page where they are asked to confirm that they are sure they would like to log out. If the user clicks that they are sure, they are logged out.
+
+![View of Logout page](readme-documents/screenshots/logout-pg-screenshot.png)
+
+* Making a Booking
+
+* Editing a Booking
+
+* Cancelling a Booking
+
+* The My Bookings Page
+
+* Table Allocation Optimisation
+
+* Messages
+
+
 
 ### Further Feature Ideas
 * At the moment if a Site Admin user does not want to approve a user's booking, they would have to contact the user manually by email to let them know that their booking was not approved before deleting it. It would be good to have an automated mechanism whereby the Site Admin could click on a button to say that they want to delete a particular booking for a particular reason and an appropriate email template would be automatically generated and sent to the user using their email address saved in the database. A bonus would be to have a mechanism that also displays a message to the user on their 'My Bookings' page to explain why the booking has been refused. The mechanism could then automatically delete the booking from the database.

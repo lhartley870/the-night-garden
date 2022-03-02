@@ -6,7 +6,6 @@ from .forms import TimeSlotForm, CustomSignUpForm, BookingForm
 from .models import Table, TimeSlot, Booking
 
 
-# Create your tests here.
 class TestForms(TestCase):
 
     # Set up test users, tables, times, time_slots and bookings.

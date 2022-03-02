@@ -7,9 +7,9 @@ from .admin import TimeSlotAdmin, BookingAdmin
 from .models import Table, TimeSlot, Booking
 
 
-# Create your tests here.
 class TestAdmin(TestCase):
 
+    # Set up test user, tables, timeslots and booking.
     def setUp(self):
 
         self.user = User.objects.create_user(
@@ -41,22 +41,25 @@ class TestAdmin(TestCase):
         )
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(18, 30, 2)
+            time=datetime.time(18, 30)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=datetime.time(19, 00, 00)
+            time=datetime.time(19, 00)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
 
         self.booking1 = Booking.objects.create(
-            date=datetime.date(2022, 3, 12),
+            date=datetime.date(2022, 6, 6),
             booker=self.user,
             party_size=4,
             time_slot=self.time_slot1,
         )
-        self.booking1.tables.add(self.table2,)
+        self.booking1.tables.add(self.table2)
+
+        self.username = 'admin5'
+        self.password = 'staff**'
 
     # Test the allocated_tables mixin method for the TimeSlotAdmin
     # ModelAdmin object.
@@ -94,23 +97,21 @@ class TestAdmin(TestCase):
         booking_admin = BookingAdmin(Booking, admin.site)
         obj = booking_admin.get_object(None, booking.id)
         admin_booking_date = booking_admin.booking_date(obj)
-        self.assertEqual(admin_booking_date, '2022-03-12')
-    
+        self.assertEqual(admin_booking_date, '2022-06-06')
+
     # Test the admin approval of booking1 created in setUp above.
     def test_approve_bookings(self):
         # Code for testing admin actions in django adapted from
         # answers given by catavaran, Wtower and radtek on this
         # Stack Overflow post - https://stackoverflow.com/questions
         # /29026779/testing-custom-admin-actions-in-django
-        
-        self.username = 'admin5'
-        self.password = 'staff**'
+
         self.user = User.objects.create_superuser(
-            self.username, 
+            self.username,
             'admin@example.com',
             self.password
         )
-        
+
         # Check the number of bookings which are already approved.
         approved_bookings = Booking.objects.filter(approved=True).count()
         self.assertFalse(self.booking1.approved)

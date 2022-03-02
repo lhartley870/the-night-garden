@@ -5,6 +5,10 @@ from .models import Table
 
 
 class TableSelectionMixin:
+    """
+    A mixin used to get the best allocation of table(s) for a booking.
+    """
+
     def filter_non_match_tables(self, combinations_capacities_dictionary,
                                 combinations_num_tables_dictionary,
                                 party_size):
@@ -299,14 +303,14 @@ class TableSelectionMixin:
         # If the combined capacity of all the available_tables is
         # a 'match' for the party_size or there are only 2
         # available_tables, all available_tables are returned.
-        if (sum(table_sizes) == party_size
-            or sum(table_sizes) == party_size + 1
-                or num_available_tables == 2):
+        if (sum(table_sizes) == party_size or
+            sum(table_sizes) == party_size + 1 or
+                num_available_tables == 2):
             allocated_tables = available_tables
         # Else if all the tables are the same size, the minimum number of
         # those tables needed to cover the party_size is returned.
-        elif (len(available_tables.filter(size=table_sizes[0]))
-              == num_available_tables):
+        elif (len(available_tables.filter(size=table_sizes[0])) ==
+              num_available_tables):
             number_tables_needed = math.ceil(party_size / table_sizes[0])
             allocated_tables = available_tables.all()[:number_tables_needed]
         # If neither of the above options apply, another method is called.

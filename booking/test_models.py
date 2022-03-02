@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from .models import Table, TimeSlot, Booking
 
 
-# Create your tests here.
 class TestModels(TestCase):
 
+    # Set up test users, tables, times, time_slots and bookings.
     def setUp(self):
 
         self.user = User.objects.create_user(
@@ -40,17 +40,17 @@ class TestModels(TestCase):
         )
 
         self.time_slot1 = TimeSlot.objects.create(
-            time=datetime.time(18, 30, 2)
+            time=datetime.time(18, 30)
         )
         self.time_slot1.tables.add(self.table1, self.table2)
 
         self.time_slot2 = TimeSlot.objects.create(
-            time=datetime.time(19, 00, 00)
+            time=datetime.time(19, 00)
         )
         self.time_slot2.tables.add(self.table3, self.table4)
 
         self.booking = Booking.objects.create(
-            date=datetime.date(2022, 3, 12),
+            date=datetime.date(2022, 6, 12),
             booker=self.user,
             party_size=4,
             time_slot=self.time_slot1,
@@ -74,11 +74,11 @@ class TestModels(TestCase):
     # Test the string method for the Booking model.
     def test_booking_string_method_returns_expected_sentence(self):
         self.assertEqual(str(self.booking),
-                         'Booking #1 on 12 March 2022 for 4 guest(s) at 18:30')
+                         'Booking #1 on 12 June 2022 for 4 guest(s) at 18:30')
 
     # Test the date_string method for the Booking model.
     def test_booking_date_string_method_returns_formatted_date(self):
-        self.assertEqual(self.booking.date_string(), '12 March 2022')
+        self.assertEqual(self.booking.date_string(), '12 June 2022')
 
     # Test the created_on default method for the Booking model.
     def test_created_on_timestamp(self):

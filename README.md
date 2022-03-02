@@ -99,6 +99,12 @@ Colour Name | Hexadecimal Code
 
 ### Entity Relationship Diagram
 
+The entity relationship diagram for the project can be found [here](readme-documents/entity-relationship-diagram/entity-relationship-diagram.png).
+
+This diagram shows the foreign key and many to many relationships between models. 
+
+The booking model has a foreign key relationship with the user model and the timeslot model. There is a many to many relationship between the tables field in the booking model and the tables model. There is also a many to many relationship between the tables field in the timeslot model and the table model.
+
 ## Agile Methodology
     
 ## Technologies Used
@@ -131,8 +137,7 @@ Colour Name | Hexadecimal Code
 * [GitHub](https://github.com/) was the git repository hosting service used to store code pushed from Git.
 * [Gitpod](https://www.gitpod.io/) was the online IDE (Integrated Development Environment)/editor used to create, modify and preview the project code. 
 * [Heroku](https://www.heroku.com/) was the cloud application platform used to deploy and host the application.
-* [Lucidchart](https://www.lucidchart.com/pages/) was used to prepare the Flow Chart for the table selection logic in the application. 
-* [dbdiagram.io](https://dbdiagram.io/home) was used to prepare the Entity Relationship Diagram.
+* [Lucidchart](https://www.lucidchart.com/pages/) was used to prepare the Flow Chart for the table selection logic in the application and the Entity Relationship Diagram. 
 * [The Multi Device Website Mockup Generator](https://techsini.com/multi-mockup/index.php) was used to create the screenshots showing how the website looks on different device types in conjunction with the [Ignore X-Frame headers Google Chrome Extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe).
 * [Google Fonts](https://fonts.google.com/) was used to import all of the fonts used on the website. 
 * [Font Awesome](https://fontawesome.com/) was used to provide all the icons throughout the site.  

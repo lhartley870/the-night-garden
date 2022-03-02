@@ -26,7 +26,6 @@ class TablesMixin:
         )
 
 
-# Register your models here.
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
 

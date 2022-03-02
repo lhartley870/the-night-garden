@@ -8,9 +8,9 @@ from .models import Table, TimeSlot, Booking
 from .views import TableSelectionMixin
 
 
-# Create your tests here.
 class TestTableSelectionMixin(TestCase):
 
+    # Set up test users, tables and time_slots.
     def setUp(self):
         self.user1 = User.objects.create_user(
             username='usertest',

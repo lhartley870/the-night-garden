@@ -91,10 +91,10 @@ The foreground text colours and their background colours were tested using the [
     * [results]() 
 
 ## Fixed Bugs
-
-*  
+*  When creating the views, I realised that the post method would need to render the form template with the form as a context variable in order to show form field validation messages in the event the booking was not valid.
+*  I had some difficulty testing the string methods for the Table model as they were not returning lowercase table names even though in the development environment the expected behaviour was being exhibited in the the Admin panel connected to the sqlite3 database. With the assistance of my mentor I realised I needed to change the tests so that they retrieved the table object from the database and the correct behaviour was then exhibited in the tests. The reason it wasn't working before was because the get_prep_value method in the NameField class which is responsible for changing table names to lowercase characters was only called before the table data was put in the database so my test was using the pre-processed data given to it, hence the string method was not showing the table names as lowercase.
+* The use of the Gijgo datepicker affected the usual structure of the Make a Booking and Edit a Booking forms so validation errors for the date field were not being displayed to the user. In order to get around this I had to include some code in the script.js file to display a paragraph containing the error elsewhere so that error messages for the date field could be viewed by the user.
 
 ## Unfixed Bugs
-
-* 
+* There are no known unfixed bugs. However, I was not able to get the use of {{ MEDIA_URL }} for the menu pdf links to work, even with the assistance of several tutors. I did not want to use the Cloudinary link as my cloudinary username would have been displayed in the url when the user opened the menu links. As a workaround I have added the pdf menus to Google Drive and included those links in the menus.html template.
     

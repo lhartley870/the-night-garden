@@ -66,125 +66,125 @@ As a Site User I can view and download the menus for the restaurant so that I kn
 ## Features
 ### Existing Features
 * Navigation Bar
-The navigation bar has the same appearance across all pages of the application and allows for easy user navigation. It contains the restaurant name and a butterfly logo, either of which can be clicked on to take the user back to the Home page which is a predictable and standard website convention. On larger screens the navigation links appear horizontally across the navbar and for smaller screens the navigation bar collapses so that only the restaurant name and logo and a burger menu are shown. The user can then click on the burger icon to see the stacked navigation links.
+    The navigation bar has the same appearance across all pages of the application and allows for easy user navigation. It contains the restaurant name and a butterfly logo, either of which can be clicked on to take the user back to the Home page which is a predictable and standard website convention. On larger screens the navigation links appear horizontally across the navbar and for smaller screens the navigation bar collapses so that only the restaurant name and logo and a burger menu are shown. The user can then click on the burger icon to see the stacked navigation links.
 
-A user who has not logged in to the site can see the links for and navigate to the Home, Register, Login, Menus and Contact pages. A logged in user who is not a Site Admin can see the links for the Home, My Bookings, Make a Booking, Menus, Contact and Logout pages. A Site Admin superuser can see the same links as a non-admin logged in user with the addition of an Admin link which takes the Admin user to the Admin panel where the database data can be managed by the Admin.
+    A user who has not logged in to the site can see the links for and navigate to the Home, Register, Login, Menus and Contact pages. A logged in user who is not a Site Admin can see the links for the Home, My Bookings, Make a Booking, Menus, Contact and Logout pages. A Site Admin superuser can see the same links as a non-admin logged in user with the addition of an Admin link which takes the Admin user to the Admin panel where the database data can be managed by the Admin.
 
-The navigation links are arranged in a logical order, likely to reflect the steps in the user journey through the application.
+    The navigation links are arranged in a logical order, likely to reflect the steps in the user journey through the application.
 
-A green leaf icon appears next to all of the navigation links (apart from the Admin link) to indicate to the user which page they are on. Additionally when a user hovers over or focusses on a navigation link, a pink leaf icon appears next to the link. 
+    A green leaf icon appears next to all of the navigation links (apart from the Admin link) to indicate to the user which page they are on. Additionally when a user hovers over or focusses on a navigation link, a pink leaf icon appears next to the link. 
 
-![Large screen view of navbar for a user not logged in](readme-documents/screenshots/navbar-user-not-logged-in.png)
-![Large screen view of navbar for an admin user logged in](readme-documents/screenshots/navbar-admin-logged-in.png)
-![Collapsed navbar](readme-documents/screenshots/collapsed-navbar.png)
+    ![Large screen view of navbar for a user not logged in](readme-documents/screenshots/navbar-user-not-logged-in.png)
+    ![Large screen view of navbar for an admin user logged in](readme-documents/screenshots/navbar-admin-logged-in.png)
+    ![Collapsed navbar](readme-documents/screenshots/collapsed-navbar.png)
 
 * Adding Tables and Timeslots
-The Admin superuser has access to the Admin panel where tables and timeslots can be created. At present the table and timeslot configuration has been set as per the restaurant's current business model (detailed above). 
+    The Admin superuser has access to the Admin panel where tables and timeslots can be created. At present the table and timeslot configuration has been set as per the restaurant's current business model (detailed above). 
 
-The Admin user can add new tables by clicking on Table and then on 'Add Table'. Table sizes are currently restricted by the restaurant to sizes of 2, 4, 6 or 8 which is reflected in the table size dropdown. Table names must be unique and the Admin user will receive an error if they try to give two tables the same name. 
+    The Admin user can add new tables by clicking on Table and then on 'Add Table'. Table sizes are currently restricted by the restaurant to sizes of 2, 4, 6 or 8 which is reflected in the table size dropdown. Table names must be unique and the Admin user will receive an error if they try to give two tables the same name. 
 
-![View of Admin panel for adding a new table](readme-documents/screenshots/admin-panel-tables.png)
+    ![View of Admin panel for adding a new table](readme-documents/screenshots/admin-panel-tables.png)
 
-The Admin user can also add new timeslots by clicking on Timeslot and then on 'Add Timeslot'. Timeslots must be between the hours of 5:30pm and 10pm to comply with the restaurant's opening and closing times. If the Admin user tries to enter a timeslot outside of these times they will receive an error message. There is a useful vertical filter for the Admin to assign particular tables to particular timeslots.
+    The Admin user can also add new timeslots by clicking on Timeslot and then on 'Add Timeslot'. Timeslots must be between the hours of 5:30pm and 10pm to comply with the restaurant's opening and closing times. If the Admin user tries to enter a timeslot outside of these times they will receive an error message. There is a useful vertical filter for the Admin to assign particular tables to particular timeslots.
 
-![View of Admin panel for adding a new timeslot](readme-documents/screenshots/admin-panel-timeslot.png)
+    ![View of Admin panel for adding a new timeslot](readme-documents/screenshots/admin-panel-timeslot.png)
 
-The Admin user can also add new bookings by clicking on Booking and then on 'Add Booking'. The current registered users will appear in the dropdown for the 'booker' field and the current created timeslots in the dropdown for the 'time' field. Again, there is a useful vertical filter for the Admin to assign particular tables to the booking. The restaurant's bussiness model does not allow more than 16 guests for a timeslot and so the Admin user cannot exceed this numnber of guests per booking. It is envisaged that the Admin will largely be making bookings for large parties of between 11 and 16 guests (as users can only make bookings for between 1 and 10 guests) and for large events where a number of overlapping timeslots may need to be booked out for a user (as users can only have one booking per day and cannot make multiple bookings over several timeslots). The Admin has the option to approve a booking whilst creating it.
+    The Admin user can also add new bookings by clicking on Booking and then on 'Add Booking'. The current registered users will appear in the dropdown for the 'booker' field and the current created timeslots in the dropdown for the 'time' field. Again, there is a useful vertical filter for the Admin to assign particular tables to the booking. The restaurant's bussiness model does not allow more than 16 guests for a timeslot and so the Admin user cannot exceed this numnber of guests per booking. It is envisaged that the Admin will largely be making bookings for large parties of between 11 and 16 guests (as users can only make bookings for between 1 and 10 guests) and for large events where a number of overlapping timeslots may need to be booked out for a user (as users can only have one booking per day and cannot make multiple bookings over several timeslots). The Admin has the option to approve a booking whilst creating it.
 
-![View of Admin panel for adding a new booking](readme-documents/screenshots/admin-panel-booking.png)
+    ![View of Admin panel for adding a new booking](readme-documents/screenshots/admin-panel-booking.png)
 
 * User Authentication
-A user will only have limited access to the application's features without an account. A user coming to the site for the first time can access the Register page via the navigation bar. The user needs to provide their email address, a username, their first and last names and a password to create an account. The email, first name and last name are required in case the restaurant needs to contact a user about their booking. If the email address or username entered are already taken, the user will receive an error message.
+    A user will only have limited access to the application's features without an account. A user coming to the site for the first time can access the Register page via the navigation bar. The user needs to provide their email address, a username, their first and last names and a password to create an account. The email, first name and last name are required in case the restaurant needs to contact a user about their booking. If the email address or username entered are already taken, the user will receive an error message.
 
-![View of Register page](readme-documents/screenshots/register-pg-screenshot.png)
+    ![View of Register page](readme-documents/screenshots/register-pg-screenshot.png)
 
-Once a user has registered they can log in via the login page with their username and password. Once logged in a user can view their current bookings that are not in the past, make new bookings and edit and cancel their existing bookings.
+    Once a user has registered they can log in via the login page with their username and password. Once logged in a user can view their current bookings that are not in the past, make new bookings and edit and cancel their existing bookings.
 
-![View of Login page](readme-documents/screenshots/login-pg-screenshot.png)
+    ![View of Login page](readme-documents/screenshots/login-pg-screenshot.png)
 
-When a user wants to log out they simply navigate to the logout page where they are asked to confirm that they are sure they would like to log out. If the user clicks that they are sure, they are logged out.
+    When a user wants to log out they simply navigate to the logout page where they are asked to confirm that they are sure they would like to log out. If the user clicks that they are sure, they are logged out.
 
-![View of Logout page](readme-documents/screenshots/logout-pg-screenshot.png)
+    ![View of Logout page](readme-documents/screenshots/logout-pg-screenshot.png)
 
 * Making a Booking
-A user must be logged in to make a booking. Once logged in the user can navigate to the Make a Booking page either via the navbar or via the button at the bottom of the My Bookings page. 
+    A user must be logged in to make a booking. Once logged in the user can navigate to the Make a Booking page either via the navbar or via the button at the bottom of the My Bookings page. 
 
-The user can select a date using the datepicker. The user cannot type a date into the date field. Once the datepicker is opened up any available dates for the current month when the restaurant is not closed are shown in a green colour and are not struck through. Any dates which are in the past appear in a grey colour and are struck through. Any dates which are not in the current month but are not closed dates or past dates appear in the grey colour but are not struck through. The user can only select dates up to approximately 3 months ahead in line with the restaurant's policy. The user cannot make more than one booking per date.
+    The user can select a date using the datepicker. The user cannot type a date into the date field. Once the datepicker is opened up any available dates for the current month when the restaurant is not closed are shown in a green colour and are not struck through. Any dates which are in the past appear in a grey colour and are struck through. Any dates which are not in the current month but are not closed dates or past dates appear in the grey colour but are not struck through. The user can only select dates up to approximately 3 months ahead in line with the restaurant's policy. The user cannot make more than one booking per date.
 
-![View of Make a Booking page datepicker](readme-documents/screenshots/datepicker.png)
+    ![View of Make a Booking page datepicker](readme-documents/screenshots/datepicker.png)
 
-The user can only book for between 1 and 10 guests. The user is informed underneath the form that they will need to get in touch with the restaurant to book for parties of over 10 guests or for private events. 
+    The user can only book for between 1 and 10 guests. The user is informed underneath the form that they will need to get in touch with the restaurant to book for parties of over 10 guests or for private events. 
 
-![View of Make a Booking page guests field](readme-documents/screenshots/guests-field.png)
+    ![View of Make a Booking page guests field](readme-documents/screenshots/guests-field.png)
 
-The user can only select timeslots that have been created by the Site Admin. If the booking is for today and the user tries to book for a time that has passed, they will receive an error message. If there are not enough free tables to accommodate the booking, the user will be informed that the booking is not available.
+    The user can only select timeslots that have been created by the Site Admin. If the booking is for today and the user tries to book for a time that has passed, they will receive an error message. If there are not enough free tables to accommodate the booking, the user will be informed that the booking is not available.
 
-![View of Make a Booking page time field](readme-documents/screenshots/time-field.png)
+    ![View of Make a Booking page time field](readme-documents/screenshots/time-field.png)
 
 * Editing a Booking
-A user must be logged in and have an existing booking to be able to edit a booking. Once logged in the user can only edit bookings from the My Bookings page. Only bookings that have been made by the user can be edited by the user. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have an 'Edit Booking' button.
+    A user must be logged in and have an existing booking to be able to edit a booking. Once logged in the user can only edit bookings from the My Bookings page. Only bookings that have been made by the user can be edited by the user. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have an 'Edit Booking' button.
 
-![View of Make a Booking page with some bookings that can be edited and some that cannot](readme-documents/screenshots/various-bookings.png)
+    ![View of Make a Booking page with some bookings that can be edited and some that cannot](readme-documents/screenshots/various-bookings.png)
 
-Once the user clicks on 'Edit Booking' for a booking, they are taken to the Edit a Booking page where they can change the details of the booking. If the user tries to enter another user's booking by including the other user's booking id in the url, they will receive an error message to let them know that they cannot edit another user's booking and the other user's booking will remain unaffected. If the user tries to put a large booking id made by the Admin for them in the url to try and edit a large booking, they will only be able to change the booking to between 1 and 10 guests which is acceptable to the restaurant as the rest of the timeslot will be freed up for other guests to book. However, if the user tries to change one of multiple bookings for the same date made for them by the Admin they will receive an error message and will not be able to. All the usual checks as to whether there is capacity for the edited booking and (if the user is trying to edit the booking to another date) whether the user already has a booking on the date the user is trying to change the booking to are made and appropriate error messages rendered.
+    Once the user clicks on 'Edit Booking' for a booking, they are taken to the Edit a Booking page where they can change the details of the booking. If the user tries to enter another user's booking by including the other user's booking id in the url, they will receive an error message to let them know that they cannot edit another user's booking and the other user's booking will remain unaffected. If the user tries to put a large booking id made by the Admin for them in the url to try and edit a large booking, they will only be able to change the booking to between 1 and 10 guests which is acceptable to the restaurant as the rest of the timeslot will be freed up for other guests to book. However, if the user tries to change one of multiple bookings for the same date made for them by the Admin they will receive an error message and will not be able to. All the usual checks as to whether there is capacity for the edited booking and (if the user is trying to edit the booking to another date) whether the user already has a booking on the date the user is trying to change the booking to are made and appropriate error messages rendered.
 
-![View of Edit a Booking page](readme-documents/screenshots/edit-booking.png)
+    ![View of Edit a Booking page](readme-documents/screenshots/edit-booking.png)
 
 * Cancelling a Booking
-A user must be logged in and have an existing booking to be able to cancel a booking. As with editing bookings, the user can only cancel bookings from the My Bookings page. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have a 'Cancel Booking' button.
+    A user must be logged in and have an existing booking to be able to cancel a booking. As with editing bookings, the user can only cancel bookings from the My Bookings page. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have a 'Cancel Booking' button.
 
-![View of Make a Booking page with some bookings that can be cancelled and some that cannot](readme-documents/screenshots/various-bookings.png)
+    ![View of Make a Booking page with some bookings that can be cancelled and some that cannot](readme-documents/screenshots/various-bookings.png)
 
-Once the user clicks on 'Cancel Booking' for a booking, they receive an alert to ask them to confirm whether they are sure they want to cancel their booking. 
+    Once the user clicks on 'Cancel Booking' for a booking, they receive an alert to ask them to confirm whether they are sure they want to cancel their booking. 
 
-![View of Cancel Booking alert](readme-documents/screenshots/cancel-booking-alert.png)
+    ![View of Cancel Booking alert](readme-documents/screenshots/cancel-booking-alert.png)
 
 * The My Bookings Page
-A user must be signed in to access the My Bookings page. The user is automatically taken to this page on logging in but can also navigate to it via the navbar. The user is informed if they have no current bookings. If the user does have bookings, whether made by the user or by Site Admin on their behalf, they are displayed with the next upcoming booking at the top and the booking furthest in the future at the bottom. Past bookings are not displayed. On smaller screens the bookings are stacked and on larger screens up to 3 bookings appear side by side. There is a maximum of 6 bookings per page before the page is paginated and the user has to navigate to see their other bookings. The My Bookings page displays whether or not each booking has been approved or is awaiting confirmation. The Site Admin user can approve bookings via the Admin panel (either one a time or multiple bookings at a time) by selecting the checkbox next to each booking to be approved, selecting 'Approve Bookings' in the dropdown next to where it says 'Action' and clicking on 'Go'. The listed bookings should then show as being approved with a green tick. 
+    A user must be signed in to access the My Bookings page. The user is automatically taken to this page on logging in but can also navigate to it via the navbar. The user is informed if they have no current bookings. If the user does have bookings, whether made by the user or by Site Admin on their behalf, they are displayed with the next upcoming booking at the top and the booking furthest in the future at the bottom. Past bookings are not displayed. On smaller screens the bookings are stacked and on larger screens up to 3 bookings appear side by side. There is a maximum of 6 bookings per page before the page is paginated and the user has to navigate to see their other bookings. The My Bookings page displays whether or not each booking has been approved or is awaiting confirmation. The Site Admin user can approve bookings via the Admin panel (either one a time or multiple bookings at a time) by selecting the checkbox next to each booking to be approved, selecting 'Approve Bookings' in the dropdown next to where it says 'Action' and clicking on 'Go'. The listed bookings should then show as being approved with a green tick. 
 
-![View of My Bookings page](readme-documents/screenshots/my-bookings-pg.png)
+    ![View of My Bookings page](readme-documents/screenshots/my-bookings-pg.png)
 
-![View of Admin approved bookings](readme-documents/screenshots/admin-approved-bookings.png)
+    ![View of Admin approved bookings](readme-documents/screenshots/admin-approved-bookings.png)
 
 * Table Allocation Optimisation
-One of the main features of this application is its ability to automatically assign the most optimised table allocation for the user's booking. The Site Admin ultimately has the final say over approving bookings as if only one table is available to accommodate a booking, it will be assigned to the booking even if it is a large table and the booking is only for 1 or 2 guests, so the Admin may not want to approve such a booking.
+    One of the main features of this application is its ability to automatically assign the most optimised table allocation for the user's booking. The Site Admin ultimately has the final say over approving bookings as if only one table is available to accommodate a booking, it will be assigned to the booking even if it is a large table and the booking is only for 1 or 2 guests, so the Admin may not want to approve such a booking.
 
-Broadly the steps in allocating tables to bookings are:
-1. How many available tables are there? 
-2. If none, this is fed back into the post method for the applicable view. 
-3. If one, that table is allocated.
-4. If multiple move on to the next step.
+    Broadly the steps in allocating tables to bookings are:
+    1. How many available tables are there? 
+    2. If none, this is fed back into the post method for the applicable view. 
+    3. If one, that table is allocated.
+    4. If multiple move on to the next step.
 
-5. Of the multiple tables, if only one table is a 'match' (being equal to the number of guests for even bookings and 1 over the number of guests for odd bookings), that table is allocated. If more than one table is a match, one is chosen at random.
-6. If no one table is a match move on to the next step.
+    5. Of the multiple tables, if only one table is a 'match' (being equal to the number of guests for even bookings and 1 over the number of guests for odd bookings), that table is allocated. If more than one table is a match, one is chosen at random.
+    6. If no one table is a match move on to the next step.
 
-7. If all the tables are larger than the booking size, select the table with the smallest size needed to cover the booking. If more than one table fits this description, choose one at random.
-8. If all the tables are smaller than the booking size or some are larger and some are smaller, move on to the next step. 
+    7. If all the tables are larger than the booking size, select the table with the smallest size needed to cover the booking. If more than one table fits this description, choose one at random.
+    8. If all the tables are smaller than the booking size or some are larger and some are smaller, move on to the next step. 
 
-9. If all the tables are smaller than the booking size and there are only 2 tables, allocate those 2.
-10. If all the tables are smaller and all of the tables taken together are a 'match' for the booking, allocate all the tables to the booking.
-11. If all the tables are smaller and all are the same size, choose the minimum number needed to cover the booking.
-12. In any other case, move on to step 14.
+    9. If all the tables are smaller than the booking size and there are only 2 tables, allocate those 2.
+    10. If all the tables are smaller and all of the tables taken together are a 'match' for the booking, allocate all the tables to the booking.
+    11. If all the tables are smaller and all are the same size, choose the minimum number needed to cover the booking.
+    12. In any other case, move on to step 14.
 
-13. If some tables are smaller and some are larger than the booking size, move on to step 14.
+    13. If some tables are smaller and some are larger than the booking size, move on to step 14.
 
-14. If there is not at least one matching combination of tables, go to step 18.
-15. If there is one matching combination of tables, allocate that combination. 
-16. If there is more than one matching combination, choose the combination with the smallest number of tables.
-17. if there is more than one such combination mentioned in 16, choose the combination with the largest size table and if there is more than one of those, choose a combination at random.
+    14. If there is not at least one matching combination of tables, go to step 18.
+    15. If there is one matching combination of tables, allocate that combination. 
+    16. If there is more than one matching combination, choose the combination with the smallest number of tables.
+    17. if there is more than one such combination mentioned in 16, choose the combination with the largest size table and if there is more than one of those, choose a combination at random.
 
-18. Get the table or combination of tables with the smallest capacity over the booking size. If there is one table/combination allocate that.
-19. If there is more than one such combination mentioned at point 18, choose the combination with the smallest number of tables. 
-20. If there is more than one such combination mentioned at point 19, choose a combination at random.
+    18. Get the table or combination of tables with the smallest capacity over the booking size. If there is one table/combination allocate that.
+    19. If there is more than one such combination mentioned at point 18, choose the combination with the smallest number of tables. 
+    20. If there is more than one such combination mentioned at point 19, choose a combination at random.
 
 * Messages
-To provide user feedback, messages are displayed to the user. Success messages appear in green at the top of the page when a user logs in or out. When a user successfully makes a booking, edits a booking or cancels a booking, a message is displayed at the top of the My Bookings page. The message fades out and then the screen moves up into the space that was taken up by the message. If the user has a failed login attempt a message in a red box appears to inform the user. Error messages for individual form fields throughout the site appear in red. If there is an error the user cannot proceed until the error is rectified.
+    To provide user feedback, messages are displayed to the user. Success messages appear in green at the top of the page when a user logs in or out. When a user successfully makes a booking, edits a booking or cancels a booking, a message is displayed at the top of the My Bookings page. The message fades out and then the screen moves up into the space that was taken up by the message. If the user has a failed login attempt a message in a red box appears to inform the user. Error messages for individual form fields throughout the site appear in red. If there is an error the user cannot proceed until the error is rectified.
 
-![View of success message](readme-documents/screenshots/success-message.png)
+    ![View of success message](readme-documents/screenshots/success-message.png)
 
-![View of login error message](readme-documents/screenshots/login-error-message.png)
+    ![View of login error message](readme-documents/screenshots/login-error-message.png)
 
-![View of field error message](readme-documents/screenshots/field-error-message.png)
+    ![View of field error message](readme-documents/screenshots/field-error-message.png)
 
 ### Further Feature Ideas
 * At the moment if a Site Admin user does not want to approve a user's booking, they would have to contact the user manually by email to let them know that their booking was not approved before deleting it. It would be good to have an automated mechanism whereby the Site Admin could click on a button to say that they want to delete a particular booking for a particular reason and an appropriate email template would be automatically generated and sent to the user using their email address saved in the database. A bonus would be to have a mechanism that also displays a message to the user on their 'My Bookings' page to explain why the booking has been refused. The mechanism could then automatically delete the booking from the database.

@@ -290,6 +290,111 @@ The booking model has a foreign key relationship with the user model and the tim
 Please see the separate [TESTING.md file](TESTING.md) for details of the project testing carried out. 
 
 ## Deployment
+The steps below set out how to create your own copy of this project and configure and deploy the application. 
+
+### Forking the GitHub Repository
+
+Forking the GitHub repository allows you to produce a personal copy of the original repository/someone else's project that you can amend without affecting the original repository. To do this:
+
+1. Log in to GitHub.
+2. Navigate to the repository that you want to fork. In this case https://github.com/lhartley870/the-night-garden.
+3. In the repository header locate the button that says 'Fork' and click on it.  
+4. When the repository is copied you will be taken to your copy of the repository. 
+
+### Making a Local Clone
+
+In order to work on a repository you have forked, you will need to clone it to your computer. In order to do this: 
+
+1. Log in to GitHub and locate the repository fork you want to make a local clone of. 
+2. Underneath the Settings button at the top of the repository there is a button with a dropdown arrow that says 'Code'. Click on it.  
+3. To clone the repository using HTTPS, undeneath 'Clone' select 'HTTPS' so that there is an orange line underneath 'HTTPS'. Click on this button:
+
+![View of local clone button](/readme-documents/deployment-screenshots/local-clone-button.png)
+
+4. Open the Terminal in your IDE/editor. 
+5. Change the current working directory to the one where you want the cloned directory to be located.  
+6. Type 'git clone' and then paste the URL you copied earlier. It will look like this with your username instead of 'YOUR-USERNAME' and the name of the forked repository you are cloning instead of 'NAME OF REPOSITORY YOU ARE CLONING': 
+
+![View of terminal command to clone fork](/readme-documents/deployment-screenshots/clone-command.png)
+
+7. Press enter and your local clone will be created. 
+8. You will need to install the packages and libraries used by this project. To do this use this command in your terminal: pip install -r requirements.txt
+9. Ensure that DEBUG=True in the settings.py file when you are in the development environment.
+
+For more information on forking and cloning repositories, see [GitHub Docs](https://docs.github.com/en/get-started/quickstart/fork-a-repo) and this [GitHub Guide](https://guides.github.com/activities/forking/). 
+
+### Heroku
+
+The project was deployed according to the following steps: 
+
+1. Log into Heroku at https://www.heroku.com/.
+2. From the Dashboard, Click on the 'New' button and then the dropdown button called 'Create new app'.
+![View of Heroku Dashboard](/readme-documents/deployment-screenshots/heroku-dashboard.png)
+3. Enter a unique App name and select your region as either 'Europe' or 'United States'. If the app name is unique you will get a green tick and a message saying that your chosen name is available, otherwise you will see a red exclamation mark and a message saying that the name is unavailable.
+![View of Create new app page](/readme-documents/deployment-screenshots/create-new-app.png)
+4. Click on 'Create app'.
+5. Click on the 'Resources' tab towards the top of the page. 
+6. In the Add-ons search bar type 'postgres'. 
+7. Select 'Heroku Postgres' and click on 'Submit Order Form' in the pop-up box that appears.
+8. Click on 'Settings' in the bar across the top of the page. You will then be taken to a page that looks like this:
+![View of Settings page](/readme-documents/deployment-screenshots/app-settings.png)
+9. Scroll down to where it says 'Config Vars' down the left hand side of the page and click on 'Reveal Config Vars'.
+10. Check that the DATABASE_URL has automatically be entered as a Config Var.
+11. Copy the DATABASE_URL value.
+12. Ensure that you have an env.py file in your project at the top level and that env.py is added to the .gitignore file.
+13. In the env.py file import os. 
+14. Type the following: os.environ["DATABASE_URL"] =""
+15. Paste the DATABASE_URL value between the quotation marks. 
+16. At the top of the settings.py file import os, dj_database_url and type: if os.path.isfile('env.py'): import env. The conditional statement is needed so that the app doesn't throw an error when it can't find the env.py file in production.
+17. Change the settings.py file DATABASE value to read as follows:
+![View of database setting](readme-documents/deployment-screenshots/database-settings.png)
+18. Add a new Config Var back in Heroku called DISABLE_COLLECTSTATIC and give it a value of 1.
+19. Use an online secret key generator to generate a secret key and add another Config Var called SECRET_KEY and copy the secret key generated as the value.
+20. Back in the settings.py file, ensure your SECRET_KEY value reads as follows:
+![View of secret key setting](readme-documents/deployment-screenshots/secret-key-settings.png)
+21. In the env.py file type the following: os.environ["SECRET_KEY"] = ""
+22. Paste the secret key value from Heroku between the quotation marks. 
+23. To migrate the database model to the Postgres database, in the command line type" python3 manage.py migrate
+24. Make sure the requirements.txt file has all the latest changes by typing: pip3 freeze --local > requirements.txt
+25. Commit any changes made locally to GitHub.
+
+### Cloudinary
+1. Log in to Cloudinary at https://cloudinary.com/ or create an account if you do not already have one.
+2. At the dashboard, copy the "API Environment Variable".
+3. Log in to Heroku and add another Config Var called CLOUDINARY_URL and paste in the API Environment Variable you have just copied from Cloudinary as the CLOUDINARY_URL value BUT make sure that you delete the "CLOUDINARY_URL=" at the beginning of the value.
+4. In your env.py file type: os.environ["CLOUDINARY_URL"] = ""
+5. Paste the Cloudinary API Environment Variable between the quotation marks but, again, make sure you delete the "CLOUDINARY_URL=" at the beginning of the value.
+
+### Connect your Heroku App to the GitHub Repository
+1. Login to Heroku and navigate to your application.
+2. Click on 'Deployment' in the bar across the top of the page.
+3. Where it says 'Deployment Method' on the left hand side of the screen click on GitHub.
+4. Where it says 'Connect to GitHub' down the left hand side of the screen, type your repository name and click 'Search'.
+5. Click on 'Connect' next to your repository name.
+6. Scroll down to where it says 'Automatic Deploys' and 'Manual Deploy' down the left hand side of the screen. 
+18. If you want Heroku to rebuild your app every time any new changes to the code are pushed to GitHub, check that the branch you want to deploy is correct and click on 'Enable Automatic Deploys'. You will then need to check that the branch you want to deploy is correct and click on 'Deploy Branch' in the Manual Deploy' section. 
+19. If you only want to manually deploy, check that the branch you want to deploy is correct and click on 'Deploy Branch' in the 'Manual Deploy' section.
+20. When your app has successfully deployed you will see a 'Your app was successfully deployed' message.
+21. Click on 'View' or 'Open app' and you will be taken to the deployed application. 
+
+### Python Automated Tests
+1. To run the Python automated tests, use the command: python3 manage.py test in your terminal. 
+2. To use the coverage tool install it with the command: pip3 install coverage.
+3. To run coverage use the command: coverage run --source=booking manage.py test
+4. To get the coverage report type: coverage report
+5. To see the report in a browser type: coverage html and then: python3 -m http.server
+6. Navigate to the htmlcov directory to see detailed information on any gaps in coverage.
+
+### Final Deployment
+1. Set DEBUG to False in settings.py
+2. Add X_FRAME_OPTIONS = 'SAMEORIGIN' in settings.py
+3. Ensure that your application is included in the settings.py file as an allowed host e.g. ALLOWED_HOSTS = ['the-night-garden.herokuapp.com', 'localhost']
+4. Make sure your requirements.txt file is up to date using the command: pip3 freeze --local > requirements.txt
+5. Push all changes to GitHub.
+6. In the Heroku Config Vars delete the DISABLE_COLLECSTATIC environment variable.
+7. Go to the Deploy tab and deploy the branch. 
+
+Further detailed instructions can be found in this [Code Institute Cheat Sheet](readme-documents/deployment-screenshots/Django Blog Cheat Sheet v1.pdf)
 
 ## Credits 
 

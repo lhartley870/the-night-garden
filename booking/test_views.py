@@ -7,9 +7,9 @@ from .models import Table, TimeSlot, Booking
 from .forms import BookingForm
 
 
-# Create your tests here.
 class TestViews(TestCase):
 
+    # Set up test users, tables, time_slots and bookings.
     def setUp(self):
         self.user1 = User.objects.create_user(
             username='usertest',
@@ -388,39 +388,6 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'make_booking.html')
-
-    # Check context rendered for make_booking page is correct.
-    def test_my_bookings_context(self):
-        self.client.login(username='usertest', password='123')
-        response = self.client.get(reverse('make_booking'))
-        initial_date = self.today
-        closed_day = self.today.weekday() == 0 or self.today.weekday() == 1
-        christmas_closed_dates = [
-            date(2022, 12, 24),
-            date(2022, 12, 25),
-            date(2022, 12, 28),
-            date(2022, 12, 29),
-            date(2022, 12, 30),
-            date(2022, 12, 31),
-            date(2023, 1, 1)
-        ]
-        if closed_day:
-            if self.today.weekday() == 0:
-                initial_date = self.today + timedelta(days=2)
-            else:
-                initial_date = self.today + timedelta(days=1)
-
-        if self.today in christmas_closed_dates:
-            initial_date = date(2023, 1, 4)
-
-        initial_data = {
-            'date': initial_date
-        }
-        booking_form = BookingForm(user=None, initial=initial_data)
-        self.assertEqual(
-                response.context['booking_form'].__dict__['initial']['date'],
-                booking_form.__dict__['initial']['date'],
-        )
 
     # Check that user can make a valid booking and is redirected to the
     # my_bookings page.

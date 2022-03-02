@@ -195,13 +195,15 @@ As a Site User I can view and download the menus for the restaurant so that I kn
 * It would be good to have some custom 'filter by date' options for the Site Admin to filter bookings e.g. to show bookings this week, bookings tomorrow and to filter out bookings for dates that have passed.
 
 ## Wireframes
-
-I used [Balsamiq](https://www.balsamiq.com) to create Wireframe mock-ups for laptop/large monitor, tablet and mobile devices which can be found here: 
-*  
+I used [Balsamiq](https://www.balsamiq.com) to create Wireframe mock-ups for laptop/large monitor, tablet and mobile devices. Being as most of the site pages follow the same structure, one wireframe was prepared for the general site layout. It can be found here:
+*  [Wireframe](readme-documents/wireframes/night-garden-wireframe.pdf)
 
 ## Design
 
 ### Page Designs
+Most of the application pages follow the same design which is based on the theme of 'halves'. The screen is generally split into two, one side being occupied by a large background image with restaurant or plant imagery appropriate to the purpose of the site and the other half containing the key information for the page. This produces an uncluttered design providing some interest in the form of imagery. The side of the page the photo is on generally switches as you go through the site pages. The Menus page again follows the theme of halves but one half is dedicated to the Summer Menu and the other to the Winter Menu. 
+
+The only page that differs from the general theme of halves is the My Bookings page. This has the bookings split into cards with up to 6 displaying on a page. If the photo 'two halves' approach had been taken it would have looked too cluttered. The bookings are stacked on small screens which mirrors the other application pages and the My Bookings page remains connected to the other pages through the use of logos and colour.
 
 ### Fonts
 

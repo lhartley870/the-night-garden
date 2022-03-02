@@ -27,13 +27,25 @@ There was a stray end div closing tag which was removed in all the templates aff
 Initially there were some warnings highlighted in this initial result for the script.js file which were subsequently corrected:
 * [Initial script.js file result](readme-documents/validation-results/initial-jquery-results.png)
 
-[The PEP8 Online Validator Service](http://pep8online.com/) was used for testing the python code for the application. The following result shows that no errors have been found: 
-* [Python code in run.py file result](/readme-documents/validator-screenshots/validator-clear.png)
+[The PEP8 Online Validator Service](http://pep8online.com/) was used for testing the python code for the application. The following results show that no errors have been found: 
+* [admin.py file result](readme-documents/validation-results/clear-result-admin.png)
+* [forms.py file result](readme-documents/validation-results/clear-result-forms.png)
+* [models.py file result](readme-documents/validation-results/clear-result-models.png)
+* [table_mixin.py file result](readme-documents/validation-results/clear-result-tables-mixin.png)
+* [test_admin.py file result](readme-documents/validation-results/clear-result-testadmin.png)
+* [test_forms.py file result](readme-documents/validation-results/clear-result-testforms.png)
+* [test_models.py file result](readme-documents/validation-results/clear-result-testmodels.png)
+* [test_table_mixin.py file result](readme-documents/validation-results/clear-results-testtablemixin.png)
+* [test_views.py file result](readme-documents/validation-results/clear-results-testviews.png)
+* [urls.py file in booking app result](readme-documents/validation-results/clear-result-booking-urls.png)
+* [views.py file result](readme-documents/validation-results/clear-result-views.png)
+* [urls.py file in nightgarden project result](readme-documents/validation-results/clear-result-nightgarden-urls.png)
+* [settings.py file result](readme-documents/validation-results/clear-result-settings.png)
 
-Initially when the project was run through the validator the following errors were shown:
-+ [Python code in run.py file initial result](/readme-documents/validator-screenshots/validator-warnings.png).
+Initially when the project was run through the validator errors were raised in relation to the table_mixin.py file as shown:
++ [table_mixin.py file initial result](readme-documents/validation-results/initial-result-tables-mixin.png).
 
-These were all errors for the same issue, stated to be *'line break before binary operator'*. This was resolved by moving the applicable line breaks to after the binary operators, in all cases the binary operator being a '+'.  
+These were all errors for the same issue, stated to be *'line break before binary operator'*. This was resolved by moving the applicable line breaks to after the binary operators. 
 
 ## Automated Testing
 

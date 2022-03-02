@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
-# Create your models here.
 class NameField(models.CharField):
     """
     Special NameField class added to be used for name fields

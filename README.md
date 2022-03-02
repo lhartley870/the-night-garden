@@ -104,10 +104,61 @@ Colour Name | Hexadecimal Code
 ## Technologies Used
 
 ### Languages 
-*  
+* [HTML5](https://en.wikipedia.org/wiki/HTML5) programming language for the structure and content of the website.
+* [CSS3](https://en.wikipedia.org/wiki/CSS) for styling the look of the website.
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript) for adding interactivity to the website. 
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) programming language for the logic of the application.
 
-### Libraries, Frameworks and Programs
+### Frameworks, Libraries and Modules
+* [Django](https://www.djangoproject.com/) was the python framework used to allow rapid, secure development and the clean, pragmatic design of this application.
+* [Bootstrap](https://getbootstrap.com/) was the framework used to assist in the building of a responsive, mobile-first site.
+* [Gunicorn](https://gunicorn.org/) was used as the python WSGI HTTP Server to run Django on Heroku.
+* [dj_database_url](https://pypi.org/project/dj-database-url/) was used so that database URLs could be used in the Django Application to connect to the Postgres database.
+* [psycopg2](https://pypi.org/project/psycopg2/) was the PostgreSQL database adapter used for the Python programming language.
+* [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) was used for authentication, registration and account management for the application.
+* [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) was used to help manage the formatting of forms in the django application.
+* [Jquery](https://jquery.com/) was used to assist with HTML document traversal, manipulation and event handling.
+* [Django testing tools](https://docs.djangoproject.com/en/4.0/topics/testing/tools/) were used for testing the python code.
+* [coverage](https://pypi.org/project/coverage/) was used to check and report on the amount of python code covered by automated tests.
+* The [inbuilt python random module](https://docs.python.org/3/library/random.html) was used to randomly choose between different suitable table options available for selection for a booking in the TableSelectionMixin class methods.
+* The [inbuilt python math module](https://docs.python.org/3/library/math.html) was used to find the minimum number of tables needed for a booking (where all the tables are smaller than the party size and all the tables are the same size but there are more than 2 and not all the tables are needed) in the TableSelectionMixin class evaluate_smaller_tables method.
+* The [inbuilt python itertools module](https://docs.python.org/3/library/itertools.html) was used to create a list of all possible table combinations in the TableSelectionMixin class combine_tables method and to chain querysets together in the test_table_mixin file.
+* The [inbuilt python datetime module](https://docs.python.org/3/library/datetime.html) was used throughout the application for manipulating date and time objects.
+* The [python pytz library](https://pypi.org/project/pytz/) and the [inbuilt unittest.mock library](https://docs.python.org/3/library/unittest.mock.html) were used in testing the 'created_on' field in the Booking model.
+
+### Programs and Resources
+* [Git](https://git-scm.com/) was the version control system used via the Gitpod terminal to commit and push code to GitHub.
+* [GitHub](https://github.com/) was the git repository hosting service used to store code pushed from Git.
+* [Gitpod](https://www.gitpod.io/) was the online IDE (Integrated Development Environment)/editor used to create, modify and preview the project code. 
+* [Heroku](https://www.heroku.com/) was the cloud application platform used to deploy and host the application.
+* [Lucidchart](https://www.lucidchart.com/pages/) was used to prepare the Flow Chart for the table selection logic in the application. 
+* [dbdiagram.io](https://dbdiagram.io/home) was used to prepare the Entity Relationship Diagram.
 * [The Multi Device Website Mockup Generator](https://techsini.com/multi-mockup/index.php) was used to create the screenshots showing how the website looks on different device types in conjunction with the [Ignore X-Frame headers Google Chrome Extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe).
+* [Google Fonts](https://fonts.google.com/) was used to import all of the fonts used on the website. 
+* [Font Awesome](https://fontawesome.com/) was used to provide all the icons throughout the site.  
+* [Balsamiq](https://www.balsamiq.com) was used to prepare all of the Wireframes for the site. 
+* [Chrome DevTools](https://developer.chrome.com/docs/devtools/) was used to inspect the project code throughout creation of the site. 
+* [ColorSpace](https://mycolor.space/) was used to generate the colour palettes from which most of the colours for the website were taken. 
+* [Eye Dropper](https://eyedropper.org/) was used to find out the names of the hex code colours used on the site.
+* [Favicon Generator](https://favicon.io/favicon-generator/) was used to create the favicon for the site. 
+* [Unsplash](https://unsplash.com/) provided free photos used throughout the site.
+* [Cloudinary](https://cloudinary.com/) was used to store the photographs, favicon and logos used by the application.
+* [Google Drive](https://www.google.com/intl/en-GB/drive/) was used to store the menus linked in the application.
+* [W3 Schools](https://www.w3schools.com/), [Stack Overflow](https://stackoverflow.com/), [CSS-Tricks](https://css-tricks.com/), [MDN Web Docs](https://developer.mozilla.org/en-US/), [Python.org](https://www.python.org/) and [Django documentation](https://docs.djangoproject.com/en/4.0/) were used for general guidance and learning.  
+* [What is my Viewport?](https://whatismyviewport.com/) was used to confirm the viewport screen sizes of my devices for testing the project. 
+* [Can I Use?](https://caniuse.com/) was used for checking browser compatibility.
+* [Compressor](https://compressor.io/) was used for compressing photos used on the site. 
+* [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) was used to check the contrast of foreground text colours against their background colours.
+* [The W3C Markup Validation Service](https://validator.w3.org/), [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/), [JSHint](https://jshint.com/) and [PEP8 Online](http://pep8online.com/), were used for testing the html, css, javascript and  python code for the site.
+* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) and [Mastering Markdown](https://guides.github.com/features/mastering-markdown/) were used for preparing the README.md and TESTING.md files.
+* [Django Secret Key Generator](https://miniwebtool.com/django-secret-key-generator/) was used to generate secret keys for the development and production environments.
+* [Character Counter Online](https://www.charactercountonline.com/) was used for counting the number of characters in git commit messages.
+* [cdnjs](https://cdnjs.com/) was used to provide CDN links.
+* [Gijgo datepicker](https://gijgo.com/datepicker) was used to provide the datepicker for the 'Make a Booking' and 'Edit a Booking' forms.
+* [Fake UK Phone Numbers](https://fakenumber.org/united-kingdom) was used to generate a fake phone number for the restaurant.
+* [Canva](https://www.canva.com/en_gb/) was used for the restaurant logos and illustrations and for the design of the restaurant menus.
+* [Color hex](https://www.color-hex.com/) was used to convert hex colours into rgb colours.
+* [Project management on Github](https://www.topcoder.com/thrive/articles/project-management-on-github), [User Stories and Epics for the Win article](https://www.christianstrunk.com/blog/user-stories-and-epics-for-the-win), [Atlassian Agile epics: definition, examples, and templates article](https://www.atlassian.com/agile/project-management/epics) and [A Complete Guide to Agile Epics article](https://www.wrike.com/agile-guide/agile-epics-guide/) were used in drafting the epics and user stories. 
 
 ## Testing
 

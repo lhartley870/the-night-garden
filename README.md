@@ -107,10 +107,37 @@ When a user wants to log out they simply navigate to the logout page where they 
 ![View of Logout page](readme-documents/screenshots/logout-pg-screenshot.png)
 
 * Making a Booking
+A user must be logged in to make a booking. Once logged in the user can navigate to the Make a Booking page either via the navbar or via the button at the bottom of the My Bookings page. 
+
+The user can select a date using the datepicker. The user cannot type a date into the date field. Once the datepicker is opened up any available dates for the current month when the restaurant is not closed are shown in a green colour and are not struck through. Any dates which are in the past appear in a grey colour and are struck through. Any dates which are not in the current month but are not closed dates or past dates appear in the grey colour but are not struck through. The user can only select dates up to approximately 3 months ahead in line with the restaurant's policy. The user cannot make more than one booking per date.
+
+![View of Make a Booking page datepicker](readme-documents/screenshots/datepicker.png)
+
+The user can only book for between 1 and 10 guests. The user is informed underneath the form that they will need to get in touch with the restaurant to book for parties of over 10 guests or for private events. 
+
+![View of Make a Booking page guests field](readme-documents/screenshots/guests-field.png)
+
+The user can only select timeslots that have been created by the Site Admin. If the booking is for today and the user tries to book for a time that has passed, they will receive an error message. If there are not enough free tables to accommodate the booking, the user will be informed that the booking is not available.
+
+![View of Make a Booking page time field](readme-documents/screenshots/time-field.png)
 
 * Editing a Booking
+A user must be logged in and have an existing booking to be able to edit a booking. Once logged in the user can only edit bookings from the My Bookings page. Only bookings that have been made by the user can be edited by the user. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have an 'Edit Booking' button.
+
+![View of Make a Booking page with some bookings that can be edited and some that cannot](readme-documents/screenshots/various-bookings.png)
+
+Once the user clicks on 'Edit Booking' for a booking, they are taken to the Edit a Booking page where they can change the details of the booking. If the user tries to enter another user's booking by including the other user's booking id in the url, they will receive an error message to let them know that they cannot edit another user's booking and the other user's booking will remain unaffected. If the user tries to put a large booking id made by the Admin for them in the url to try and edit a large booking, they will only be able to change the booking to between 1 and 10 guests which is acceptable to the restaurant as the rest of the timeslot will be freed up for other guests to book. However, if the user tries to change one of multiple bookings for the same date made for them by the Admin they will receive an error message and will not be able to. All the usual checks as to whether there is capacity for the edited booking and (if the user is trying to edit the booking to another date) whether the user already has a booking on the date the user is trying to change the booking to are made and appropriate error messages rendered.
+
+![View of Edit a Booking page](readme-documents/screenshots/edit-booking.png)
 
 * Cancelling a Booking
+A user must be logged in and have an existing booking to be able to cancel a booking. As with editing bookings, the user can only cancel bookings from the My Bookings page. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have a 'Cancel Booking' button.
+
+![View of Make a Booking page with some bookings that can be cancelled and some that cannot](readme-documents/screenshots/various-bookings.png)
+
+Once the user clicks on 'Cancel Booking' for a booking, they receive an alert to ask them to confirm whether they are sure they want to cancel their booking. 
+
+![View of Cancel Booking alert](readme-documents/screenshots/cancel-booking-alert.png)
 
 * The My Bookings Page
 

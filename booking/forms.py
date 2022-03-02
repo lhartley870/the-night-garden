@@ -149,7 +149,7 @@ class BookingForm(forms.ModelForm):
 
     def clean_date(self):
         """
-        Method to clean the time field.
+        Method to clean the date field.
 
         This method makes sure that if the user tries to manipulate
         the booking id number in the url on the Edit Booking page to

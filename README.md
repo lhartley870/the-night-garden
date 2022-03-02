@@ -211,6 +211,11 @@ I used [Google Fonts](https://fonts.google.com/) for the website fonts. The sele
 
 Selected Font | Fallback Font
 ------------- | --------------
+Montez | Cursive
+Oregano | Cursive
+Roboto | Sans serif
+
+I chose the Montez and Oregano fonts as they have a 'French' look which is well-suited to the restaurant theme of this application. The Montez font also looks good on the menus. Raleway is a clear and easily readable font for use throughout the majority of the website and on the menus. 
 
 ### Colours
 
@@ -218,6 +223,22 @@ The colour scheme used on the site is as follows:
 
 Colour Name | Hexadecimal Code
 ------------| ---------
+Blue Green | #3D6C77
+Seashell | #fff6ea
+Light Pink | #e6c2bf
+Gainsboro | #D4E9CE
+Misty Rose |#FFDBE0
+Pale Turqoise | #B9EEF8
+Firebrick | #C32232
+Dark Slate Grey | #2F4858
+Teal | #007A6A
+Dimgray | #806A60
+Olive | #747201
+Sienna | #B15739
+
+Initially I was going to include a yellow colour to represent the moon and found a lemon chiffon (#fefcbc) colour which I used to generate a colour palette on [ColorSpace](https://mycolor.space/). I then found an attrative colour palette on Canva (used to create the logos) called 'Mellow Barnyard' from which the Light Pink and Seashell colours were taken. All the other colours used were largely taken from one of those two palettes or were lightened/darkened based on those colours to ensure effective contrast. 
+
+The blue green colour was chosen because green is synonymous with gardens and because the restaurant only has evening dining I thought a mainly dark background colour would be appropriate. The Seashell colour is synonymous with the moon and the pink colour represents the flower element.
 
 ### Entity Relationship Diagram
 

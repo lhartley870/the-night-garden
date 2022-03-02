@@ -9,7 +9,6 @@ from .models import Booking, TimeSlot
 from .table_mixin import TableSelectionMixin
 
 
-# Create your views here.
 class Home(View):
     def get(self, request):
         return render(request, "index.html",)

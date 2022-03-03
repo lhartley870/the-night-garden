@@ -21,6 +21,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
 ## UX (User Experience) 
 ### User Stories
 * 1: Admin Management of Restaurant Tables
+
     As a Site Admin I can create, read, update, delete and filter the restaurant tables so that I can manage the size and number of tables available for guests to book.
 * 2: Admin Management of Restaurant Time Slots
     As a Site Admin I can create, read, update, delete and filter the restaurant time slots so that I can manage the time slots available for guests to book and which tables are available for those time slots.

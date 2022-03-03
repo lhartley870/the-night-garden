@@ -66,7 +66,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
 
 * 12: User cannot edit another user's booking
 
-    As a Site Admin I can prevent a user from editing another user's booking so that user's bookings are secure.
+    As a Site Admin I can prevent a user from editing another user's booking so that users' bookings are secure.
 
 * 13: User can delete a booking
 
@@ -107,6 +107,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
 ## Features
 ### Existing Features
 * Navigation Bar
+
     The navigation bar has the same appearance across all pages of the application and allows for easy user navigation. It contains the restaurant name and a butterfly logo, either of which can be clicked on to take the user back to the Home page which is a predictable and standard website convention. On larger screens the navigation links appear horizontally across the navbar and for smaller screens the navigation bar collapses so that only the restaurant name and logo and a burger menu are shown. The user can then click on the burger icon to see the stacked navigation links.
 
     A user who has not logged in to the site can see the links for and navigate to the Home, Register, Login, Menus and Contact pages. A logged in user who is not a Site Admin can see the links for the Home, My Bookings, Make a Booking, Menus, Contact and Logout pages. A Site Admin superuser can see the same links as a non-admin logged in user with the addition of an Admin link which takes the Admin user to the Admin panel where the database data can be managed by the Admin.
@@ -120,6 +121,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![Collapsed navbar](readme-documents/screenshots/collapsed-navbar.png)
 
 * Adding Tables and Timeslots
+
     The Admin superuser has access to the Admin panel where tables and timeslots can be created. At present the table and timeslot configuration has been set as per the restaurant's current business model (detailed above). 
 
     The Admin user can add new tables by clicking on Table and then on 'Add Table'. Table sizes are currently restricted by the restaurant to sizes of 2, 4, 6 or 8 which is reflected in the table size dropdown. Table names must be unique and the Admin user will receive an error if they try to give two tables the same name. 
@@ -130,11 +132,12 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
 
     ![View of Admin panel for adding a new timeslot](readme-documents/screenshots/admin-panel-timeslot.png)
 
-    The Admin user can also add new bookings by clicking on Booking and then on 'Add Booking'. The current registered users will appear in the dropdown for the 'booker' field and the current created timeslots in the dropdown for the 'time' field. Again, there is a useful vertical filter for the Admin to assign particular tables to the booking. The restaurant's bussiness model does not allow more than 16 guests for a timeslot and so the Admin user cannot exceed this numnber of guests per booking. It is envisaged that the Admin will largely be making bookings for large parties of between 11 and 16 guests (as users can only make bookings for between 1 and 10 guests) and for large events where a number of overlapping timeslots may need to be booked out for a user (as users can only have one booking per day and cannot make multiple bookings over several timeslots). The Admin has the option to approve a booking whilst creating it.
+    The Admin user can also add new bookings by clicking on Booking and then on 'Add Booking'. The current registered users will appear in the dropdown for the 'booker' field and the current created timeslots in the dropdown for the 'time' field. Again, there is a useful vertical filter for the Admin to assign particular tables to the booking. The restaurant's business model does not allow more than 16 guests for a timeslot and so the Admin user cannot exceed this number of guests per booking. It is envisaged that the Admin will largely be making bookings for large parties of between 11 and 16 guests (as users can only make bookings for between 1 and 10 guests) and for large events where a number of overlapping timeslots may need to be booked out for a user (as users can only have one booking per day and cannot make multiple bookings over several timeslots). The Admin has the option to approve a booking whilst creating it.
 
     ![View of Admin panel for adding a new booking](readme-documents/screenshots/admin-panel-booking.png)
 
 * User Authentication
+
     A user will only have limited access to the application's features without an account. A user coming to the site for the first time can access the Register page via the navigation bar. The user needs to provide their email address, a username, their first and last names and a password to create an account. The email, first name and last name are required in case the restaurant needs to contact a user about their booking. If the email address or username entered are already taken, the user will receive an error message.
 
     ![View of Register page](readme-documents/screenshots/register-pg-screenshot.png)
@@ -148,6 +151,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![View of Logout page](readme-documents/screenshots/logout-pg-screenshot.png)
 
 * Making a Booking
+
     A user must be logged in to make a booking. Once logged in the user can navigate to the Make a Booking page either via the navbar or via the button at the bottom of the My Bookings page. 
 
     The user can select a date using the datepicker. The user cannot type a date into the date field. Once the datepicker is opened up any available dates for the current month when the restaurant is not closed are shown in a green colour and are not struck through. Any dates which are in the past appear in a grey colour and are struck through. Any dates which are not in the current month but are not closed dates or past dates appear in the grey colour but are not struck through. The user can only select dates up to approximately 3 months ahead in line with the restaurant's policy. The user cannot make more than one booking per date.
@@ -163,6 +167,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![View of Make a Booking page time field](readme-documents/screenshots/time-field.png)
 
 * Editing a Booking
+
     A user must be logged in and have an existing booking to be able to edit a booking. Once logged in the user can only edit bookings from the My Bookings page. Only bookings that have been made by the user can be edited by the user. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have an 'Edit Booking' button.
 
     ![View of Make a Booking page with some bookings that can be edited and some that cannot](readme-documents/screenshots/various-bookings.png)
@@ -172,6 +177,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![View of Edit a Booking page](readme-documents/screenshots/edit-booking.png)
 
 * Cancelling a Booking
+
     A user must be logged in and have an existing booking to be able to cancel a booking. As with editing bookings, the user can only cancel bookings from the My Bookings page. Bookings that have been made by Site Admin for the user (being large bookings of over 10 guests or multiple bookings for the same date) do not have a 'Cancel Booking' button.
 
     ![View of Make a Booking page with some bookings that can be cancelled and some that cannot](readme-documents/screenshots/various-bookings.png)
@@ -181,7 +187,8 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![View of Cancel Booking alert](readme-documents/screenshots/cancel-booking-alert.png)
 
 * The My Bookings Page
-    A user must be signed in to access the My Bookings page. The user is automatically taken to this page on logging in but can also navigate to it via the navbar. The user is informed if they have no current bookings. If the user does have bookings, whether made by the user or by Site Admin on their behalf, they are displayed with the next upcoming booking at the top and the booking furthest in the future at the bottom. Past bookings are not displayed. On smaller screens the bookings are stacked and on larger screens up to 3 bookings appear side by side. There is a maximum of 6 bookings per page before the page is paginated and the user has to navigate to see their other bookings. The My Bookings page displays whether or not each booking has been approved or is awaiting confirmation. The Site Admin user can approve bookings via the Admin panel (either one a time or multiple bookings at a time) by selecting the checkbox next to each booking to be approved, selecting 'Approve Bookings' in the dropdown next to where it says 'Action' and clicking on 'Go'. The listed bookings should then show as being approved with a green tick. 
+
+    A user must be signed in to access the My Bookings page. The user is automatically taken to this page on logging in but can also navigate to it via the navbar. The user is informed if they have no current bookings. If the user does have bookings, whether made by the user or by Site Admin on their behalf, they are displayed with the next upcoming booking at the top and the booking furthest in the future at the bottom. Past bookings are not displayed. On smaller screens the bookings are stacked and on larger screens up to 3 bookings appear side by side. There is a maximum of 6 bookings per page before the page is paginated and the user has to navigate to see their other bookings. The My Bookings page displays whether or not each booking has been approved or is awaiting confirmation. The Site Admin user can approve bookings via the Admin panel (either one at a time or multiple bookings at a time) by selecting the checkbox next to each booking to be approved, selecting 'Approve Bookings' in the dropdown next to where it says 'Action' and clicking on 'Go'. The listed bookings should then show as being approved with a green tick. 
 
     ![View of My Bookings page](readme-documents/screenshots/my-bookings-pg.png)
 
@@ -219,6 +226,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     20. If there is more than one such combination mentioned at point 19, choose a combination at random.
 
 * Messages
+
     To provide user feedback, messages are displayed to the user. Success messages appear in green at the top of the page when a user logs in or out. When a user successfully makes a booking, edits a booking or cancels a booking, a message is displayed at the top of the My Bookings page. The message fades out and then the screen moves up into the space that was taken up by the message. If the user has a failed login attempt a message in a red box appears to inform the user. Error messages for individual form fields throughout the site appear in red. If there is an error the user cannot proceed until the error is rectified.
 
     ![View of success message](readme-documents/screenshots/success-message.png)
@@ -256,7 +264,7 @@ Montez | Cursive
 Oregano | Cursive
 Roboto | Sans serif
 
-I chose the Montez and Oregano fonts as they have a 'French' look which is well-suited to the restaurant theme of this application. The Montez font also looks good on the menus. Raleway is a clear and easily readable font for use throughout the majority of the website and on the menus. 
+I chose the Montez and Oregano fonts as they have a 'French' look which is well-suited to the restaurant theme of this application. The Montez font also looks good on the menus. Roboto is a clear and easily readable font for use throughout the majority of the website and on the menus. 
 
 ### Colours
 
@@ -324,11 +332,11 @@ The Product Backlog, Epics, User Stories and the 2 Iteration Boards can be acces
 * [GitHub](https://github.com/) was the git repository hosting service used to store code pushed from Git.
 * [Gitpod](https://www.gitpod.io/) was the online IDE (Integrated Development Environment)/editor used to create, modify and preview the project code. 
 * [Heroku](https://www.heroku.com/) was the cloud application platform used to deploy and host the application.
-* [Lucidchart](https://www.lucidchart.com/pages/) was used to prepare the Flow Chart for the table selection logic in the application and the Entity Relationship Diagram. 
+* [Lucidchart](https://www.lucidchart.com/pages/) was used to prepare the Entity Relationship Diagram. 
 * [The Multi Device Website Mockup Generator](https://techsini.com/multi-mockup/index.php) was used to create the screenshots showing how the website looks on different device types in conjunction with the [Ignore X-Frame headers Google Chrome Extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe).
 * [Google Fonts](https://fonts.google.com/) was used to import all of the fonts used on the website. 
 * [Font Awesome](https://fontawesome.com/) was used to provide all the icons throughout the site.  
-* [Balsamiq](https://www.balsamiq.com) was used to prepare all of the Wireframes for the site. 
+* [Balsamiq](https://www.balsamiq.com) was used to prepare the Wireframes for the site. 
 * [Chrome DevTools](https://developer.chrome.com/docs/devtools/) was used to inspect the project code throughout creation of the site. 
 * [ColorSpace](https://mycolor.space/) was used to generate the colour palettes from which most of the colours for the website were taken. 
 * [Eye Dropper](https://eyedropper.org/) was used to find out the names of the hex code colours used on the site.
@@ -406,7 +414,7 @@ The project was deployed according to the following steps:
 8. Click on 'Settings' in the bar across the top of the page. You will then be taken to a page that looks like this:
 ![View of Settings page](/readme-documents/deployment-screenshots/app-settings.png)
 9. Scroll down to where it says 'Config Vars' down the left hand side of the page and click on 'Reveal Config Vars'.
-10. Check that the DATABASE_URL has automatically be entered as a Config Var.
+10. Check that the DATABASE_URL has automatically been entered as a Config Var.
 11. Copy the DATABASE_URL value.
 12. Ensure that you have an env.py file in your project at the top level and that env.py is added to the .gitignore file.
 13. In the env.py file import os. 
@@ -421,7 +429,7 @@ The project was deployed according to the following steps:
 ![View of secret key setting](readme-documents/deployment-screenshots/secret-key-settings.png)
 21. In the env.py file type the following: os.environ["SECRET_KEY"] = ""
 22. Paste the secret key value from Heroku between the quotation marks. 
-23. To migrate the database model to the Postgres database, in the command line type" python3 manage.py migrate
+23. To migrate the database model to the Postgres database, in the command line type: python3 manage.py migrate
 24. Make sure the requirements.txt file has all the latest changes by typing: pip3 freeze --local > requirements.txt
 25. Commit any changes made locally to GitHub.
 
@@ -467,41 +475,61 @@ Further detailed instructions can be found in this [Code Institute Cheat Sheet](
 
 ### Code
 * I referenced the 'I Think Therefore I Blog' and 'Hello Django' Code Institute projects heavily whilst creating this project.
+
 In the html template files:
+
 * Code for adding a favicon to a Django project was taken from an answer given by hanleyhansen and edited by FlipperPA on [this Stack Overflow post](https://stackoverflow.com/questions/21938028/how-can-i-get-a-favicon-to-show-up-in-my-django-app)
 * Code for adding an active class depending on whether the user is on the current page was adapted from an answer given by hassanrazadev on [this Stack Overflow post](https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page)
 * The url for the admin panel was taken from an answer given by markmuetz and edited by blueyed on [this Stack Overflow post](https://stackoverflow.com/questions/694477/getting-django-admin-url-for-an-object)
 * Code for rendering messages was taken from the Code Institute 'I Think Therefore I Blog' project.
 * Code for the user to confirm that they want to cancel a booking was taken from an answer given by Raghav Rach and edited by Besnik on [this Stack Overflow post](https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete)
 * Code for the My Bookings page pagination was taken from the official Django documentation and the Code Institute 'I Think Therefore I Blog' project
+
 In the admin.py file:
+
 * Code for the display of each table's details in the Admin panel was adapted from an answer given by  karthikr and edited by Joseph jun. Melettukunnel on [this Stack Overflow post](https://stackoverflow.com/questions/18108521/many-to-many-in-list-display-django)
 In the forms.py file:
 * Code for the TimeSlotForm clean_time method was adapted from a question posted by Amistad and an answer given by Daniel Roseman on [this Stack Overflow post](https://stackoverflow.com/questions/24802244/custom-validation-in-django-admin)
 * Code for the CustomSignUpForm class was based upon code included in an article entitled ['The complete django-allauth guide' by Gajesh](https://dev.to/gajesh/the-complete-django-allauth-guide-la3)
 * Code for validating the first_name and last_name fields in the CustomSignUpForm class so that only letters are allowed was adapted from an answer given by Martijn Pieters and edited by Lord Elrond on [this Stack Overflow post](https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters)
+
 In the models.py file:
+
 * Code for the NameField class was taken from an answer given by Danil and edited by Oran on [this Stack Overflow post](https://stackoverflow.com/questions/36330677/django-model-set-default-charfield-in-lowercase)
 In the table_mixin.py file:
 * The code to remove duplicates from a list was adapated from a W3 Schools article entitled ['How to Remove Duplicates From a Python List'](https://www.w3schools.com/python/python_howto_remove_duplicates.asp)
 * Code for creating a list of all possible table combinations for a particular minimum combination size and above was adapted from a response provided by Dan H and edited by Steven C.Howell on [this Stack Overflow post](https://stackoverflow.com/questions/464864/how-to-get-all-possible-combinations-of-a-list-s-elements)
 * Code for creating a dictionary from two lists was adapted from an answer given by Dan Lenski and edited by wjandrea on [this Stack Overflow post](https://stackoverflow.com/questions/209840/how-do-i-convert-two-lists-into-a-dictionary)
+
 In the test_admin.py file:
+
 * Code for testing django admin custom functions was adapted from answers given by giantas and Alex V on [this Stack Overflow post](https://stackoverflow.com/questions/40724534/coverage-test-django-admin-custom-functions)
 * Code for testing admin actions in django adapted from answers given by catavaran, Wtower and radtek on this [Stack Overflow post](https://stackoverflow.com/questions/29026779/testing-custom-admin-actions-in-django)
+
 In the test_forms.py file:
+
 * Code for testing whether querysets are equal in django taken from an answer given by dspacejs on [this Stack Overflow post](https://stackoverflow.com/questions/17685023/how-do-i-test-django-querysets-are-equal)
+
 In the test_models.py file:
+
 * Code for testing the created_on method adapted from an answer given by neverwalkaloner and edited by vidstige on [this Stack Overflow post](https://stackoverflow.com/questions/49874923/how-to-test-auto-now-add-in-django)
+
 In the booking app urls.py file:
+
 * The solution of using the login_required decorator to control what happens if a user logs out of their account and then presses the back button was taken from an answer given by Mahmood on [this Stack Overflow post](https://stackoverflow.com/questions/28000981/django-user-re-entering-session-by-clicking-browser-back-button-after-logging?noredirect=1&lq=1)
 * The solution of using the login_required decorator in the url path for class-based views was taken from an answer given by FMZ on [this Stack Overflow post](https://stackoverflow.com/questions/28555260/django-login-required-for-class-views)
+
 In the views.py file:
+
 * Code for providing an initial value in a model form field was adapted from code provided in an article entitled ['Django Initial Value to Model forms' by challapallimanoj99@gmail.com dated 16 June 2021](https://studygyaan.com/django/how-to-give-initial-value-to-model-forms)
 * Use of .format() to add the booking details to the success message taken from an answer given by Glenn D.J. on [this Stack Overflow post](https://stackoverflow.com/questions/64956279/django-show-message-only-when-form-has-changed)
+
 In the settings.py file:
+
 * Solution for changing the format of time inputs taken from an answer given by CoffeeBasedLifeform on [this Stack Overflow post](https://stackoverflow.com/questions/48514222/django-admin-datetimefield-showing-24hr-format-time)
+
 In the style.css file:
+
 * Code for making the pink leaf icon within a navigation link visible only when hovering over or focussing on that link adapted from an answer given by Curtis
 on [this Stack Overflow post](https://stackoverflow.com/questions/9617641/css-link-to-an-icon-visible-on-hover)
 

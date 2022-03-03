@@ -195,6 +195,7 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
     ![View of Admin approved bookings](readme-documents/screenshots/admin-approved-bookings.png)
 
 * Table Allocation Optimisation
+
     One of the main features of this application is its ability to automatically assign the most optimised table allocation for the user's booking. The Site Admin ultimately has the final say over approving bookings as if only one table is available to accommodate a booking, it will be assigned to the booking even if it is a large table and the booking is only for 1 or 2 guests, so the Admin may not want to approve such a booking.
 
     Broadly the steps in allocating tables to bookings are:

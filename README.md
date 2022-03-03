@@ -23,45 +23,85 @@ The restaurant has decided to close on Mondays and Tuesdays at the moment and, i
 * 1: Admin Management of Restaurant Tables
 
     As a Site Admin I can create, read, update, delete and filter the restaurant tables so that I can manage the size and number of tables available for guests to book.
+
 * 2: Admin Management of Restaurant Time Slots
+    
     As a Site Admin I can create, read, update, delete and filter the restaurant time slots so that I can manage the time slots available for guests to book and which tables are available for those time slots.
+
 * 3: Admin Management of Restaurant Bookings
+    
     As a Site Admin I can create, read, update, delete and filter the restaurant bookings so that I can manage large bookings and events and see the status of the bookings at any given time.
+
 * 4: Admin can approve guest bookings
+    
     As a Site Admin I can approve or decide not to approve guest bookings so that I can manage the bookings, particularly if a user has been allocated a large table for a small number of guests.
+
 * 5: User can register for an account and login
+    
     As a Site User I can register to create an account so that I can make restaurant bookings, view my bookings and manage my bookings.
+
 * 6: User must provide details required by the restaurant on registration
+    
     As a Site Admin I can require users to provide an email address and their first and last names on registration so that I can contact users if required and can address them by name when contacting them.
+
 * 7: User can create a new booking 
-    As a Site User I can make bookings at The Night Garden restaurant so that I have a dining reservation
+    
+    As a Site User I can make bookings at The Night Garden restaurant so that I have a dining reservation.
+
 * 8: User cannot make more than one booking per date/edit a booking to have more than one booking per date
+    
     As a Site Admin I can prevent a user making more than one booking per day/editing a booking to have more than one booking per day so that large events for one User are within the control of the Site Admin.
+
 * 9: User cannot make a booking/edit a booking for today for a time in the past 
+
     As a Site Admin I can prevent a user making a booking today/editing a booking for today for a time in the past so that I only receive valid bookings for the restaurant and minimise user error.
+
 * 10: User cannot make a booking/edit a booking if there are not enough free tables to seat the guests
+
     As a Site User I can prevent a user from making a booking/editing a booking if there are not enough free tables to seat the guests so that the restaurant does not get overbooked.
+
 * 11: User can edit an existing booking
+
     As a Site User I can edit an existing booking so that I have flexibility to change my bookings if my circumstances change.
+
 * 12: User cannot edit another user's booking
+
     As a Site Admin I can prevent a user from editing another user's booking so that user's bookings are secure.
+
 * 13: User can delete a booking
+
     As a Site User I can delete a booking that I have made so that so that I have flexibility to cancel my bookings if my circumstances change.
+
 * 14: User can view their current bookings
+
     As a Site User I can view my current bookings so that I can see which bookings I have currently made and whether or not they have been approved.
+
 * 15: Table selection where only 1 table is available or only 1 table is a match
+
     As a Site Admin I can control allocation of tables where only one table is available for a user's booking or only one table is a match so that I can ensure the most optimised allocation of tables for a booking.
+
 * 16: Table selection where no one table is a match and all tables are larger in size than the number of guests for the booking
+
     As a Site Admin I can control allocation of tables where no one table is a match for the user's booking and all tables are larger in size than the number of guests for the booking so that I can ensure the most optimised allocation of tables for a booking.
+
 * 17: Table selection where no one table is a match and all tables are smaller in size than the number of guests for the booking.
+
     As a Site Admin I can control allocation of tables where no one table is a match for the user's booking and all tables are smaller in size than the number of guests for the booking so that I can ensure the most optimised allocation of tables for a booking.
+
 * 18: Table selection where no one table is a match and some tables are smaller and some are larger than the number of guests for the booking.
+
     As a Site Admin I can control allocation of tables where no one table is a match for the user's booking and some tables are smaller in size than the number of guests for the booking and some are larger so that I can ensure the most optimised allocation of tables for a booking.
+
 * 19: Site Navigation
+
     As a Site User I can easily navigate the site so that I can find exactly what I want quickly.
+
 * 20: Site Appearance and Imagery
+
     As a Site User, I can see a comforting familiar layout as I explore the site with an attractive colour scheme and imagery so that I can be inspired by and interested in visiting The Night Garden restaurant.
+
 * 21: Site Menu Information
+
     As a Site User I can view and download the menus for the restaurant so that I know if I want to register with the site to book a table and eat there.
 
 ## Features

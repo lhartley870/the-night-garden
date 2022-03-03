@@ -224,8 +224,8 @@ The colour scheme used on the site is as follows:
 Colour Name | Hexadecimal Code
 ------------| ---------
 Blue Green | #3D6C77
-Seashell | #fff6ea
-Light Pink | #e6c2bf
+Seashell | #FFF6EA
+Light Pink | #E6C2BF
 Gainsboro | #D4E9CE
 Misty Rose |#FFDBE0
 Pale Turqoise | #B9EEF8
@@ -249,6 +249,9 @@ This diagram shows the foreign key and many to many relationships between models
 The booking model has a foreign key relationship with the user model and the timeslot model. There is a many to many relationship between the tables field in the booking model and the tables model. There is also a many to many relationship between the tables field in the timeslot model and the table model.
 
 ## Agile Methodology
+A GitHub project with issues acting as the Product Backlog was used as the Agile tool for this project. Epics and linked user stories were created as issues and linked to milestones. There were 2 iterations of 3 weeks long with their own kanban boards. The first iteration had a total of 36 story points with 47% being must have user stories, 38% being should have user stories and 13% being could have user stories. All were completed and moved along the kanban board. The second iteration had a total of 40 story points with 52% being must have user stories and 47% being should have user stories. All were completed and moved along the kanban board. The acceptance criteria for all user stories was tested in the Manual Testing document referenced in the TESTING.md file. 
+
+The Product Backlog, Epics, User Stories and the 2 Iteration Boards can be accessed here: [Nightgarden Agile Tool](https://github.com/lhartley870/the-night-garden/projects?type=beta).
     
 ## Technologies Used
 

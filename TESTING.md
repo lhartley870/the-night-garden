@@ -87,8 +87,26 @@ The manual testing results can be found [here](readme-documents/manual-testing/m
 
 The foreground text colours and their background colours were tested using the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/). The following combinations were tested and all received at least a WCAG AA pass. The results are as follows: 
 
-* The [         ] colour of [       ] (#) was tested against the [] colour (#) of the []:
-    * [results]() 
+* The Seashell colour (#FFF6EA) was tested against the blue green colour (#3D6C77) as seen in the navigation bar:
+    * [results](readme-documents/contrast-results/ff6ea-against-3d6c77.png) 
+* The Pale turqoise colour (#B9EEF8) used for some of the links was tested against the blue green colour (#3D6C77):
+    * [results](readme-documents/contrast-results/b9eef8-against-3d6c77.png) 
+* The Misty Rose colour (#FFDBE0) also used for some of the links was tested against the blue green colour (#3D6C77):
+  * [results](readme-documents/contrast-results/ffdbe0-against-3d6c77.png) 
+* The Gainsboro colour (#D4E9CE) used for some of the button text was tested against the blue green colour (#3D6C77):
+  * [results](readme-documents/contrast-results/d4e9ce-against-3d6c77.png) 
+* The Olive colour (#747201) used for the Winter menu link was tested against the Seashell colour (#FFF6EA):
+  * [results](readme-documents/contrast-results/747201-against-fff6ea.png) 
+* The Sienna colour (#B15739) used for the Winter menu link was tested against the Seashell colour (#FFF6EA):
+  * [results](readme-documents/contrast-results/b15739-against-fff6ea.png) 
+* The blue green colour (#3D6C77) used for the edit and cancel buttons was tested against the Misty Rose colour (#FFDBE0):
+  * [results](readme-documents/contrast-results/3d6c77-against-ffdbe0.png) 
+* The Teal colour (#007A6A) used for the datepicker dates was tested against the Seashell colour (#FFF6EA):
+  * [results](readme-documents/contrast-results/007a6a-against-fff6ea.png) 
+* The Dimgray colour (#806A60) used for the disabled datepicker dates was tested against the Seashell colour (#FFF6EA):
+  * [results](readme-documents/contrast-results/806a60-against-fff6ea.png) 
+* The Firebrick colour (#C32232) used for the form field error messages was tested against the Gainsboro colour (#D4E9CE):
+  * [results](readme-documents/contrast-results/c32232-against-d4e9ce.png) 
 
 ## Fixed Bugs
 *  When creating the views, I realised that the post method would need to render the form template with the form as a context variable in order to show form field validation messages in the event the booking was not valid.
